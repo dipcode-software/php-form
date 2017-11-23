@@ -1,0 +1,26 @@
+{
+  "name": "drawmyattention/php-project-boilerplate",
+  "description": "PHP boilerplate including PSR-4 autoloading, PHPUnit test config (with separate PSR-2 namespace), and Travis CI.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Amo Chohan",
+      "email": "amo.chohan@gmail.com"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "DrawMyAttention\\MyProject\\" : "src"
+    },
+    "files": ["config.php"]
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "MyProjectTests\\": "tests/"
+    }
+  }
+}
