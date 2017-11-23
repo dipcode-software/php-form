@@ -1,5 +1,5 @@
 <?php
-namespace Forms;
+namespace PHPForm;
 
 class Form
 {

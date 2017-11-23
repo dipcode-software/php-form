@@ -1,11 +1,11 @@
 {
-  "name": "drawmyattention/php-project-boilerplate",
-  "description": "PHP boilerplate including PSR-4 autoloading, PHPUnit test config (with separate PSR-2 namespace), and Travis CI.",
+  "name": "PHP Form",
+  "description": "PHP class for form handling abstraction.",
   "license": "MIT",
   "authors": [
     {
-      "name": "Amo Chohan",
-      "email": "amo.chohan@gmail.com"
+      "name": "Dipcode",
+      "email": "team@dipcode.com"
     }
   ],
   "require": {},
@@ -16,13 +16,19 @@
   },
   "autoload": {
     "psr-4": {
-      "DrawMyAttention\\MyProject\\" : "src"
+      "PHPForm\\" : "src/"
     },
     "files": ["config.php"]
   },
   "autoload-dev": {
-    "psr-0": {
-      "MyProjectTests\\": "tests/"
+    "psr-4": {
+      "PHPForm\\Unit\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": [
+      "phpcs --standard=phpcs.xml -v",
+      "phpunit"
+    ]
   }
 }
