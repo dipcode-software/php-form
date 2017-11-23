@@ -2,12 +2,18 @@
   "name": "PHP Form",
   "description": "PHP class for form handling abstraction.",
   "license": "MIT",
+  "version": "1.0.0-dev",
+  "homepage": "https://github.com/dipcode-software/php-form",
   "authors": [
     {
       "name": "Dipcode",
-      "email": "team@dipcode.com"
+      "email": "team@dipcode.com",
+      "homepage": "https://dipcode.com"
     }
   ],
+  "support": {
+    "issues": "https://github.com/dipcode-software/php-form/issues"
+  },
   "require": {},
   "require-dev": {
     "phpunit/phpunit": "~4.0",
