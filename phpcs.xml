@@ -14,5 +14,4 @@
   <!-- Use PSR-2 as a base -->
   <rule ref="PSR2"/>
 
-  <!-- Exclusions below are for resources/views/ folder -->
 </ruleset>

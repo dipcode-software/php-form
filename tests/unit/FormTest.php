@@ -1,12 +1,14 @@
 <?php
 namespace PHPForm\Unit;
 
-use PHPForm;
+use PHPUnit\Framework\TestCase;
+use PHPForm\Form;
 
-class FormTest extends \PHPUnit_Framework_TestCase
+class FormTest extends TestCase
 {
     public function testItWorks()
     {
+        $form = new Form($b = "Sandro");
         $this->assertTrue(true);
     }
 }

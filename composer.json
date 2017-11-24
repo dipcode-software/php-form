@@ -14,9 +14,11 @@
   "support": {
     "issues": "https://github.com/dipcode-software/php-form/issues"
   },
-  "require": {},
+  "require": {
+    "fleshgrinder/format": "^1.1"
+  },
   "require-dev": {
-    "phpunit/phpunit": "~4.0",
+    "phpunit/phpunit": "~6.0",
     "php-coveralls/php-coveralls": "^1.0",
     "squizlabs/php_codesniffer": "*"
   },
@@ -33,8 +35,8 @@
   },
   "scripts": {
     "test": [
-      "phpcs --standard=phpcs.xml -v",
-      "phpunit"
+      "phpcs --standard=phpcs.xml",
+      "phpunit -c phpunit.xml"
     ]
   }
 }
