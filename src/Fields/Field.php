@@ -73,7 +73,7 @@ abstract class Field
 
         if (!is_null($this->widget)) {
             $this->widget = new $this->widget;
-            $this->widget->setIsRequired($this->required);
+            $this->widget->setRequired($this->required);
             $this->widget->setAttrs($this->widgetAttrs($this->widget));
         }
 

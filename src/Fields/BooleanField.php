@@ -16,7 +16,7 @@ class BooleanField extends Field
         if (is_string($value) && in_array($value, $this::FALSE_STRING_VALUES)) {
             $value = false;
         } else {
-            $value = bool($value);
+            $value = (bool)$value;
         }
 
         return parent::toNative($value);

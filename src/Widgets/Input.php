@@ -4,10 +4,6 @@
  */
 namespace PHPForm\Widgets;
 
-use Fleshgrinder\Core\Formatter;
-
-use PHPForm\Utils\Attributes;
-
 abstract class Input extends Widget
 {
     /**
@@ -16,28 +12,24 @@ abstract class Input extends Widget
     protected $input_type = null;
 
     /**
-     * Renders input widget to HTML.
+    * @var string The input template used to render the HTML.
+    */
+    protected $template = '<input type="{type}" name="{name}" [{attrs}?] [value="{value}?"]/>';
+
+    /**
+     * Prepare context to be used on render method.
      *
-     * @param string $name    The name to use for the widget.
-     * @param mixed  $value   The value to render into the widget.
-     * @param array  $attrs   The attributes to use when rendering the widget.
+     * @param string $name  Field name.
+     * @param mixed  $value Field value.
+     * @param mixed  $attrs Extra widget attributes.
      *
-     * @return string
+     * @return array
      */
-    public function render(string $name, string $value, array $attrs = null)
+    public function getContext(string $name, $value, array $attrs = null)
     {
-        $value = $this->formatValue($value);
-        $attrs = $this->buildAttrs($attrs);
+        $context = parent::getContext($name, $value, $attrs);
+        $context["type"] = $this->input_type;
 
-        if (!is_null($value)) {
-            $attrs['value'] = $value;
-        }
-
-        Formatter::format('<input type="{type}" name="{name}" {attrs} {required}>', array(
-            "type" => $this->input_type,
-            "name" => $name,
-            "attrs" => Attributes::flatten($attrs),
-            "required" => $this->is_required ? 'required' : ''
-        ));
+        return $context;
     }
 }

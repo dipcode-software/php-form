@@ -4,17 +4,26 @@
  */
 namespace PHPForm\Widgets;
 
+use Fleshgrinder\Core\Formatter;
+
+use PHPForm\Utils\Attributes;
+
 abstract class Widget
 {
     /**
     * @var bool Mark the widget as required.
     */
-    protected $is_required = false;
+    protected $required = false;
 
     /**
-    * @var array Attributes for widgets.
+    * @var array Attributes to be added to the widget.
     */
     protected $attrs = array();
+
+    /**
+    * @var string The template used to render the HTML.
+    */
+    protected $template = '';
 
     /**
      * The constructor.
@@ -27,9 +36,45 @@ abstract class Widget
     }
 
     /**
-     * Abstract method to render html.
+     * Renders widget to HTML.
+     *
+     * @param string $name    The name to use for the widget.
+     * @param mixed  $value   The value to render into the widget.
+     * @param array  $attrs   The attributes to use when rendering the widget.
+     *
+     * @return string
      */
-    abstract public function render(string $name, string $value, array $attrs = null);
+    public function render(string $name, $value, array $attrs = null)
+    {
+        $context = $this->getContext($name, $value, $attrs);
+
+        return Formatter::format($this->template, $context);
+    }
+
+    /**
+     * Prepare context to be used on render method.
+     *
+     * @param string $name  Field name.
+     * @param mixed  $value Field value.
+     * @param array  $attrs Extra widget attributes.
+     *
+     * @return array
+     */
+    public function getContext(string $name, $value, array $attrs = null)
+    {
+        $value = $this->formatValue($value);
+        $attrs = $this->buildAttrs($attrs);
+
+        if ($this->required) {
+            $attrs['required'] = 'required';
+        }
+
+        return array(
+            "name" => htmlentities($name),
+            "attrs" => Attributes::flatten($attrs),
+            "value" => htmlentities($value)
+        );
+    }
 
     /**
      * Format value to be rendered in html.
@@ -40,7 +85,7 @@ abstract class Widget
      */
     public function formatValue($value)
     {
-        if (empty($value) || is_null($value)) {
+        if (empty($value)) {
             return null;
         }
 
@@ -66,13 +111,13 @@ abstract class Widget
     }
 
     /**
-     * Setter for $is_required attribute.
+     * Setter for $required attribute.
      *
      * @param bool $value Value to be setted.
      */
-    public function setIsRequired(bool $value)
+    public function setRequired(bool $value)
     {
-        $this->is_required = $value;
+        $this->required = $value;
     }
 
     /**
