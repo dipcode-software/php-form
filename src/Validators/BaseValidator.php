@@ -1,6 +1,6 @@
 <?php
 /**
- * Validator to check if $value has max length
+ * BaseValidator to check $value through condition
  */
 namespace PHPForm\Validators;
 
@@ -9,7 +9,7 @@ use Fleshgrinder\Core\Formatter;
 use PHPForm\Validators\Validator;
 use PHPForm\Exceptions\ValidationError;
 
-abstract class BaseValidator implements Validator
+abstract class BaseValidator extends Validator
 {
     /*
     * Receive a limit and can redefine message
@@ -18,9 +18,7 @@ abstract class BaseValidator implements Validator
     {
         $this->value = $value;
 
-        if (isset($message)) {
-            $this->message = $message;
-        }
+        parent::__construct($message);
     }
 
     public function __invoke($value)

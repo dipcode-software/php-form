@@ -18,7 +18,7 @@ class InputTest extends TestCase
     {
         $stub = $this->getMockForAbstractClass(Input::class);
         $result = $stub->render("name", "value");
-        $expected = '<input type="NULL" name="name" value="value"/>';
+        $expected = '<input type="NULL" id="id_name" name="name" value="value"/>';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 
@@ -26,7 +26,7 @@ class InputTest extends TestCase
     {
         $stub = $this->getMockForAbstractClass(Input::class);
         $result = $stub->render("name", null);
-        $expected = '<input type="NULL" name="name" />';
+        $expected = '<input type="NULL" id="id_name" name="name" />';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 
@@ -35,7 +35,7 @@ class InputTest extends TestCase
         $stub = $this->getMockForAbstractClass(Input::class);
         $stub->setRequired(true);
         $result = $stub->render("name", "value");
-        $expected = '<input type="NULL" name="name" required="required" value="value"/>';
+        $expected = '<input type="NULL" id="id_name" name="name" required="required" value="value"/>';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 }

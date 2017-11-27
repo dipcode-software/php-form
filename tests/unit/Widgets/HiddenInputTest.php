@@ -18,6 +18,6 @@ class HiddenInputTest extends TestCase
     {
         $widget = new HiddenInput();
         $render = $widget->render("name", 10);
-        $this->assertXmlStringEqualsXmlString($render, '<input type="hidden" name="name" value="10"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="hidden" id="id_name" name="name" value="10"/>');
     }
 }

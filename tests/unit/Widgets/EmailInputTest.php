@@ -18,6 +18,6 @@ class EmailInputTest extends TestCase
     {
         $widget = new EmailInput();
         $render = $widget->render("name", "s@m.c");
-        $this->assertXmlStringEqualsXmlString($render, '<input type="email" name="name" value="s@m.c"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="email" id="id_name" name="name" value="s@m.c"/>');
     }
 }

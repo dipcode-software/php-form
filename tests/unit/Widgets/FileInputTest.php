@@ -18,7 +18,7 @@ class FileInputTest extends TestCase
     {
         $widget = new FileInput();
         $render = $widget->render("name", null);
-        $this->assertXmlStringEqualsXmlString($render, '<input type="file" name="name"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="file" id="id_name" name="name"/>');
     }
 
     public function testFormatValue()

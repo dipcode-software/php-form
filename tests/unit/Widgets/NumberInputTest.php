@@ -18,6 +18,6 @@ class NumberInputTest extends TestCase
     {
         $widget = new NumberInput();
         $render = $widget->render("name", 10);
-        $this->assertXmlStringEqualsXmlString($render, '<input type="number" name="name" value="10"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="number" id="id_name" name="name" value="10"/>');
     }
 }

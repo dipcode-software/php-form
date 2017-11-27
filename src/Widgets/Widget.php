@@ -10,6 +10,8 @@ use PHPForm\Utils\Attributes;
 
 abstract class Widget
 {
+    const AUTO_ID_TEMPLATE = "id_{name}";
+
     /**
     * @var bool Mark the widget as required.
     */
@@ -65,13 +67,17 @@ abstract class Widget
         $value = $this->formatValue($value);
         $attrs = $this->buildAttrs($attrs);
 
+        if (!array_key_exists('id', $attrs)) {
+            $attrs['id'] = $this->buildAutoId($name);
+        }
+
         if ($this->required) {
             $attrs['required'] = 'required';
         }
 
         return array(
             "name" => htmlentities($name),
-            "attrs" => Attributes::flatten($attrs),
+            "attrs" => Attributes::flatatt($attrs),
             "value" => htmlentities($value)
         );
     }
@@ -101,7 +107,7 @@ abstract class Widget
      *
      * @return mixed
      */
-    public function valueFromData(array $data, array $files, string $name)
+    public function valueFromData($data, $files, string $name)
     {
         if (array_key_exists($name, $data)) {
             return $data[$name];
@@ -131,9 +137,11 @@ abstract class Widget
     }
 
     /**
-     * .
+     * Join default attrs with $extra_attrs if not null.
      *
-     * @param array $attrs .
+     * @param array $extra_attrs.
+     *
+     * @return array
      */
     public function buildAttrs(array $extra_attrs = null)
     {
@@ -144,5 +152,19 @@ abstract class Widget
         }
 
         return $attrs;
+    }
+
+    /**
+     * Create a id to be rendered in HTML.
+     *
+     * @param string $name Name of field.
+     *
+     * @return string
+     */
+    public function buildAutoId(string $name)
+    {
+        return Formatter::format(self::AUTO_ID_TEMPLATE, array(
+            "name" => $name
+        ));
     }
 }

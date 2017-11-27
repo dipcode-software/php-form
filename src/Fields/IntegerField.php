@@ -5,27 +5,27 @@
 namespace PHPForm\Fields;
 
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\Validators\MinLengthValidator;
-use PHPForm\Validators\MaxLengthValidator;
+use PHPForm\Validators\MinValueValidator;
+use PHPForm\Validators\MaxValueValidator;
 use PHPForm\Widgets\NumberInput;
 
 class IntegerField extends Field
 {
     protected $widget = NumberInput::class;
 
-    protected $error_messages = array(
-        'invalid' => 'Enter a whole number.'
-    );
-
     /**
     * @var int Max value.
     */
-    private $max_value;
+    protected $max_value;
 
     /**
     * @var int Min value.
     */
-    private $min_value;
+    protected $min_value;
+
+    protected $error_messages = array(
+        'invalid' => 'Enter a whole number.'
+    );
 
 
     public function __construct(array $args = array())

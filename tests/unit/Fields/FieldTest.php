@@ -3,6 +3,8 @@ namespace PHPForm\Unit\Fields;
 
 use PHPUnit\Framework\TestCase;
 use PHPForm\Fields\Field;
+use PHPForm\Fields\IntegerField;
+use PHPForm\Fields\EmailField;
 use PHPForm\Exceptions\ValidationError;
 
 class FieldTest extends TestCase

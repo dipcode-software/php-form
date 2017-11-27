@@ -8,7 +8,7 @@ use Fleshgrinder\Core\Formatter;
 
 class Attributes
 {
-    public static function flatten($attrs)
+    public static function flatatt($attrs)
     {
         if (!is_array($attrs)) {
             return '';
@@ -24,5 +24,10 @@ class Attributes
         }
 
         return implode(" ", $flat);
+    }
+
+    public static function prettyName($name)
+    {
+        return ucfirst(str_replace("_", " ", $name));
     }
 }

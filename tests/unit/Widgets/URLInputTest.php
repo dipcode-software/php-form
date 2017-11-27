@@ -18,6 +18,6 @@ class URLInputTest extends TestCase
     {
         $widget = new URLInput();
         $render = $widget->render("name", "url");
-        $this->assertXmlStringEqualsXmlString($render, '<input type="url" name="name" value="url"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="url" id="id_name" name="name" value="url"/>');
     }
 }

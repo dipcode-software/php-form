@@ -4,24 +4,17 @@
  */
 namespace PHPForm\Fields;
 
+use InvalidArgumentException;
+
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\Utils\Attributes;
 
 abstract class Field
 {
     /**
-    * @var array Array of considered empty values.
-    */
-    const EMPTY_VALUES = array(null, '', []);
-
-    /**
     * @var string Widget name.
     */
     protected $widget;
-
-    /**
-    * @var string Field name.
-    */
-    protected $name;
 
     /**
     * @var string Field nice name.
@@ -31,17 +24,12 @@ abstract class Field
     /**
     * @var string Help text for this field.
     */
-    protected $help_text;
+    protected $help_text = '';
 
     /**
     * @var bool Mark field as required.
     */
     protected $required = false;
-
-    /**
-    * @var mixed Field value.
-    */
-    protected $value;
 
     /**
     * @var array Array of user validators.
@@ -77,7 +65,45 @@ abstract class Field
             $this->widget->setAttrs($this->widgetAttrs($this->widget));
         }
 
-        $this->error_messages = array_merge($this::getErrorMessages(), $this->error_messages);
+        $this->error_messages = array_merge($this->getErrorMessages(), $this->error_messages);
+    }
+
+    /**
+    * Return defined widget.
+    *
+    * @return \PHPForm\Widgets\Widget
+    */
+    public function getWidget()
+    {
+        return $this->widget;
+    }
+
+    /**
+    * Return defined label or construct one based on the field name.
+    *
+    * @param  string $name Name to be prettified, if no label defined.
+    *
+    * @return string
+    */
+    public function getLabel(string $name = null)
+    {
+        $label = $this->label;
+
+        if (is_null($this->label) && !is_null($name)) {
+            $label = Attributes::prettyName($name);
+        }
+
+        return $label;
+    }
+
+    /**
+    * Return defined label or construct one based on the field name.
+    *
+    * @return string
+    */
+    public function getHelpText()
+    {
+        return $this->help_text;
     }
 
     /**
@@ -101,7 +127,7 @@ abstract class Field
     */
     public function validate($value)
     {
-        if (in_array($value, $this::EMPTY_VALUES) && $this->required) {
+        if (empty($value) && $this->required) {
             throw new ValidationError($this->error_messages['required'], 'required');
         }
     }
@@ -115,7 +141,7 @@ abstract class Field
     */
     public function runValidators($value)
     {
-        if (in_array($value, $this::EMPTY_VALUES)) {
+        if (empty($value)) {
             return;
         }
 
@@ -125,8 +151,10 @@ abstract class Field
             try {
                 $validator($value);
             } catch (ValidationError $e) {
-                if (array_key_exists($e->getCode(), $this->error_messages)) {
-                    $errors[] = new ValidationError($this->error_messages[$e->getCode()], $e->getCode());
+                if (array_key_exists($e->getMessageCode(), $this->error_messages)) {
+                    $errors[] = $this->error_messages[$e->getMessageCode()];
+                } else {
+                    $errors[] = $e->getMessage();
                 }
             }
         }
@@ -146,6 +174,8 @@ abstract class Field
         $value = $this->toNative($value);
         $this->validate($value);
         $this->runValidators($value);
+
+        return $value;
     }
 
     /**
@@ -165,25 +195,18 @@ abstract class Field
      *
      * @return array
      */
-    public function getErrorMessages($class = null)
+    private function getErrorMessages($class = null)
     {
         if (is_null($class)) {
             $class = get_class($this);
         }
 
-        $class_vars = get_class_vars($class);
-        $error_messages = $class_vars['error_messages'];
+        $error_messages = array();
 
-        if ($class == __CLASS__) {
-            return $error_messages;
-        }
-
-        $parent = get_parent_class($class);
-
-        $error_messages = array_merge(
-            $this->getErrorMessages($parent),
-            $error_messages
-        );
+        do {
+            $class_vars = get_class_vars($class);
+            $error_messages = array_merge($class_vars['error_messages'], $error_messages);
+        } while ($class = get_parent_class($class));
 
         return $error_messages;
     }
@@ -199,12 +222,12 @@ abstract class Field
     private function computeArgs(array $args = array(), array $exclude = array())
     {
         foreach ($args as $name => $value) {
-            if (property_exists(__CLASS__, $name)) {
+            if (property_exists(get_class($this), $name)) {
                 if (!in_array($name, $exclude)) {
                     $this->$name = $value;
                 }
             } else {
-                throw new \InvalidArgumentException("Unexpected argument: '$name'");
+                throw new InvalidArgumentException("Unexpected argument: '$name'");
             }
         }
     }

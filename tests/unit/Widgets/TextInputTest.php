@@ -18,6 +18,6 @@ class TextInputTest extends TestCase
     {
         $widget = new TextInput();
         $render = $widget->render("name", "value");
-        $this->assertXmlStringEqualsXmlString($render, '<input type="text" name="name" value="value"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="text" id="id_name" name="name" value="value"/>');
     }
 }

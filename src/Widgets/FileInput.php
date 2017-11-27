@@ -29,7 +29,7 @@ class FileInput extends Input
      *
      * @return mixed
      */
-    public function valueFromData(array $data, array $files, string $name)
+    public function valueFromData($data, $files, string $name)
     {
         if (array_key_exists($name, $files)) {
             return $files[$name];

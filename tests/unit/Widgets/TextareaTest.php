@@ -11,7 +11,7 @@ class TextareaTest extends TestCase
     {
         $widget = new Textarea();
         $result = $widget->render("name", "value");
-        $expected = '<textarea name="name" cols="40" rows="5">value</textarea>';
+        $expected = '<textarea id="id_name" name="name" cols="40" rows="5">value</textarea>';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 
@@ -19,7 +19,7 @@ class TextareaTest extends TestCase
     {
         $widget = new Textarea(array("cols" => 20));
         $result = $widget->render("name", "value");
-        $expected = '<textarea name="name" cols="20" rows="5">value</textarea>';
+        $expected = '<textarea id="id_name" name="name" cols="20" rows="5">value</textarea>';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 
@@ -27,7 +27,7 @@ class TextareaTest extends TestCase
     {
         $widget = new Textarea(array("cols" => 20));
         $result = $widget->render("name", null);
-        $expected = '<textarea name="name" cols="20" rows="5"></textarea>';
+        $expected = '<textarea id="id_name" name="name" cols="20" rows="5"></textarea>';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 }

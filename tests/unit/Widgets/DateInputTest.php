@@ -13,6 +13,6 @@ class DateInputTest extends TestCase
 
         $widget = new DateInput();
         $render = $widget->render("name", $date);
-        $this->assertXmlStringEqualsXmlString($render, '<input type="text" name="name" value="01/01/2000"/>');
+        $this->assertXmlStringEqualsXmlString($render, '<input type="text" id="id_name" name="name" value="01/01/2000"/>');
     }
 }

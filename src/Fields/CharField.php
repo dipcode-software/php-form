@@ -12,15 +12,15 @@ class CharField extends Field
 {
     protected $widget = TextInput::class;
 
-    /*
+    /**
     * @var int Max value length.
     */
-    private $max_length;
+    protected $max_length;
 
-    /*
+    /**
     * @var int Min value length.
     */
-    private $min_length;
+    protected $min_length;
 
     public function __construct(array $args = array())
     {

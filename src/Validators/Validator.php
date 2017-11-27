@@ -4,7 +4,17 @@
  */
 namespace PHPForm\Validators;
 
-interface Validator
+abstract class Validator
 {
-    public function __invoke($value);
+    /**
+    * Receive an redefinition of message
+    */
+    public function __construct($message = null)
+    {
+        if (isset($message)) {
+            $this->message = $message;
+        }
+    }
+
+    abstract public function __invoke($value);
 }
