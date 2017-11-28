@@ -1,5 +1,5 @@
 {
-  "name": "PHP Form",
+  "name": "dipcode/phpform",
   "description": "PHP class for form handling abstraction.",
   "license": "MIT",
   "version": "1.0.0-dev",
@@ -15,6 +15,7 @@
     "issues": "https://github.com/dipcode-software/php-form/issues"
   },
   "require": {
+    "php": ">=7.0.0",
     "fleshgrinder/format": "^1.1"
   },
   "require-dev": {
