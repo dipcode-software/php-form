@@ -12,6 +12,7 @@ class AttributesTest extends TestCase
         $attrs = array("name" => "name", "type" => "text");
         $this->assertEquals(Attributes::flatatt($attrs), 'name="name" type="text"');
         $this->assertEquals(Attributes::flatatt(array()), '');
+        $this->assertEquals(Attributes::flatatt("string"), '');
     }
 
     public function testPrettyName()

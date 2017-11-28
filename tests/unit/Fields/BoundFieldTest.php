@@ -3,6 +3,7 @@ namespace PHPForm\Unit\Fields;
 
 use PHPUnit\Framework\TestCase;
 
+use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;
 use PHPForm\Fields\CharField;
@@ -49,6 +50,20 @@ class BoundFieldTest extends TestCase
         $this->assertAttributeEquals("Label", "label", $bound);
     }
 
+    public function testGetErrors()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $bound = new BoundField($form, $this->simple_field, "name");
+        $this->assertInstanceOf(ErrorList::class, $bound->errors);
+    }
+
+    public function testSimpleGet()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $bound = new BoundField($form, $this->simple_field, "name");
+        $this->assertEquals($bound->label, "Name");
+    }
+
     public function testToString()
     {
         $form = $this->getMockForAbstractClass(Form::class, array(array("name" => "value")));
@@ -88,5 +103,14 @@ class BoundFieldTest extends TestCase
         $bound = new BoundField($this->simple_form, $this->simple_field, "name");
         $expected = '<label for="id_name">content</label>';
         $this->assertXmlStringEqualsXmlString($bound->labelTag("content"), $expected);
+    }
+
+    public function testLabelTagWithAttrs()
+    {
+        $bound = new BoundField($this->simple_form, $this->simple_field, "name");
+        $attrs = array("class" => "show");
+
+        $expected = '<label for="id_name" class="show">content</label>';
+        $this->assertXmlStringEqualsXmlString($bound->labelTag("content", $attrs), $expected);
     }
 }
