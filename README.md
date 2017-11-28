@@ -10,7 +10,7 @@ PHP class for form handling abstraction inspired in Django Framework forms.
 Library can be installed using Composer like so:
 
 ```shell
-$ composer require dipcode/phpform
+$ composer require dipcode/php-form
 ```
 
 ## Starting development

@@ -1,5 +1,5 @@
 {
-  "name": "dipcode/phpform",
+  "name": "dipcode/php-form",
   "description": "PHP class for form handling abstraction.",
   "license": "MIT",
   "version": "1.0.0-dev",
