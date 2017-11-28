@@ -9,14 +9,6 @@ use PHPForm\Exceptions\ValidationError;
 
 class FieldTest extends TestCase
 {
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testConstructWithInvalidArgument()
-    {
-        $this->getMockForAbstractClass(Field::class, array(array("a" => true)));
-    }
-
     public function testConstruct()
     {
         $args = array("label" => "label", "required" => true);

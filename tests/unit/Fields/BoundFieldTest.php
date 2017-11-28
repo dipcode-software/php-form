@@ -28,7 +28,7 @@ class BoundFieldTest extends TestCase
 
     public function testConstructWithPrefix()
     {
-        $form = $this->getMockForAbstractClass(Form::class, array(null, null, "form"));
+        $form = $this->getMockForAbstractClass(Form::class, array(["prefix" => "form"]));
         $bound = new BoundField($form, $this->simple_field, "name");
 
         $this->assertAttributeEquals("form-name", "html_name", $bound);
@@ -66,17 +66,22 @@ class BoundFieldTest extends TestCase
 
     public function testToString()
     {
-        $form = $this->getMockForAbstractClass(Form::class, array(array("name" => "value")));
+        $form_args = ["data" => ["name" => "value"]];
+        $form = $this->getMockForAbstractClass(Form::class, array($form_args));
+
         $bound = new BoundField($form, $this->simple_field, "name");
+
         $expected = '<input type="text" id="id_name" name="name" value="value"/>';
         $this->assertXmlStringEqualsXmlString((string) $bound, $expected);
     }
 
     public function testToStringWithPrefix()
     {
-        $data = array("prefix-name" => "value");
-        $form = $this->getMockForAbstractClass(Form::class, array($data, null, "prefix"));
+        $form_args = ["data" => ["prefix-name" => "value"], "prefix" => "prefix"];
+        $form = $this->getMockForAbstractClass(Form::class, array($form_args));
+
         $bound = new BoundField($form, $this->simple_field, "name");
+
         $expected = '<input type="text" id="id_prefix-name" name="prefix-name" value="value"/>';
         $this->assertXmlStringEqualsXmlString((string) $bound, $expected);
     }
@@ -91,9 +96,13 @@ class BoundFieldTest extends TestCase
 
     public function testLabelTagWithPrefix()
     {
-        $form = $this->getMockForAbstractClass(Form::class, array(null, null, "prefix"));
+        $form_args = ["prefix" => "prefix"];
+        $form = $this->getMockForAbstractClass(Form::class, array($form_args));
+
         $field = new CharField(array("label" => "Label"));
+
         $bound = new BoundField($form, $field, "name");
+
         $expected = '<label for="id_prefix-name">Label</label>';
         $this->assertXmlStringEqualsXmlString($bound->labelTag(), $expected);
     }

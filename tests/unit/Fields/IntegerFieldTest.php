@@ -9,25 +9,25 @@ use PHPForm\Widgets\NumberInput;
 
 class IntegerFieldTest extends TestCase
 {
+    public function setUp()
+    {
+        $this->field = new IntegerField(["min_value" => 10, "max_value" => 40]);
+    }
+
     public function testConstruct()
     {
-        $field = new IntegerField();
-        $this->assertInstanceOf(NumberInput::class, $field->getWidget());
+        $this->assertInstanceOf(NumberInput::class, $this->field->getWidget());
     }
 
     public function testConstructWithValidators()
     {
-        $args = array("min_value" => 10, "max_value" => 40);
-        $field = new IntegerField($args);
-        $this->assertAttributeEquals(10, "min_value", $field);
-        $this->assertAttributeEquals(40, "max_value", $field);
+        $this->assertAttributeEquals(10, "min_value", $this->field);
+        $this->assertAttributeEquals(40, "max_value", $this->field);
     }
 
     public function testValidatorNoException()
     {
-        $args = array("min_value" => 10, "max_value" => 40);
-        $field = new IntegerField($args);
-        $this->assertEquals($field->clean("25"), 25);
+        $this->assertEquals($this->field->clean("25"), 25);
     }
 
     /**
@@ -35,9 +35,7 @@ class IntegerFieldTest extends TestCase
      */
     public function testMinValidatorError()
     {
-        $args = array("min_value" => 10, "max_value" => 40);
-        $field = new IntegerField($args);
-        $field->clean("1");
+        $this->field->clean("1");
     }
 
     /**
@@ -45,9 +43,7 @@ class IntegerFieldTest extends TestCase
      */
     public function testMaxValidatorError()
     {
-        $args = array("min_value" => 10, "max_value" => 20);
-        $field = new IntegerField($args);
-        $field->clean("100");
+        $this->field->clean("100");
     }
 
     /**
@@ -56,16 +52,12 @@ class IntegerFieldTest extends TestCase
      */
     public function testInvalidValue()
     {
-        $field = new IntegerField();
-        $field->clean("aa");
+        $this->field->clean("aa");
     }
 
     public function testWidgetAttrs()
     {
-        $args = array("min_value" => 10, "max_value" => 40);
-        $field = new IntegerField($args);
-
         $expected = array("min" => 10, "max" => 40);
-        $this->assertEquals($field->widgetAttrs(null), $expected);
+        $this->assertEquals($this->field->widgetAttrs(null), $expected);
     }
 }

@@ -20,7 +20,9 @@ class FormTest extends TestCase
 
     public function testConstructorWithBoundedForm()
     {
-        $form = new ExampleForm(['data' => ["description" => "Description"]]);
+        $data = ["description" => "Description"];
+        $form = new ExampleForm(['data' => $data]);
+
         $this->assertAttributeEquals(true, "is_bound", $form);
         $this->assertAttributeEquals($data, "data", $form);
     }

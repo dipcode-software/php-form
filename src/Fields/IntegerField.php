@@ -13,16 +13,6 @@ class IntegerField extends Field
 {
     protected $widget = NumberInput::class;
 
-    /**
-    * @var int Max value.
-    */
-    protected $max_value;
-
-    /**
-    * @var int Min value.
-    */
-    protected $min_value;
-
     protected $error_messages = array(
         'invalid' => 'Enter a whole number.'
     );
@@ -30,12 +20,15 @@ class IntegerField extends Field
 
     public function __construct(array $args = array())
     {
+        $this->min_value = array_key_exists('min_value', $args) ? $args['min_value'] : null;
+        $this->max_value = array_key_exists('max_value', $args) ? $args['max_value'] : null;
+
         parent::__construct($args);
 
-        if (isset($this->min_value)) {
+        if (!is_null($this->min_value)) {
             $this->validators[] = new MinValueValidator($this->min_value);
         }
-        if (isset($this->max_value)) {
+        if (!is_null($this->max_value)) {
             $this->validators[] = new MaxValueValidator($this->max_value);
         }
     }
@@ -53,10 +46,10 @@ class IntegerField extends Field
     {
         $attrs = parent::widgetAttrs($widget);
 
-        if (isset($this->min_value) && !is_null($this->min_value)) {
+        if (!is_null($this->min_value)) {
             $attrs['min'] = $this->min_value;
         }
-        if (isset($this->max_value) && !is_null($this->max_value)) {
+        if (!is_null($this->max_value)) {
             $attrs['max'] = $this->max_value;
         }
 
