@@ -37,4 +37,4 @@ $ composer test
 
 Largely PSR-2 compliant:
 
-(https://raw.githubusercontent.com/php-fig/fig-standards/master/accepted/PSR-2-coding-style-guide.md)[https://raw.githubusercontent.com/php-fig/fig-standards/master/accepted/PSR-2-coding-style-guide.md]
+https://raw.githubusercontent.com/php-fig/fig-standards/master/accepted/PSR-2-coding-style-guide.md
