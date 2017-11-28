@@ -22,6 +22,11 @@ class CharField extends Field
     */
     protected $min_length;
 
+    /**
+     * Constructor with extra args min_length and max_length
+     *
+     * @param array
+     */
     public function __construct(array $args = array())
     {
         parent::__construct($args);
@@ -34,6 +39,12 @@ class CharField extends Field
         }
     }
 
+    /**
+     * Return extra minlength and maxlength attrs to be added to the input in HTML.
+     *
+     * @param  PHPForm\Widgets\Widget
+     * @return array
+     */
     public function widgetAttrs($widget)
     {
         $attrs = parent::widgetAttrs($widget);

@@ -4,6 +4,8 @@
  */
 namespace PHPForm\Fields;
 
+use PHPForm\Exceptions\ValidationError;
+
 class BooleanField extends Field
 {
     const FALSE_STRING_VALUES = ['false', '0'];

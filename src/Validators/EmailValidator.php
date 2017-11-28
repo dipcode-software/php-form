@@ -9,8 +9,8 @@ use PHPForm\Exceptions\ValidationError;
 
 class EmailValidator extends Validator
 {
-    private $message = "Enter a valid email address.";
-    private $code = "invalid";
+    protected $message = "Enter a valid email address.";
+    protected $code = "invalid";
 
     public function __invoke($value)
     {

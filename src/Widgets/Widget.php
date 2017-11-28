@@ -109,11 +109,7 @@ abstract class Widget
      */
     public function valueFromData($data, $files, string $name)
     {
-        if (array_key_exists($name, $data)) {
-            return $data[$name];
-        }
-
-        return null;
+        return array_key_exists($name, $data) ? $data[$name] : null;
     }
 
     /**

@@ -2,7 +2,10 @@
 namespace PHPForm\Unit\Forms;
 
 use PHPUnit\Framework\TestCase;
-use PHPForm\Form;
+use Fleshgrinder\Core\Formatter;
+
+use PHPForm\Forms\Form;
+use PHPForm\Fields\BoundField;
 
 class FormTest extends TestCase
 {
@@ -15,7 +18,7 @@ class FormTest extends TestCase
         $this->assertAttributeEquals(null, "prefix", $form);
     }
 
-    public function testConstructorOfBoundedForm()
+    public function testConstructorWithBoundedForm()
     {
         $data = array("description" => "Description");
         $form = new ExampleForm($data);
@@ -28,6 +31,14 @@ class FormTest extends TestCase
         $form = new ExampleForm(null, null, "prefix");
         $this->assertAttributeEquals("prefix", "prefix", $form);
         $this->assertEquals($form->addPrefix("name"), "prefix-name");
+    }
+
+    public function testFieldObjectAccess()
+    {
+        $form = new ExampleForm();
+        $this->assertInstanceOf(BoundField::class, $form['description']);
+        $this->assertInstanceOf(BoundField::class, $form['title']);
+        $this->assertInstanceOf(BoundField::class, $form['email']);
     }
 
     public function testErrors()

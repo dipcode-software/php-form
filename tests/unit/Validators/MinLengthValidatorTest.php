@@ -1,5 +1,5 @@
 <?php
-namespace PHPForm\Unit\Fields;
+namespace PHPForm\Unit\Validators;
 
 use PHPUnit\Framework\TestCase;
 

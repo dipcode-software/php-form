@@ -1,5 +1,5 @@
 <?php
-namespace PHPForm;
+namespace PHPForm\Forms;
 
 use ArrayAccess;
 use Iterator;
@@ -7,6 +7,7 @@ use Countable;
 
 use Fleshgrinder\Core\Formatter;
 
+use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;
 
@@ -37,6 +38,11 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     protected static function setFields()
     {
         return array();
+    }
+
+    public function isBound()
+    {
+        return $this->is_bound;
     }
 
     /**
@@ -192,10 +198,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
      */
     public function isValid()
     {
-        if ($this->is_bound and !count($this->errors)) {
-            return true;
-        }
-        return false;
+        return $this->is_bound and !count($this->errors);
     }
 
     /**

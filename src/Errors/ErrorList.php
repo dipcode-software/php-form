@@ -1,5 +1,5 @@
 <?php
-namespace PHPForm;
+namespace PHPForm\Errors;
 
 use ArrayObject;
 
@@ -37,6 +37,6 @@ class ErrorList extends ArrayObject
             $items[] = Formatter::format($this::LIST_ITEM_TEMPLATE, array("content" => $error));
         }
 
-        return Formatter::format($this::LIST_TEMPLATE, array("items" => impode($items)));
+        return Formatter::format($this::LIST_TEMPLATE, array("items" => implode($items)));
     }
 }

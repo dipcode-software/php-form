@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;
 use PHPForm\Fields\CharField;
-use PHPForm\Form;
+use PHPForm\Forms\Form;
 
 class BoundFieldTest extends TestCase
 {
@@ -57,11 +57,29 @@ class BoundFieldTest extends TestCase
         $this->assertXmlStringEqualsXmlString((string) $bound, $expected);
     }
 
+    public function testToStringWithPrefix()
+    {
+        $data = array("prefix-name" => "value");
+        $form = $this->getMockForAbstractClass(Form::class, array($data, null, "prefix"));
+        $bound = new BoundField($form, $this->simple_field, "name");
+        $expected = '<input type="text" id="id_prefix-name" name="prefix-name" value="value"/>';
+        $this->assertXmlStringEqualsXmlString((string) $bound, $expected);
+    }
+
     public function testLabelTag()
     {
         $field = new CharField(array("label" => "Label"));
         $bound = new BoundField($this->simple_form, $field, "name");
         $expected = '<label for="id_name">Label</label>';
+        $this->assertXmlStringEqualsXmlString($bound->labelTag(), $expected);
+    }
+
+    public function testLabelTagWithPrefix()
+    {
+        $form = $this->getMockForAbstractClass(Form::class, array(null, null, "prefix"));
+        $field = new CharField(array("label" => "Label"));
+        $bound = new BoundField($form, $field, "name");
+        $expected = '<label for="id_prefix-name">Label</label>';
         $this->assertXmlStringEqualsXmlString($bound->labelTag(), $expected);
     }
 

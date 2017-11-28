@@ -4,7 +4,9 @@
  */
 namespace PHPForm\Exceptions;
 
-class ValidationError extends \Exception
+use Exception;
+
+class ValidationError extends Exception
 {
     /**
     * @var string Error message code.

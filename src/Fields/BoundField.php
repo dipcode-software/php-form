@@ -46,7 +46,11 @@ class BoundField
     {
         $widget = is_null($widget) ? $this->field->getWidget() : $widget;
 
-        $value = $widget->valueFromData($this->form->data, $this->form->files, $this->html_name);
+        $value = null;
+
+        if ($this->form->isBound()) {
+            $value = $widget->valueFromData($this->form->data, $this->form->files, $this->html_name);
+        }
 
         return $widget->render($this->html_name, $value, $attrs);
     }

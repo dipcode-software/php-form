@@ -1,7 +1,7 @@
 <?php
 namespace PHPForm\Unit\Forms;
 
-use PHPForm\Form;
+use PHPForm\Forms\Form;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\CharField;
 use PHPForm\Fields\EmailField;
