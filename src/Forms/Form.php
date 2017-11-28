@@ -10,6 +10,7 @@ use Fleshgrinder\Core\Formatter;
 use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;
+use PHPForm\Utils\Attributes;
 
 abstract class Form implements ArrayAccess, Iterator, Countable
 {
@@ -17,9 +18,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     const NON_FIELD_ERRORS = '__all__';
 
     private $form_errors = null;
-    private $fields = array();
-    private $cleaned_data = array();
     private $is_bound = false;
+    protected $fields = array();
+    protected $cleaned_data = array();
 
     public function __construct(array $data = null, array $files = null, string $prefix = null)
     {
@@ -129,13 +130,13 @@ abstract class Form implements ArrayAccess, Iterator, Countable
             $value = $widget->valueFromData($this->data, $this->files, $this->addPrefix($field_name));
 
             try {
-                $cleaned_value = $field->clean($value);
+                $this->cleaned_data[$field_name] = $field->clean($value);
 
-                if (method_exists($this, 'clean_' . $field_name)) {
-                    $cleaned_value = call_user_func(array($this, 'clean_' . $field_name));
+                $method = 'clean' . Attributes::snakeToCamel($field_name);
+
+                if (method_exists($this, $method)) {
+                    $this->cleaned_data[$field_name] = call_user_func(array($this, $method));
                 }
-
-                $this->cleaned_data[$field_name] = $cleaned_value;
             } catch (ValidationError $e) {
                 $this->addError($e->getErrorList(), $field_name);
             }

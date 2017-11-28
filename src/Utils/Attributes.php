@@ -30,4 +30,9 @@ class Attributes
     {
         return ucfirst(str_replace("_", " ", $name));
     }
+
+    public static function snakeToCamel($name)
+    {
+        return str_replace(" ", "", ucwords(str_replace("_", " ", $name)));
+    }
 }

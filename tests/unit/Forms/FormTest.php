@@ -71,6 +71,12 @@ class FormTest extends TestCase
         $this->assertEquals(array("Error on title"), (array) $form->getFieldErrors("title"));
     }
 
+    public function testCleanWithTowAddError()
+    {
+        $form = new ExampleForm(array("title" => "Title2"));
+        $this->assertEquals(array("Error on title 1", "Error on title 2"), (array) $form->getFieldErrors("title"));
+    }
+
     public function testCleanWithNonFieldError()
     {
         $form = new ExampleForm(array("title" => "title", "description" => "title"));
@@ -81,5 +87,29 @@ class FormTest extends TestCase
     {
         $form = new ExampleForm(array("title" => "title", "email" => "test@unit.c"));
         $this->assertEquals(array("Email invalid"), (array) $form->getNonFieldErrors());
+    }
+
+    public function testCleanEmail()
+    {
+        $form = new ExampleForm(array("title" => "title", "email" => "test2@unit.c"));
+        $this->assertEquals(array("Error Processing Email"), (array) $form->getFieldErrors("email"));
+    }
+
+    public function testIsValidWithInvalidForm()
+    {
+        $form = new ExampleForm(array());
+        $this->assertFalse($form->IsValid());
+    }
+
+    public function testIsValidWithValidForm()
+    {
+        $form = new ExampleForm(array("title" => "title"));
+        $this->assertTrue($form->IsValid());
+    }
+
+    public function testIsValidWithNoDataBounded()
+    {
+        $form = new ExampleForm();
+        $this->assertFalse($form->IsValid());
     }
 }
