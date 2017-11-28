@@ -7,7 +7,8 @@ use PHPForm\Utils\Attributes;
 
 class BoundField
 {
-    const LABEL_TEMPLATE = '<label for="{for}" [{attrs}?]>{contents}</label>';
+    const LABEL_TEMPLATE = '<label for="{for}"[ {attrs}?]>{contents}[ {required}?]</label>';
+    const LABEL_REQUIRED = '<span class="required">*</span>';
 
     private $form;
     private $field;
@@ -39,6 +40,18 @@ class BoundField
             return $this->form->getFieldErrors($this->name);
         }
 
+        if ($name == 'has_errors') {
+            return $this->form->hasErrors($this->name);
+        }
+
+        if ($name == 'label_tag') {
+            return $this->labelTag();
+        }
+
+        if ($name == 'is_required') {
+            return $this->field->isRequired();
+        }
+
         return parent::__get($name);
     }
 
@@ -46,7 +59,7 @@ class BoundField
     {
         $widget = is_null($widget) ? $this->field->getWidget() : $widget;
 
-        $value = null;
+        $value = $this->form->getInitialForField($this->field, $this->name);
 
         if ($this->form->isBound()) {
             $value = $widget->valueFromData($this->form->data, $this->form->files, $this->html_name);
@@ -68,7 +81,8 @@ class BoundField
         return Formatter::format(self::LABEL_TEMPLATE, array(
             "for" => $widget->buildAutoId($this->html_name),
             "attrs" => $attrs,
-            "contents" => $contents
+            "contents" => $contents,
+            "required" => $this->field->isRequired() ? $this::LABEL_REQUIRED : null
         ));
     }
 }

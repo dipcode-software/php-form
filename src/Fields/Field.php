@@ -32,6 +32,12 @@ abstract class Field
     protected $required = false;
 
     /**
+     * Initial value if no data bounded.
+     * @var mixed
+     */
+    protected $initial = null;
+
+    /**
     * @var array Array of user validators.
     */
     protected $validators = array();
@@ -57,7 +63,14 @@ abstract class Field
     */
     public function __construct(array $args = array())
     {
-        $this->computeArgs($args);
+        $this->widget = array_key_exists('widget', $args) ? $args['widget'] : $this->widget;
+        $this->label = array_key_exists('label', $args) ? $args['label'] : $this->label;
+        $this->help_text = array_key_exists('help_text', $args) ? $args['help_text'] : $this->help_text;
+        $this->required = array_key_exists('required', $args) ? $args['required'] : $this->required;
+        $this->initial = array_key_exists('initial', $args) ? $args['initial'] : $this->initial;
+        $this->validators = array_key_exists('validators', $args) ? $args['validators'] : $this->validators;
+        $this->error_messages = array_key_exists('error_messages', $args) ?
+            $args['error_messages'] : $this->error_messages;
 
         if (!is_null($this->widget)) {
             $this->widget = new $this->widget;
@@ -76,6 +89,26 @@ abstract class Field
     public function getWidget()
     {
         return $this->widget;
+    }
+
+    /**
+    * Return defined initial value.
+    *
+    * @return mixed
+    */
+    public function getInitial()
+    {
+        return $this->initial;
+    }
+
+    /**
+    * Return defined if this field is required or not.
+    *
+    * @return bool
+    */
+    public function isRequired()
+    {
+        return $this->required;
     }
 
     /**
@@ -209,26 +242,5 @@ abstract class Field
         } while ($class = get_parent_class($class));
 
         return $error_messages;
-    }
-
-    /**
-    * Init object arguments, but only valid class arguments, otherwise throw an exception.
-    *
-    * @param array $args    Arguments to be setted.
-    * @param array $exclude Fields to be excluded when trying to set value.
-    *
-    * @throws InvalidArgumentException
-    */
-    private function computeArgs(array $args = array(), array $exclude = array())
-    {
-        foreach ($args as $name => $value) {
-            if (property_exists(get_class($this), $name)) {
-                if (!in_array($name, $exclude)) {
-                    $this->$name = $value;
-                }
-            } else {
-                throw new InvalidArgumentException("Unexpected argument: '$name'");
-            }
-        }
     }
 }

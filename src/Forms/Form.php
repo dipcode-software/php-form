@@ -2,8 +2,10 @@
 namespace PHPForm\Forms;
 
 use ArrayAccess;
-use Iterator;
 use Countable;
+use InvalidArgumentException;
+use Iterator;
+use UnexpectedValueException;
 
 use Fleshgrinder\Core\Formatter;
 
@@ -17,23 +19,59 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     const PREFIX_TEMPLATE = '{prefix}-{field_name}';
     const NON_FIELD_ERRORS = '__all__';
 
+    /**
+     * List of form errors.
+     * @var array
+     */
     private $form_errors = null;
+
+    /**
+     * Array of bounded field to cache propose.
+     * @var array
+     */
+    private $bound_fields_cache = array();
+
+    /**
+     * Indicates if there's data bounded to form.
+     * @var boolean
+     */
     private $is_bound = false;
+
+    /**
+     * Prefix to be used in form names.
+     * @var string
+     */
+    protected $prefix = null;
+
+    /**
+     * Fields declared to this form.
+     * @var array
+     */
     protected $fields = array();
+
+    /**
+     * Cleaned values after validation.
+     * @var array
+     */
     protected $cleaned_data = array();
 
-    public function __construct(array $data = null, array $files = null, string $prefix = null)
+    /**
+     * Constructor method
+     * @param array $args Arguments
+     */
+    public function __construct(array $args = array())
     {
-        $this->is_bound = !is_null($data) or !is_null($files);
-        $this->data = $data;
-        $this->files = $files;
-        $this->prefix = $prefix;
+        $this->data = array_key_exists('data', $args) ? $args['data'] : null;
+        $this->files = array_key_exists('files', $args) ? $args['files'] : null;
+        $this->prefix = array_key_exists('prefix', $args) ? $args['prefix'] : $this->prefix;
+        $this->initial = array_key_exists('initial', $args) ? $args['initial'] : array();
+
+        $this->is_bound = !is_null($this->data) or !is_null($this->files);
         $this->fields = $this::setFields();
     }
 
     /**
      * Method to be redefined with form fields
-     *
      * @return array Desired fields for this form.
      */
     protected static function setFields()
@@ -41,6 +79,10 @@ abstract class Form implements ArrayAccess, Iterator, Countable
         return array();
     }
 
+    /**
+     * Return if form is bounded or not.
+     * @return boolean
+     */
     public function isBound()
     {
         return $this->is_bound;
@@ -48,9 +90,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Special method to make errors accessible as a attribute.
-     *
-     * @param  string Attribute name.
-     *
+     * @param  string $name Attribute name.
      * @return mixed
      */
     public function __get(string $name)
@@ -68,9 +108,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Add a prefix to a name.
-     *
-     * @param  string Field name.
-     *
+     * @param  string $field_name Field name.
      * @return string
      */
     public function addPrefix(string $field_name)
@@ -86,8 +124,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     }
 
     /**
-     * @param mixed
-     * @param string
+     * Add error to specific $field_name, if null, define to NON_FIELD_ERRORS.
+     * @param mixed  $error
+     * @param string $field_name
      */
     protected function addError($error, string $field_name = null)
     {
@@ -157,7 +196,6 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Redefine if need to validate crossfields.
-     *
      * @return array Cleaned data
      */
     protected function clean()
@@ -166,12 +204,42 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     }
 
     /**
-     * @param  string Field name
+     * Return cleaned data values.
+     * @return array Cleaned data
+     */
+    public function getCleanedData()
+    {
+        return $this->cleaned_data;
+    }
+
+    /**
+     * Return cleaned field value.
+     * @param  string $field_name Name of field.
+     * @return string             Cleaned field value.
+     */
+    public function getCleanedField(string $field_name)
+    {
+        return isset($this->cleaned_data[$field_name]) ? $this->cleaned_data[$field_name] : null;
+    }
+
+    /**
+     * Check if field has error on it.
+     * @param  string   $field_name Name of field to check
+     * @return boolean
+     */
+    public function hasError($field_name)
+    {
+        return array_key_exists($field_name, $this->errors);
+    }
+
+    /**
+     * Return all errors associated to $field_name.
+     * @param  string    $field_name Field name
      * @return ErrorList
      */
     public function getFieldErrors(string $field_name)
     {
-        if (!array_key_exists($field_name, $this->errors)) {
+        if (!$this->hasError($field_name)) {
             return new ErrorList();
         }
 
@@ -180,12 +248,11 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return errors not associated with any field.
-     *
      * @return ErrorList
      */
     public function getNonFieldErrors()
     {
-        if (!array_key_exists($this::NON_FIELD_ERRORS, $this->errors)) {
+        if (!$this->hasError($this::NON_FIELD_ERRORS)) {
             return new ErrorList();
         }
 
@@ -194,12 +261,20 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Check if form is valid.
-     *
      * @return bool
      */
     public function isValid()
     {
         return $this->is_bound and !count($this->errors);
+    }
+
+    /**
+     * Check if form is valid.
+     * @return bool
+     */
+    public function getInitialForField($field, $field_name)
+    {
+        return isset($this->initial[$field_name]) ? $this->initial[$field_name] : $field->getInitial();
     }
 
     /**
@@ -224,10 +299,25 @@ abstract class Form implements ArrayAccess, Iterator, Countable
         unset($this->fields[$offset]);
     }
 
+    /**
+     * @throws UnexpectedValueException
+     * @return BoundField
+     */
     public function offsetGet($offset)
     {
         $field = isset($this->fields[$offset]) ? $this->fields[$offset] : null;
-        return new BoundField($this, $field, $offset);
+
+        if (is_null($field)) {
+            $choices = implode(", ", array_keys($this->fields));
+            $class_name = get_called_class();
+            throw new UnexpectedValueException("Field '$offset' not found in $class_name. Choices are: $choices", 1);
+        }
+
+        if (!isset($this->bound_fields_cache[$offset])) {
+            $this->bound_fields_cache[$offset] = new BoundField($this, $field, $offset);
+        }
+
+        return $this->bound_fields_cache[$offset];
     }
 
     /**

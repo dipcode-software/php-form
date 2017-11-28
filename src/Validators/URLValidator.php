@@ -1,6 +1,6 @@
 <?php
 /**
- * Validator to check if $value is an valid email
+ * Validator to check if $value is an valid url
  */
 namespace PHPForm\Validators;
 
