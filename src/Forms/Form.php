@@ -44,6 +44,12 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     protected $prefix = null;
 
     /**
+     * Cass classes to be added to all widgets.
+     * @var array
+     */
+    protected $css_classes = array();
+
+    /**
      * Fields declared to this form.
      * @var array
      */
@@ -65,6 +71,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
         $this->files = array_key_exists('files', $args) ? $args['files'] : null;
         $this->prefix = array_key_exists('prefix', $args) ? $args['prefix'] : $this->prefix;
         $this->initial = array_key_exists('initial', $args) ? $args['initial'] : array();
+        $this->css_classes = array_key_exists('css_classes', $args) ? $args['css_classes'] : $this->css_classes;
 
         $this->is_bound = !is_null($this->data) or !is_null($this->files);
         $this->fields = $this::setFields();
@@ -86,6 +93,15 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     public function isBound()
     {
         return $this->is_bound;
+    }
+
+    /**
+     * Return css classes to be added to each widget.
+     * @return array
+     */
+    public function getCssClasses()
+    {
+        return $this->css_classes;
     }
 
     /**
@@ -165,8 +181,11 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     private function cleanFields()
     {
         foreach ($this->fields as $field_name => $field) {
-            $widget = $field->getWidget();
-            $value = $widget->valueFromData($this->data, $this->files, $this->addPrefix($field_name));
+            if ($field->isDisabled()) {
+                $value = $this->getInitialForField($field, $field_name);
+            } else {
+                $value = $field->getWidget()->valueFromData($this->data, $this->files, $this->addPrefix($field_name));
+            }
 
             try {
                 $this->cleaned_data[$field_name] = $field->clean($value);

@@ -52,20 +52,20 @@ class BoundField
             return $this->field->isRequired();
         }
 
+        if ($name == 'value') {
+            return $this->getValue();
+        }
+
         return parent::__get($name);
     }
 
-    protected function asWidget($widget = null, array $attrs = null)
+    protected function asWidget($widget = null, array $attrs = array())
     {
         $widget = is_null($widget) ? $this->field->getWidget() : $widget;
 
-        $value = $this->form->getInitialForField($this->field, $this->name);
+        $widget->setCssClasses($this->form->getCssClasses());
 
-        if ($this->form->isBound()) {
-            $value = $widget->valueFromData($this->form->data, $this->form->files, $this->html_name);
-        }
-
-        return $widget->render($this->html_name, $value, $attrs);
+        return $widget->render($this->html_name, $this->getValue(), $attrs);
     }
 
     public function labelTag($contents = null, array $attrs = null)
@@ -84,5 +84,17 @@ class BoundField
             "contents" => $contents,
             "required" => $this->field->isRequired() ? $this::LABEL_REQUIRED : null
         ));
+    }
+
+    protected function getValue()
+    {
+        if ($this->form->isBound() && !$this->field->isDisabled()) {
+            $widget = $this->field->getWidget();
+            $value = $widget->valueFromData($this->form->data, $this->form->files, $this->html_name);
+        } else {
+            $value = $this->form->getInitialForField($this->field, $this->name);
+        }
+
+        return $value;
     }
 }

@@ -6,7 +6,6 @@
 PHP class for form handling abstraction inspired in Django Framework forms.
 
 ## Instalation
-
 Library can be installed using Composer like so:
 
 ```shell

@@ -32,6 +32,11 @@ abstract class Field
     protected $required = false;
 
     /**
+    * @var bool Mark field as disabled.
+    */
+    protected $disabled = false;
+
+    /**
      * Initial value if no data bounded.
      * @var mixed
      */
@@ -67,15 +72,23 @@ abstract class Field
         $this->label = array_key_exists('label', $args) ? $args['label'] : $this->label;
         $this->help_text = array_key_exists('help_text', $args) ? $args['help_text'] : $this->help_text;
         $this->required = array_key_exists('required', $args) ? $args['required'] : $this->required;
+        $this->disabled = array_key_exists('disabled', $args) ? $args['disabled'] : $this->disabled;
         $this->initial = array_key_exists('initial', $args) ? $args['initial'] : $this->initial;
         $this->validators = array_key_exists('validators', $args) ? $args['validators'] : $this->validators;
         $this->error_messages = array_key_exists('error_messages', $args) ?
             $args['error_messages'] : $this->error_messages;
 
         if (!is_null($this->widget)) {
-            $this->widget = new $this->widget;
-            $this->widget->setRequired($this->required);
-            $this->widget->setAttrs($this->widgetAttrs($this->widget));
+            // instantiate widget class if string is passed like so: Widget::class
+            if (is_string($this->widget)) {
+                $widget = new $this->widget;
+            }
+
+            $widget->setRequired($this->required);
+            $widget->setDisabled($this->disabled);
+            $widget->setAttrs($this->widgetAttrs($widget));
+
+            $this->widget = $widget;
         }
 
         $this->error_messages = array_merge($this->getErrorMessages(), $this->error_messages);
@@ -109,6 +122,16 @@ abstract class Field
     public function isRequired()
     {
         return $this->required;
+    }
+
+    /**
+    * Return defined if this field is disabled or not.
+    *
+    * @return bool
+    */
+    public function isDisabled()
+    {
+        return $this->disabled;
     }
 
     /**

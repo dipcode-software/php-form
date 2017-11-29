@@ -4,21 +4,20 @@
  */
 namespace PHPForm\Widgets;
 
+use DateTime;
+
 abstract class TemporalInput extends TextInput
 {
-    /**
-    * @var string Format of temporal value.
-    */
-    protected $format;
+    const FORMAT = "";
 
     /**
      * The constructor.
      */
-    public function __construct(array $attrs = null, string $format = null)
+    public function __construct(string $format = null, array $css_classes = null, array $attrs = null)
     {
-        parent::__construct($attrs);
+        parent::__construct($css_classes, $attrs);
 
-        $this->format = empty($format) ? $this->format : $format;
+        $this->format = empty($format) ? static::FORMAT : $format;
     }
 
     /**
@@ -30,7 +29,7 @@ abstract class TemporalInput extends TextInput
      */
     public function formatValue($value)
     {
-        if (is_a($value, \DateTime::class)) {
+        if (is_a($value, DateTime::class)) {
             return date_format($value, $this->format);
         }
 

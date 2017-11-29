@@ -5,10 +5,13 @@
 namespace PHPForm\Fields;
 
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\Widgets\CheckboxInput;
 
 class BooleanField extends Field
 {
     const FALSE_STRING_VALUES = ['false', '0'];
+
+    protected $widget = CheckboxInput::class;
 
     /*
     * Tranforms $value into a native php object type

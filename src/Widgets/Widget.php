@@ -11,6 +11,7 @@ use PHPForm\Utils\Attributes;
 abstract class Widget
 {
     const AUTO_ID_TEMPLATE = "id_{name}";
+    const TEMPLATE = '';
 
     /**
     * @var bool Mark the widget as required.
@@ -18,20 +19,30 @@ abstract class Widget
     protected $required = false;
 
     /**
+    * @var bool Mark the widget as disabled.
+    */
+    protected $disabled = false;
+
+    /**
+     * @var array Css classes to be added to widget.
+     */
+    protected $css_classes = array();
+
+    /**
     * @var array Attributes to be added to the widget.
     */
     protected $attrs = array();
 
-    /**
-    * @var string The template used to render the HTML.
-    */
-    protected $template = '';
 
     /**
      * The constructor.
      */
-    public function __construct(array $attrs = null)
+    public function __construct(array $css_classes = null, array $attrs = null)
     {
+        if (!is_null($css_classes)) {
+            $this->css_classes = $css_classes;
+        }
+
         if (!is_null($attrs)) {
             $this->attrs = $attrs;
         }
@@ -50,7 +61,7 @@ abstract class Widget
     {
         $context = $this->getContext($name, $value, $attrs);
 
-        return Formatter::format($this->template, $context);
+        return Formatter::format(static::TEMPLATE, $context);
     }
 
     /**
@@ -62,23 +73,32 @@ abstract class Widget
      *
      * @return array
      */
-    public function getContext(string $name, $value, array $attrs = null)
+    protected function getContext(string $name, $value, array $attrs = null)
     {
         $value = $this->formatValue($value);
         $attrs = $this->buildAttrs($attrs);
+        $css_classes = $this->buildCssClasses();
 
         if (!array_key_exists('id', $attrs)) {
             $attrs['id'] = $this->buildAutoId($name);
+        }
+
+        if (!empty($css_classes)) {
+            $attrs['class'] = $css_classes;
         }
 
         if ($this->required) {
             $attrs['required'] = 'required';
         }
 
+        if ($this->disabled) {
+            $attrs['disabled'] = 'disabled';
+        }
+
         return array(
             "name" => htmlentities($name),
             "attrs" => Attributes::flatatt($attrs),
-            "value" => htmlentities($value)
+            "value" => is_string($value) ? htmlentities($value) : $value,
         );
     }
 
@@ -89,13 +109,9 @@ abstract class Widget
      *
      * @return string
      */
-    public function formatValue($value)
+    protected function formatValue($value)
     {
-        if (empty($value)) {
-            return null;
-        }
-
-        return (string) $value;
+        return !empty($value) ? (string) $value : null;
     }
 
     /**
@@ -113,6 +129,24 @@ abstract class Widget
     }
 
     /**
+     * Return css classes to be added to each widget.
+     * @return string
+     */
+    private function buildCssClasses()
+    {
+        return implode(" ", $this->css_classes);
+    }
+
+    /**
+     * Return css classes to be added to each widget.
+     * @return string
+     */
+    public function setCssClasses(array $css_classes)
+    {
+        $this->css_classes = array_merge($this->css_classes, $css_classes);
+    }
+
+    /**
      * Setter for $required attribute.
      *
      * @param bool $value Value to be setted.
@@ -120,6 +154,16 @@ abstract class Widget
     public function setRequired(bool $value)
     {
         $this->required = $value;
+    }
+
+    /**
+     * Setter for $disabled attribute.
+     *
+     * @param bool $value Value to be setted.
+     */
+    public function setDisabled(bool $value)
+    {
+        $this->disabled = $value;
     }
 
     /**
@@ -139,11 +183,11 @@ abstract class Widget
      *
      * @return array
      */
-    public function buildAttrs(array $extra_attrs = null)
+    private function buildAttrs(array $extra_attrs = null)
     {
         $attrs = $this->attrs;
 
-        if (!is_null($extra_attrs) && is_array($extra_attrs)) {
+        if (is_array($extra_attrs)) {
             $attrs = array_merge($attrs, $extra_attrs);
         }
 

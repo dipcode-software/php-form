@@ -9,6 +9,8 @@ use PHPForm\Widgets\Textarea;
 
 class ExampleForm extends Form
 {
+    protected $css_classes = array("form-control");
+
     protected static function setFields()
     {
         return array(

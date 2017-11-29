@@ -9,5 +9,5 @@ class DateInput extends TemporalInput
     /**
     * @var string Format of temporal value.
     */
-    protected $format = 'd/m/Y';
+    const FORMAT = 'd-m-Y';
 }

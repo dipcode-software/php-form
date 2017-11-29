@@ -6,15 +6,13 @@ namespace PHPForm\Widgets;
 
 abstract class Input extends Widget
 {
+    const TEMPLATE = '<input type="{type}" name="{name}" [{attrs}?] [value="{value}?"]/>';
+
     /**
     * @var string The input type to use for the widget.
     */
     protected $input_type = null;
 
-    /**
-    * @var string The input template used to render the HTML.
-    */
-    protected $template = '<input type="{type}" name="{name}" [{attrs}?] [value="{value}?"]/>';
 
     /**
      * Prepare context to be used on render method.
@@ -29,7 +27,6 @@ abstract class Input extends Widget
     {
         $context = parent::getContext($name, $value, $attrs);
         $context["type"] = $this->input_type;
-
         return $context;
     }
 }

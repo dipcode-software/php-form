@@ -86,6 +86,17 @@ class BoundFieldTest extends TestCase
         $this->assertXmlStringEqualsXmlString((string) $bound, $expected);
     }
 
+    public function testToStringWithCssClasses()
+    {
+        $form_args = ["css_classes" => ["form-control", "form-control-sm"]];
+        $form = $this->getMockForAbstractClass(Form::class, array($form_args));
+
+        $bound = new BoundField($form, $this->simple_field, "name");
+
+        $expected = '<input type="text" id="id_name" name="name" class="form-control form-control-sm"/>';
+        $this->assertXmlStringEqualsXmlString($expected, (string) $bound);
+    }
+
     public function testLabelTag()
     {
         $field = new CharField(array("label" => "Label"));

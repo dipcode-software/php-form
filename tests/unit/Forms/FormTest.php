@@ -34,6 +34,13 @@ class FormTest extends TestCase
         $this->assertEquals($form->addPrefix("name"), "prefix-name");
     }
 
+    public function testCssClasses()
+    {
+        $form = new ExampleForm();
+        $this->assertAttributeEquals(["form-control"], "css_classes", $form);
+        $this->assertEquals($form->getCssClasses(), ["form-control"]);
+    }
+
     public function testFieldObjectAccess()
     {
         $form = new ExampleForm();
