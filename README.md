@@ -12,6 +12,98 @@ Library can be installed using Composer like so:
 $ composer require dipcode/php-form
 ```
 
+## Simple Example
+
+Start by defining your form class like so:
+```php
+<?php
+namespace MyForms;
+
+use PHPForm\Exceptions\ValidationError;
+use PHPForm\Fields\CharField;
+use PHPForm\Fields\EmailField;
+use PHPForm\Forms\Form;
+use PHPForm\Widgets\Textarea;
+
+class ContactForm extends Form
+{
+    protected static function setFields()
+    {
+        return array(
+            'name' => new CharField(['required' => true]),
+            'email' => new EmailField(['required' => true]),
+            'subject' => new CharField(),
+            'body' => new CharField(["widget" => Textarea::class])
+        );
+    }
+
+    protected function clean()
+    {
+        // Use this function to crossfields validation
+        //
+        // You can use $this->addError($message, $field) to add error messages to specific fields.
+        // Or just throw a ValidationError Exception.
+    }
+}
+```
+
+Define the template to render form fields:
+```php
+<form action="/contact-form/" method="POST" novalidate>
+    <div class="form-row">
+        <div class="col">
+            <?php echo $form['name']->label_tag; ?>
+            <?php echo $form['name']; ?>
+            <?php echo $form['name']->errors; ?>
+        </div>
+        <div class="col">
+            <?php echo $form['email']->label_tag; ?>
+            <?php echo $form['email']; ?>
+            <?php echo $form['email']->errors; ?>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <?php echo $form['subject']->label_tag; ?>
+            <?php echo $form['subject']; ?>
+            <?php echo $form['subject']->errors; ?>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <?php echo $form['body']->label_tag; ?>
+            <?php echo $form['body']; ?>
+            <?php echo $form['body']->errors; ?>
+        </div>
+    </div>
+
+    <input type="submit" value="Submit">
+</form>
+```
+
+Now process the form and force validation when `$_POST` data is sended:
+```php
+namespace MyViews;
+
+use MyForms\ContactForm;
+
+public function handleForm()
+{
+    if (!empty($_POST)) {
+        $form = new ContactForm(["data" => $_POST]);
+
+        if ($form->isValid()) {
+            // Form is valid, do your logic here
+            // Use can use $form->getCleanedData() to access cleaned and validated data.
+        }
+
+        return $form;
+    }
+
+    return new ContactForm();
+}
+```
+
 ## Starting development
 Start by cloning the repo:
 
