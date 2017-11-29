@@ -51,4 +51,11 @@ class CharFieldTest extends TestCase
         $expected = array("minlength" => 10, "maxlength" => 20);
         $this->assertEquals($expected, $this->field->widgetAttrs(null));
     }
+
+    public function testToNative()
+    {
+        $this->assertEquals("text", $this->field->toNative("text"));
+        $this->assertEquals("text", $this->field->toNative(" text "));
+        $this->assertEquals("", $this->field->toNative(0));
+    }
 }

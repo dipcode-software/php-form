@@ -35,6 +35,8 @@ class IntegerField extends Field
 
     public function toNative($value)
     {
+        $value = filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+
         if (is_numeric($value)) {
             return intval($value);
         } else {

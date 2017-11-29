@@ -32,6 +32,15 @@ class CharField extends Field
         }
     }
 
+    public function toNative($value)
+    {
+        $value = parent::toNative($value);
+
+        $value = trim((string) $value);
+
+        return !empty($value) ? $value : '';
+    }
+
     /**
      * Return extra minlength and maxlength attrs to be added to the input in HTML.
      *

@@ -17,4 +17,11 @@ class EmailField extends CharField
 
         $this->validators[] = new EmailValidator();
     }
+
+    public function toNative($value)
+    {
+        $value = parent::toNative($value);
+
+        return filter_var($value, FILTER_SANITIZE_EMAIL);
+    }
 }
