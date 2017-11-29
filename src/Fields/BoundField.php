@@ -13,6 +13,7 @@ class BoundField
     private $form;
     private $field;
     private $name;
+    private $subwidgets_cache;
 
     public $html_name;
     public $help_text;
@@ -57,7 +58,10 @@ class BoundField
         }
 
         if ($name == 'choices') {
-            return $this->getSubWidgets();
+            if (!isset($subwidgets_cache)) {
+                $subwidgets_cache = $this->getSubWidgets();
+            }
+            return $subwidgets_cache;
         }
 
         return parent::__get($name);
