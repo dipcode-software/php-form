@@ -14,21 +14,6 @@ abstract class Widget
     const TEMPLATE = '';
 
     /**
-    * @var bool Mark the widget as required.
-    */
-    protected $required = false;
-
-    /**
-    * @var bool Mark the widget as disabled.
-    */
-    protected $disabled = false;
-
-    /**
-     * @var array Css classes to be added to widget.
-     */
-    protected $css_classes = array();
-
-    /**
     * @var array Attributes to be added to the widget.
     */
     protected $attrs = array();
@@ -37,12 +22,8 @@ abstract class Widget
     /**
      * The constructor.
      */
-    public function __construct(array $css_classes = null, array $attrs = null)
+    public function __construct(array $attrs = null)
     {
-        if (!is_null($css_classes)) {
-            $this->css_classes = $css_classes;
-        }
-
         if (!is_null($attrs)) {
             $this->attrs = $attrs;
         }
@@ -77,28 +58,15 @@ abstract class Widget
     {
         $value = $this->formatValue($value);
         $attrs = $this->buildAttrs($attrs);
-        $css_classes = $this->buildCssClasses();
 
         if (!array_key_exists('id', $attrs)) {
             $attrs['id'] = $this->buildAutoId($name);
         }
 
-        if (!empty($css_classes)) {
-            $attrs['class'] = $css_classes;
-        }
-
-        if ($this->required) {
-            $attrs['required'] = 'required';
-        }
-
-        if ($this->disabled) {
-            $attrs['disabled'] = 'disabled';
-        }
-
         return array(
             "name" => htmlentities($name),
             "attrs" => Attributes::flatatt($attrs),
-            "value" => is_string($value) ? htmlentities($value) : $value,
+            "value" => is_string($value) ? htmlspecialchars($value) : $value,
         );
     }
 
@@ -138,42 +106,13 @@ abstract class Widget
     }
 
     /**
-     * Return css classes to be added to each widget.
-     * @return string
-     */
-    public function setCssClasses(array $css_classes)
+    * Return defined subwidget.
+    *
+    * @return array
+    */
+    public function getSubWidgets(string $name, $value, array $attrs = null)
     {
-        $this->css_classes = array_merge($this->css_classes, $css_classes);
-    }
-
-    /**
-     * Setter for $required attribute.
-     *
-     * @param bool $value Value to be setted.
-     */
-    public function setRequired(bool $value)
-    {
-        $this->required = $value;
-    }
-
-    /**
-     * Setter for $required attribute.
-     *
-     * @param bool $value Value to be setted.
-     */
-    public function isRequired()
-    {
-        return $this->required;
-    }
-
-    /**
-     * Setter for $disabled attribute.
-     *
-     * @param bool $value Value to be setted.
-     */
-    public function setDisabled(bool $value)
-    {
-        $this->disabled = $value;
+        return $this->widget;
     }
 
     /**

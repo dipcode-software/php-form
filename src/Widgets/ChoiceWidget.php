@@ -10,7 +10,7 @@ use PHPForm\Utils\Attributes;
 
 abstract class ChoiceWidget extends Widget
 {
-    const TEMPLATE_OPTION = "";
+    const TEMPLATE_CHOICE = "";
 
     protected $allow_multiple_selected = false;
     protected $input_type = null;
@@ -21,9 +21,9 @@ abstract class ChoiceWidget extends Widget
     /**
      * The constructor.
      */
-    public function __construct(array $choices = array(), array $css_classes = null, array $attrs = null)
+    public function __construct(array $choices = array(), array $attrs = null)
     {
-        parent::__construct($css_classes, $attrs);
+        parent::__construct($attrs);
 
         $this->setChoices($choices);
     }
@@ -36,14 +36,17 @@ abstract class ChoiceWidget extends Widget
     public function getContext(string $name, $value, array $attrs = null)
     {
         $context = parent::getContext($name, $value, $attrs);
-        $context["options"] = $this->renderOptions($context["name"], $context["value"], $attrs);
+
+        $context["options"] = implode($this->getSubWidgets($name, $value, $attrs));
 
         return $context;
     }
 
-    public function renderOptions(string $name, $value, array $attrs = null)
+    public function getSubWidgets(string $name, $value, array $attrs = null)
     {
-        $options = "";
+        $value = $this->formatValue($value);
+        $subwidgets = array();
+
         $index = 1;
         $has_selected = false;
 
@@ -55,17 +58,17 @@ abstract class ChoiceWidget extends Widget
                 $has_selected = true;
             }
 
-            $context = $this->getOptionContext($name, $choice_value, $choice_label, $selected, $index, $attrs);
+            $context = $this->getSubWidgetContext($name, $choice_value, $choice_label, $selected, $index, $attrs);
 
-            $options .= Formatter::format(static::TEMPLATE_OPTION, $context);
+            $subwidgets[] = Formatter::format(static::TEMPLATE_CHOICE, $context);
 
             $index++;
         }
 
-        return $options;
+        return $subwidgets;
     }
 
-    public function getOptionContext(
+    public function getSubWidgetContext(
         string $name,
         $value,
         string $label,
@@ -78,7 +81,7 @@ abstract class ChoiceWidget extends Widget
         }
 
         if ($this->option_inherits_attrs) {
-            $attrs["id"] = $this->buildAutoId($name, $index);
+            $attrs['id'] = $this->buildAutoId($name, $index);
         }
 
         if ($is_selected) {
@@ -88,7 +91,7 @@ abstract class ChoiceWidget extends Widget
         return array(
             "for" => $this->buildAutoId($name, $index),
             "type" => $this->input_type,
-            "name" => $name,
+            "name" => htmlentities($name),
             "value" => htmlentities($value),
             "label" => htmlentities($label),
             "attrs" => Attributes::flatatt($attrs),

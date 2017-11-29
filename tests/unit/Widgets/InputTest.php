@@ -30,15 +30,6 @@ class InputTest extends TestCase
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }
 
-    public function testRenderRequiredTrue()
-    {
-        $stub = $this->getMockForAbstractClass(Input::class);
-        $stub->setRequired(true);
-        $result = $stub->render("name", "value");
-        $expected = '<input type="NULL" id="id_name" name="name" required="required" value="value"/>';
-        $this->assertXmlStringEqualsXmlString($result, $expected);
-    }
-
     public function testRenderWithExtraAttrs()
     {
         $stub = $this->getMockForAbstractClass(Input::class);

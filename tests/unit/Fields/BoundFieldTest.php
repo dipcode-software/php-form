@@ -7,6 +7,8 @@ use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;
 use PHPForm\Fields\CharField;
+use PHPForm\Fields\ChoiceField;
+use PHPForm\Widgets\RadioSelect;
 use PHPForm\Forms\Form;
 
 class BoundFieldTest extends TestCase
@@ -132,5 +134,18 @@ class BoundFieldTest extends TestCase
 
         $expected = '<label for="id_name" class="show">content</label>';
         $this->assertXmlStringEqualsXmlString($bound->labelTag("content", $attrs), $expected);
+    }
+
+    public function testChoices()
+    {
+        $field = new ChoiceField(["choices" => array("option1" => "Option1", "option2" => "Option2")]);
+        $bound = new BoundField($this->simple_form, $field, "name");
+
+        $expected = array(
+            '<option value="option1">Option1</option>',
+            '<option value="option2">Option2</option>'
+        );
+
+        $this->assertEquals($expected, $bound->choices);
     }
 }

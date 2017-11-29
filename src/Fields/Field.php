@@ -43,6 +43,11 @@ abstract class Field
     protected $initial = null;
 
     /**
+    * @var array Array of attributes to be added to widget.
+    */
+    protected $widget_attrs = array();
+
+    /**
     * @var array Array of user validators.
     */
     protected $validators = array();
@@ -75,20 +80,17 @@ abstract class Field
         $this->disabled = array_key_exists('disabled', $args) ? $args['disabled'] : $this->disabled;
         $this->initial = array_key_exists('initial', $args) ? $args['initial'] : $this->initial;
         $this->validators = array_key_exists('validators', $args) ? $args['validators'] : $this->validators;
+        $this->widget_attrs = array_key_exists('widget_attrs', $args) ? $args['widget_attrs'] : $this->widget_attrs;
         $this->error_messages = array_key_exists('error_messages', $args) ?
             $args['error_messages'] : $this->error_messages;
 
         if (!is_null($this->widget)) {
             // instantiate widget class if string is passed like so: Widget::class
             if (is_string($this->widget)) {
-                $widget = new $this->widget;
+                $this->widget = new $this->widget;
             }
 
-            $widget->setRequired($this->required);
-            $widget->setDisabled($this->disabled);
-            $widget->setAttrs($this->widgetAttrs($widget));
-
-            $this->widget = $widget;
+            $this->widget->setAttrs($this->widgetAttrs($this->widget));
         }
 
         $this->error_messages = array_merge($this->getErrorMessages(), $this->error_messages);
@@ -241,7 +243,7 @@ abstract class Field
     */
     public function widgetAttrs($widget)
     {
-        return array();
+        return $this->widget_attrs;
     }
 
     /**

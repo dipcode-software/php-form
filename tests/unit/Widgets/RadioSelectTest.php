@@ -1,0 +1,45 @@
+<?php
+namespace PHPForm\Unit\Widgets;
+
+use PHPUnit\Framework\TestCase;
+
+use PHPForm\Widgets\RadioSelect;
+
+class RadioSelectTest extends TestCase
+{
+    public function setUp()
+    {
+        $this->widget = new RadioSelect(["option1" => "option1", "option2" => "option2"]);
+    }
+
+    public function testRender()
+    {
+        $expected =
+            '<div>' .
+                '<label for="id_name_1">' .
+                    '<input id="id_name_1" name="name" type="radio" value="option1"/> option1' .
+                '</label>' .
+                '<label for="id_name_2">' .
+                    '<input id="id_name_2" name="name" type="radio" value="option2"/> option2'.
+                '</label>' .
+            '</div>';
+
+        $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", null));
+    }
+
+    public function testRenderChecked()
+    {
+        $expected =
+            '<div>' .
+                '<label for="id_name_1">' .
+                    '<input id="id_name_1" name="name" type="radio" checked="checked" value="option1"/> option1' .
+                '</label>' .
+                '<label for="id_name_2">' .
+                    '<input id="id_name_2" name="name" type="radio" value="option2"/> option2'.
+                '</label>' .
+            '</div>';
+
+        $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", "option1"));
+        $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", ["option1", "option2"]));
+    }
+}

@@ -56,14 +56,26 @@ class BoundField
             return $this->getValue();
         }
 
+        if ($name == 'choices') {
+            return $this->getSubWidgets();
+        }
+
         return parent::__get($name);
+    }
+
+    private function getSubWidgets(array $attrs = array())
+    {
+        $widget = $this->field->getWidget();
+        $attrs = $this->buildWidgetAttrs($attrs);
+
+        return $widget->getSubWidgets($this->html_name, $this->getValue(), $attrs);
     }
 
     protected function asWidget($widget = null, array $attrs = array())
     {
         $widget = is_null($widget) ? $this->field->getWidget() : $widget;
 
-        $widget->setCssClasses($this->form->getCssClasses());
+        $attrs = $this->buildWidgetAttrs($attrs);
 
         return $widget->render($this->html_name, $this->getValue(), $attrs);
     }
@@ -96,5 +108,24 @@ class BoundField
         }
 
         return $value;
+    }
+
+    private function buildWidgetAttrs(array $attrs = array())
+    {
+        $css_classes = implode(" ", $this->form->getCssClasses());
+
+        if (!empty($css_classes)) {
+            $attrs['class'] = $css_classes;
+        }
+
+        if ($this->field->isRequired()) {
+            $attrs['required'] = 'required';
+        }
+
+        if ($this->field->isDisabled()) {
+            $attrs['disabled'] = 'disabled';
+        }
+
+        return $attrs;
     }
 }

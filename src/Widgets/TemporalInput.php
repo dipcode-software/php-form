@@ -13,9 +13,9 @@ abstract class TemporalInput extends TextInput
     /**
      * The constructor.
      */
-    public function __construct(string $format = null, array $css_classes = null, array $attrs = null)
+    public function __construct(string $format = null, array $attrs = null)
     {
-        parent::__construct($css_classes, $attrs);
+        parent::__construct($attrs);
 
         $this->format = empty($format) ? static::FORMAT : $format;
     }

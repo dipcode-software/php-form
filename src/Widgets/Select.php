@@ -7,7 +7,7 @@ namespace PHPForm\Widgets;
 class Select extends ChoiceWidget
 {
     const TEMPLATE = '<select name="{name}"[ {attrs}?]>{options}</select>';
-    const TEMPLATE_OPTION = '<option value="{value}"[ {attrs}?]>{label}</option>';
+    const TEMPLATE_CHOICE = '<option value="{value}"[ {attrs}?]>{label}</option>';
 
     protected $option_inherits_attrs = false;
 

@@ -11,7 +11,7 @@ class Textarea extends Widget
     /**
      * The constructor.
      */
-    public function __construct(array $css_classes = null, array $attrs = null)
+    public function __construct(array $attrs = null)
     {
         $extra_attrs = array("cols" => 40, "rows" => 5);
 
@@ -19,6 +19,6 @@ class Textarea extends Widget
             $extra_attrs = array_merge($extra_attrs, $attrs);
         }
 
-        parent::__construct($css_classes, $extra_attrs);
+        parent::__construct($extra_attrs);
     }
 }
