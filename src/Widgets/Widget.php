@@ -10,7 +10,7 @@ use PHPForm\Utils\Attributes;
 
 abstract class Widget
 {
-    const AUTO_ID_TEMPLATE = "id_{name}";
+    const AUTO_ID_TEMPLATE = "id_{name}[_{index}?]";
     const TEMPLATE = '';
 
     /**
@@ -157,6 +157,16 @@ abstract class Widget
     }
 
     /**
+     * Setter for $required attribute.
+     *
+     * @param bool $value Value to be setted.
+     */
+    public function isRequired()
+    {
+        return $this->required;
+    }
+
+    /**
      * Setter for $disabled attribute.
      *
      * @param bool $value Value to be setted.
@@ -201,10 +211,11 @@ abstract class Widget
      *
      * @return string
      */
-    public function buildAutoId(string $name)
+    public function buildAutoId(string $name, int $index = null)
     {
         return Formatter::format(self::AUTO_ID_TEMPLATE, array(
-            "name" => $name
+            "name" => $name,
+            "index" => $index
         ));
     }
 }
