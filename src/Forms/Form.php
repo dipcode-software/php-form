@@ -246,7 +246,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
      * @param  string   $field_name Name of field to check
      * @return boolean
      */
-    public function hasError($field_name)
+    public function hasErrors($field_name)
     {
         return array_key_exists($field_name, $this->errors);
     }
