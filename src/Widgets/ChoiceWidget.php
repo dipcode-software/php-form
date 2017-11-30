@@ -54,8 +54,8 @@ abstract class ChoiceWidget extends Widget
             $selected = false;
 
             if (!$has_selected || $this->allow_multiple_selected) {
-                $selected =  in_array($choice_value, $value);
-                $has_selected = true;
+                $selected = in_array($choice_value, $value);
+                $has_selected = $selected;
             }
 
             $context = $this->getSubWidgetContext($name, $choice_value, $choice_label, $selected, $index, $attrs);

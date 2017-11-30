@@ -32,4 +32,14 @@ class SelectTest extends TestCase
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", "option1"));
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", ["option1", "option2"]));
     }
+
+    public function testRenderSelectingSecondElement()
+    {
+        $expected = '<select id="id_name" name="name">' .
+                        '<option value="option1">option1</option>' .
+                        '<option value="option2" selected="selected">option2</option>' .
+                    '</select>';
+
+        $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", "option2"));
+    }
 }
