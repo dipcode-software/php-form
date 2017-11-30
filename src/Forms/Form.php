@@ -258,7 +258,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
      */
     public function getFieldErrors(string $field_name)
     {
-        if (!$this->hasError($field_name)) {
+        if (!$this->hasErrors($field_name)) {
             return new ErrorList();
         }
 
@@ -271,7 +271,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
      */
     public function getNonFieldErrors()
     {
-        if (!$this->hasError($this::NON_FIELD_ERRORS)) {
+        if (!$this->hasErrors($this::NON_FIELD_ERRORS)) {
             return new ErrorList();
         }
 

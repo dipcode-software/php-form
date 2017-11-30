@@ -59,6 +59,13 @@ class BoundFieldTest extends TestCase
         $this->assertInstanceOf(ErrorList::class, $bound->errors);
     }
 
+    public function testHasErrors()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $bound = new BoundField($form, $this->simple_field, "name");
+        $this->assertFalse($bound->has_errors);
+    }
+
     public function testSimpleGet()
     {
         $form = $this->getMockForAbstractClass(Form::class);
