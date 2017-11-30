@@ -12,18 +12,25 @@ use PHPForm\Widgets\Select;
 class ChoiceField extends Field
 {
     protected $widget = Select::class;
+    protected $choices = array();
 
     protected $error_messages = array(
-        'invalid' => 'Select a valid choice. {choice} is not one of the available choices.'
+        'invalid' => 'Select a valid choice. "{choice}" is not one of the available choices.'
     );
 
     public function __construct(array $args = array())
     {
-        $this->choices = array_key_exists('choices', $args) ? $args['choices'] : array();
-
         parent::__construct($args);
 
-        $this->widget->setChoices($this->choices);
+        $choices = array_key_exists('choices', $args) ? $args['choices'] : array();
+
+        $this->setChoices($choices);
+    }
+
+    public function setChoices(array $choices)
+    {
+        $this->choices = $choices;
+        $this->widget->setChoices($choices);
     }
 
     public function toNative($value)
@@ -35,7 +42,7 @@ class ChoiceField extends Field
     {
         parent::validate($value);
 
-        if (!array_key_exists($value, $this->choices)) {
+        if (empty($value) || !array_key_exists($value, $this->choices)) {
             $message = Formatter::format($this->error_messages['invalid'], array(
                 'choice' => $value
             ));

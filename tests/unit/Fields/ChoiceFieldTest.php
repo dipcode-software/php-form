@@ -11,12 +11,25 @@ class ChoiceFieldTest extends TestCase
 {
     public function setUp()
     {
-        $this->field = new ChoiceField(["choices" => array("option1" => "Option1"), "required" => true]);
+        $this->choices = array("option1" => "Option1");
+        $this->field = new ChoiceField(["choices" => $this->choices, "required" => true]);
     }
 
     public function testConstruct()
     {
         $this->assertInstanceOf(Select::class, $this->field->getWidget());
+    }
+
+    public function testSetChoices()
+    {
+        $this->assertAttributeEquals($this->choices, "choices", $this->field);
+        $this->assertAttributeEquals($this->choices, "choices", $this->field->getWidget());
+
+        $choices = array("option1" => "Option1");
+        $this->field->setChoices($choices);
+
+        $this->assertAttributeEquals($choices, "choices", $this->field);
+        $this->assertAttributeEquals($choices, "choices", $this->field->getWidget());
     }
 
     public function testToNative()
@@ -40,11 +53,21 @@ class ChoiceFieldTest extends TestCase
 
     /**
      * @expectedException PHPForm\Exceptions\ValidationError
-     * @expectedExceptionMessage Select a valid choice. option2 is not one of the available choices.
+     * @expectedExceptionMessage Select a valid choice. "option2" is not one of the available choices.
      */
     public function testValidateChoiceUnexistent()
     {
         $this->field->validate("option2");
+    }
+
+    /**
+     * @expectedException PHPForm\Exceptions\ValidationError
+     * @expectedExceptionMessage Select a valid choice. "empty string" is not one of the available choices.
+     */
+    public function testValidateChoiceEmpty()
+    {
+        $field = new ChoiceField(["choices" => array("option1" => "Option1")]);
+        $field->validate("");
     }
 
     public function testValidateValidValue()
