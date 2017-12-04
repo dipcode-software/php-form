@@ -33,10 +33,20 @@ abstract class ChoiceWidget extends Widget
         $this->choices = $choices;
     }
 
+    public function buildName($name)
+    {
+        if ($this->allow_multiple_selected && substr($name, -2, 2) !== "[]") {
+            $name = $name . "[]";
+        }
+
+        return $name;
+    }
+
     public function getContext(string $name, $value, array $attrs = null)
     {
         $context = parent::getContext($name, $value, $attrs);
 
+        $context["name"] = $this->buildName($name);
         $context["options"] = implode($this->getSubWidgets($name, $value, $attrs));
 
         return $context;
@@ -91,7 +101,7 @@ abstract class ChoiceWidget extends Widget
         return array(
             "for" => $this->buildAutoId($name, $index),
             "type" => $this->input_type,
-            "name" => htmlentities($name),
+            "name" => htmlentities($this->buildName($name)),
             "value" => htmlentities($value),
             "label" => htmlentities($label),
             "attrs" => Attributes::flatatt($attrs),
