@@ -7,16 +7,13 @@ namespace PHPForm\Fields;
 use Fleshgrinder\Core\Formatter;
 
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\PHPFormConfig;
 use PHPForm\Widgets\Select;
 
 class ChoiceField extends Field
 {
     protected $widget = Select::class;
     protected $choices = array();
-
-    protected $error_messages = array(
-        'invalid' => 'Select a valid choice. "{choice}" is not one of the available choices.'
-    );
 
     public function __construct(array $args = array())
     {
@@ -48,7 +45,8 @@ class ChoiceField extends Field
         parent::validate($value);
 
         if ($this->isEmpty($value) || !array_key_exists($value, $this->choices)) {
-            $message = Formatter::format($this->error_messages['invalid'], array(
+            $error_message = PHPFormConfig::getIMessage("INVALID_CHOICE");
+            $message = Formatter::format($error_message, array(
                 'choice' => $value
             ));
 

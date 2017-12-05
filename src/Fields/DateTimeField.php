@@ -4,6 +4,7 @@
  */
 namespace PHPForm\Fields;
 
+use PHPForm\PHPFormConfig;
 use PHPForm\Widgets\DateTimeInput;
 
 class DateTimeField extends TemporalField
@@ -12,7 +13,10 @@ class DateTimeField extends TemporalField
 
     protected $widget = DateTimeInput::class;
 
-    protected $error_messages = array(
-        'invalid' => 'Enter a valid date/time.'
-    );
+    public function __construct(array $args = array())
+    {
+        parent::__construct($args);
+
+        $this->error_messages['invalid'] = PHPFormConfig::getIMessage("INVALID_DATETIME");
+    }
 }

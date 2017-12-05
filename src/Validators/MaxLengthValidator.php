@@ -6,13 +6,22 @@ namespace PHPForm\Validators;
 
 use Fleshgrinder\Core\Formatter;
 
-use PHPForm\Validators\BaseValidator;
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\PHPFormConfig;
+use PHPForm\Validators\BaseValidator;
 
 class MaxLengthValidator extends BaseValidator
 {
-    protected $message = "Ensure this value has at most {limit} character (it has {value}).";
     protected $code = "max_length";
+
+    public function __construct(int $value, $message = null)
+    {
+        if (is_null($message)) {
+            $message = PHPFormConfig::getIMessage("INVALID_MAX_LENGTH");
+        }
+
+        parent::__construct($value, $message);
+    }
 
     protected function cleanValue($value)
     {

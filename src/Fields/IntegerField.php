@@ -5,6 +5,7 @@
 namespace PHPForm\Fields;
 
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\PHPFormConfig;
 use PHPForm\Validators\MinValueValidator;
 use PHPForm\Validators\MaxValueValidator;
 use PHPForm\Widgets\NumberInput;
@@ -12,11 +13,6 @@ use PHPForm\Widgets\NumberInput;
 class IntegerField extends Field
 {
     protected $widget = NumberInput::class;
-
-    protected $error_messages = array(
-        'invalid' => 'Enter a whole number.'
-    );
-
 
     public function __construct(array $args = array())
     {
@@ -40,7 +36,8 @@ class IntegerField extends Field
         if (is_numeric($value)) {
             return intval($value);
         } else {
-            throw new ValidationError($this->error_messages['invalid'], 'invalid');
+            $error_messages = PHPFormConfig::getIMessage("INVALID_NUMBER");
+            throw new ValidationError($error_messages, 'invalid');
         }
     }
 

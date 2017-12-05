@@ -5,12 +5,21 @@
 namespace PHPForm\Validators;
 
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\PHPFormConfig;
 use PHPForm\Validators\Validator;
 
 class URLValidator extends Validator
 {
-    protected $message = "Enter a valid URL.";
     protected $code = "invalid";
+
+    public function __construct($message = null)
+    {
+        if (is_null($message)) {
+            $message = PHPFormConfig::getIMessage("INVALID_URL");
+        }
+
+        parent::__construct($message);
+    }
 
     public function __invoke($value)
     {

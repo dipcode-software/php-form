@@ -7,6 +7,7 @@ namespace PHPForm\Fields;
 use InvalidArgumentException;
 
 use PHPForm\Exceptions\ValidationError;
+use PHPForm\PHPFormConfig;
 use PHPForm\Utils\Attributes;
 
 abstract class Field
@@ -55,9 +56,7 @@ abstract class Field
     /**
     * @var array Array of message errors.
     */
-    protected $error_messages = array(
-        'required' => 'This field is required.'
-    );
+    protected $error_messages = array();
 
     /**
     * Instantiates a field.
@@ -84,6 +83,12 @@ abstract class Field
         $this->error_messages = array_key_exists('error_messages', $args) ?
             $args['error_messages'] : $this->error_messages;
 
+        $default_error_messages = array(
+            'required' => PHPFormConfig::getIMessage("REQUIRED"),
+        );
+
+        $this->error_messages = array_merge($default_error_messages, $this->error_messages);
+
         if (!is_null($this->widget)) {
             // instantiate widget class if string is passed like so: Widget::class
             if (is_string($this->widget)) {
@@ -92,8 +97,6 @@ abstract class Field
 
             $this->widget->setAttrs($this->widgetAttrs($this->widget));
         }
-
-        $this->error_messages = array_merge($this->getErrorMessages(), $this->error_messages);
     }
 
     /**
@@ -244,28 +247,5 @@ abstract class Field
     public function widgetAttrs($widget)
     {
         return $this->widget_attrs;
-    }
-
-    /**
-     * Returns the combined inherited error messages for the field.
-     *
-     * @param string $class The class name to retrieve error message from.
-     *
-     * @return array
-     */
-    private function getErrorMessages($class = null)
-    {
-        if (is_null($class)) {
-            $class = get_class($this);
-        }
-
-        $error_messages = array();
-
-        do {
-            $class_vars = get_class_vars($class);
-            $error_messages = array_merge($class_vars['error_messages'], $error_messages);
-        } while ($class = get_parent_class($class));
-
-        return $error_messages;
     }
 }

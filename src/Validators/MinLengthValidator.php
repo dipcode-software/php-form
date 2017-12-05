@@ -4,12 +4,21 @@
  */
 namespace PHPForm\Validators;
 
+use PHPForm\PHPFormConfig;
 use PHPForm\Validators\BaseValidator;
 
 class MinLengthValidator extends BaseValidator
 {
-    protected $message = "Ensure this value has at least {limit} character (it has {value}).";
     protected $code = "min_length";
+
+    public function __construct(int $value, $message = null)
+    {
+        if (is_null($message)) {
+            $message = PHPFormConfig::getIMessage("INVALID_MIN_LENGTH");
+        }
+
+        parent::__construct($value, $message);
+    }
 
     protected function cleanValue($value)
     {
