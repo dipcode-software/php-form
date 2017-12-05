@@ -21,7 +21,7 @@ class EmailValidatorTest extends TestCase
     public function testInvalidEmail()
     {
         $validator = new EmailValidator();
-        $this->assertNull($validator("@example.com"));
+        $validator("@example.com");
     }
 
     /**
@@ -31,6 +31,6 @@ class EmailValidatorTest extends TestCase
     public function testInvalidEmailWithDifferentMessage()
     {
         $validator = new EmailValidator("Invalid email.");
-        $this->assertNull($validator("@example.com"));
+        $validator("@example.com");
     }
 }

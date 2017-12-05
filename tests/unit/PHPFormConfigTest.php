@@ -14,7 +14,7 @@ class PHPFormConfigTest extends TestCase
 
     public function testGetIMessage()
     {
-        $this->assertEquals(PHPFormConfig::getIMessage("Invalid"), "Invalid");
+        $this->assertEquals(PHPFormConfig::getIMessage("REQUIRED"), "This field is required.");
         $this->assertNull(PHPFormConfig::getIMessage("Inexistent"));
     }
 
@@ -22,13 +22,13 @@ class PHPFormConfigTest extends TestCase
     {
         $instance = PHPFormConfig::getInstance();
 
-        $this->assertEquals($instance->getMessage("Invalid"), "Invalid");
+        $this->assertEquals($instance->getMessage("REQUIRED"), "This field is required.");
         $this->assertNull($instance->getMessage("Inexistent"));
     }
 
     public function testGetITemplate()
     {
-        $this->assertEquals(PHPFormConfig::getITemplate("Invalid"), "Invalid");
+        $this->assertEquals(PHPFormConfig::getITemplate("LABEL_REQUIRED"), '<span class="required">*</span>');
         $this->assertNull(PHPFormConfig::getITemplate("Inexistent"));
     }
 
@@ -36,7 +36,7 @@ class PHPFormConfigTest extends TestCase
     {
         $instance = PHPFormConfig::getInstance();
 
-        $this->assertEquals($instance->getTemplate("Invalid"), "Invalid");
+        $this->assertEquals($instance->getTemplate("LABEL_REQUIRED"), '<span class="required">*</span>');
         $this->assertNull($instance->getTemplate("Inexistent"));
     }
 
@@ -48,7 +48,7 @@ class PHPFormConfigTest extends TestCase
             "Invalid 3" => "Invalid 3",
         ));
 
-        $this->assertEquals("Invalid", $instance->getMessage("Invalid"));
+        $this->assertEquals("This field is required.", $instance->getMessage("REQUIRED"));
         $this->assertEquals("Invalid 2", $instance->getMessage("Invalid 2"));
         $this->assertEquals("Invalid 3", $instance->getMessage("Invalid 3"));
     }
@@ -61,7 +61,7 @@ class PHPFormConfigTest extends TestCase
             "Invalid 3" => "Invalid 3",
         ));
 
-        $this->assertEquals("Invalid", $instance->getTemplate("Invalid"));
+        $this->assertEquals('<span class="required">*</span>', $instance->getTemplate("LABEL_REQUIRED"));
         $this->assertEquals("Invalid 2", $instance->getTemplate("Invalid 2"));
         $this->assertEquals("Invalid 3", $instance->getTemplate("Invalid 3"));
     }
