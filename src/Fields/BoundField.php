@@ -3,13 +3,11 @@ namespace PHPForm\Fields;
 
 use Fleshgrinder\Core\Formatter;
 
+use PHPForm\PHPFormConfig;
 use PHPForm\Utils\Attributes;
 
 class BoundField
 {
-    const LABEL_TEMPLATE = '<label for="{for}"[ {attrs}?]>{contents}[ {required}?]</label>';
-    const LABEL_REQUIRED = '<span class="required">*</span>';
-
     private $form;
     private $field;
     private $name;
@@ -98,11 +96,14 @@ class BoundField
 
         $widget = $this->field->getWidget();
 
-        return Formatter::format(self::LABEL_TEMPLATE, array(
+        $label_tpl = PHPFormConfig::getITemplate("LABEL");
+        $label_required_tpl = PHPFormConfig::getITemplate("LABEL_REQUIRED");
+
+        return Formatter::format($label_tpl, array(
             "for" => $widget->buildAutoId($this->html_name),
             "attrs" => $attrs,
             "contents" => $contents,
-            "required" => $this->field->isRequired() ? $this::LABEL_REQUIRED : null
+            "required" => $this->field->isRequired() ? $label_required_tpl : null
         ));
     }
 
