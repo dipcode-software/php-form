@@ -40,6 +40,18 @@ class PHPFormConfigTest extends TestCase
         $this->assertNull($instance->getTemplate("Inexistent"));
     }
 
+    public function testSetIMessages()
+    {
+        PHPFormConfig::setIMessages(array(
+            "Invalid 2" => "Invalid 2",
+            "Invalid 3" => "Invalid 3",
+        ));
+
+        $this->assertEquals("This field is required.", PHPFormConfig::getIMessage("REQUIRED"));
+        $this->assertEquals("Invalid 2", PHPFormConfig::getIMessage("Invalid 2"));
+        $this->assertEquals("Invalid 3", PHPFormConfig::getIMessage("Invalid 3"));
+    }
+
     public function testSetMessages()
     {
         $instance = PHPFormConfig::getInstance();
@@ -51,6 +63,18 @@ class PHPFormConfigTest extends TestCase
         $this->assertEquals("This field is required.", $instance->getMessage("REQUIRED"));
         $this->assertEquals("Invalid 2", $instance->getMessage("Invalid 2"));
         $this->assertEquals("Invalid 3", $instance->getMessage("Invalid 3"));
+    }
+
+    public function testSetITemplates()
+    {
+        PHPFormConfig::setITemplates(array(
+            "Invalid 2" => "Invalid 2",
+            "Invalid 3" => "Invalid 3",
+        ));
+
+        $this->assertEquals('<span class="required">*</span>', PHPFormConfig::getITemplate("LABEL_REQUIRED"));
+        $this->assertEquals("Invalid 2", PHPFormConfig::getITemplate("Invalid 2"));
+        $this->assertEquals("Invalid 3", PHPFormConfig::getITemplate("Invalid 3"));
     }
 
     public function testSetTemplates()

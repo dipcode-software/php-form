@@ -47,9 +47,19 @@ class PHPFormConfig
         return array_key_exists($id, $this->templates) ? $this->templates[$id] : null;
     }
 
+    public function setIMessages(array $messages)
+    {
+        static::getInstance()->setMessages($messages);
+    }
+
     public function setMessages(array $messages)
     {
         $this->messages = array_merge($this->messages, $messages);
+    }
+
+    public function setITemplates(array $templates)
+    {
+        static::getInstance()->setTemplates($templates);
     }
 
     public function setTemplates(array $templates)
