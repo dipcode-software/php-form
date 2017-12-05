@@ -104,6 +104,37 @@ public function handleForm()
 }
 ```
 
+## Available Fields
+
+```php
+// All fields has the following common arguments:
+$args = [
+    PHPForm\Widgets\Widget $widget,
+    string $label = null,
+    string $help_text = '',
+    bool $required = false,
+    bool $disabled = false,
+    mixed $initial = null,
+    array $validators = array(),
+    array $widget_attrs = array(),
+    array $error_messages = array()
+]
+
+// Fields available
+// '...' represents common fields
+
+new BooleanField([...]);
+new CharField([int $max_length, int $min_length, ...]);
+new ChoiceField([array $choices, ...]);
+new DateField([string $format, ...]);
+new DateTimeField([string $format, ...]);
+new EmailField([...]);
+new FileField([int $max_size, array $valid_filetypes, ...]);
+new IntegerField([int $max_value, int $min_value, ...]);
+new URLField([...]);
+
+```
+
 ## Starting development
 Start by cloning the repo:
 
