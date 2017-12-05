@@ -37,4 +37,16 @@ class CheckboxInputTest extends TestCase
         $expected = '<input type="checkbox" id="id_name" name="name"/>';
         $this->assertXmlStringEqualsXmlString($expected, $render);
     }
+
+    public function testValueFromData()
+    {
+        $result = $this->widget->ValueFromData(["name" => "true"], [], "name");
+        $this->assertTrue($result);
+    }
+
+    public function testValueFromDataNotExistent()
+    {
+        $result = $this->widget->ValueFromData(["name2" => "true"], [], "name");
+        $this->assertFalse($result);
+    }
 }

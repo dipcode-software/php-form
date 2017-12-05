@@ -20,6 +20,6 @@ class CheckboxInput extends Input
 
     public function valueFromData($data, $files, string $name)
     {
-        return array_key_exists($name, $data) ? bool($data[$name]) : false;
+        return array_key_exists($name, $data) ? (bool) $data[$name] : false;
     }
 }
