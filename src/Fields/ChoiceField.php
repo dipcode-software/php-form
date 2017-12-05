@@ -33,16 +33,21 @@ class ChoiceField extends Field
         $this->widget->setChoices($choices);
     }
 
+    public function isEmpty($value)
+    {
+        return empty($value) && $value != "0";
+    }
+
     public function toNative($value)
     {
-        return !empty($value) ? (string) $value : '';
+        return !$this->isEmpty($value) ? (string) $value : '';
     }
 
     public function validate($value)
     {
         parent::validate($value);
 
-        if (empty($value) || !array_key_exists($value, $this->choices)) {
+        if ($this->isEmpty($value) || !array_key_exists($value, $this->choices)) {
             $message = Formatter::format($this->error_messages['invalid'], array(
                 'choice' => $value
             ));

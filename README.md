@@ -41,7 +41,7 @@ class ContactForm extends Form
     {
         // Use this function to crossfields validation
         //
-        // You can use $this->addError($message, $field) to add error messages to specific fields.
+        // You can use $this->addError($message, $field_name) to add error messages to specific fields.
         // Or just throw a ValidationError Exception.
     }
 }
