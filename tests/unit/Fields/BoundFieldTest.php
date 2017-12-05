@@ -134,6 +134,14 @@ class BoundFieldTest extends TestCase
         $this->assertXmlStringEqualsXmlString($bound->labelTag("content"), $expected);
     }
 
+    public function testLabelTagWithoutContent()
+    {
+        $field = new CharField(["label" => ""]);
+        $bound = new BoundField($this->simple_form, $field, "name");
+
+        $this->assertEquals($bound->labelTag(), "");
+    }
+
     public function testLabelTagWithAttrs()
     {
         $bound = new BoundField($this->simple_form, $this->simple_field, "name");
@@ -142,6 +150,7 @@ class BoundFieldTest extends TestCase
         $expected = '<label for="id_name" class="show">content</label>';
         $this->assertXmlStringEqualsXmlString($bound->labelTag("content", $attrs), $expected);
     }
+
 
     public function testChoices()
     {

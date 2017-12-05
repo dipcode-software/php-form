@@ -88,11 +88,15 @@ class BoundField
     {
         $contents = is_null($contents) ? $this->label : $contents;
 
-        $widget = $this->field->getWidget();
+        if (empty($contents)) {
+            return "";
+        }
 
         if (!is_null($attrs)) {
             $attrs = Attributes::flatatt($attrs);
         }
+
+        $widget = $this->field->getWidget();
 
         return Formatter::format(self::LABEL_TEMPLATE, array(
             "for" => $widget->buildAutoId($this->html_name),
