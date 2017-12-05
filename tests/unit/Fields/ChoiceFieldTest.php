@@ -37,7 +37,8 @@ class ChoiceFieldTest extends TestCase
         $this->assertEquals("", $this->field->toNative(false));
         $this->assertEquals("1", $this->field->toNative(true));
         $this->assertEquals("false", $this->field->toNative("false"));
-        $this->assertEquals("", $this->field->toNative("0"));
+        $this->assertEquals("0", $this->field->toNative("0"));
+        $this->assertEquals("0", $this->field->toNative(0));
         $this->assertEquals("1", $this->field->toNative("1"));
         $this->assertEquals("aa", $this->field->toNative("aa"));
     }
