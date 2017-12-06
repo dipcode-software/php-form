@@ -97,15 +97,6 @@ abstract class Widget
     }
 
     /**
-     * Return css classes to be added to each widget.
-     * @return string
-     */
-    private function buildCssClasses()
-    {
-        return implode(" ", $this->css_classes);
-    }
-
-    /**
     * Return defined subwidget.
     *
     * @return array

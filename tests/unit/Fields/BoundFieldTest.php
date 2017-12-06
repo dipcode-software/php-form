@@ -106,6 +106,23 @@ class BoundFieldTest extends TestCase
         $this->assertXmlStringEqualsXmlString($expected, (string) $bound);
     }
 
+    public function testToStringWithErrors()
+    {
+        $form = $this->getMockBuilder(Form::class)
+                ->setMethods(array('hasErrors'))
+                ->getMockForAbstractClass();
+
+        $form->method('hasErrors')
+            ->will($this->returnValue(true));
+
+        $field = new CharField(["required" => true]);
+        $bound = new BoundField($form, $field, "name");
+
+        $expected = '<input type="text" id="id_name" name="name" required="required" class="is-invalid"/>';
+
+        $this->assertXmlStringEqualsXmlString($expected, (string) $bound);
+    }
+
     public function testLabelTag()
     {
         $field = new CharField(array("label" => "Label"));

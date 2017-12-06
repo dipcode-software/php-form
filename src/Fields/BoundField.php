@@ -121,10 +121,14 @@ class BoundField
 
     private function buildWidgetAttrs(array $attrs = array())
     {
-        $css_classes = implode(" ", $this->form->getCssClasses());
+        $css_classes = $this->form->getCssClasses();
+
+        if ($this->has_errors) {
+            $css_classes[] = $this->form->getErrorCssClass();
+        }
 
         if (!empty($css_classes)) {
-            $attrs['class'] = $css_classes;
+            $attrs['class'] = implode(" ", $css_classes);
         }
 
         if ($this->field->isRequired()) {

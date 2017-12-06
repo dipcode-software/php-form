@@ -45,7 +45,7 @@ class FieldTest extends TestCase
     {
         $args = array("required" => true);
         $stub = $this->getMockForAbstractClass(Field::class, array($args));
-        $this->assertNull($stub->validate(""));
+        $stub->validate(null);
     }
 
     public function testRunValidatorsWithEmptyValue()

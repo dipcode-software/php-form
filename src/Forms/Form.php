@@ -50,6 +50,12 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     protected $css_classes = array();
 
     /**
+     * Cass classes to be added to all widgets.
+     * @var array
+     */
+    protected $error_css_class = 'is-invalid';
+
+    /**
      * Fields declared to this form.
      * @var array
      */
@@ -102,6 +108,15 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     public function getCssClasses()
     {
         return $this->css_classes;
+    }
+
+    /**
+     * Return error css class to be added on case of field error.
+     * @return array
+     */
+    public function getErrorCssClass()
+    {
+        return $this->error_css_class;
     }
 
     /**
