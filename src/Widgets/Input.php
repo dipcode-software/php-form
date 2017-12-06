@@ -4,15 +4,24 @@
  */
 namespace PHPForm\Widgets;
 
+use PHPForm\PHPFormConfig;
+
 abstract class Input extends Widget
 {
-    const TEMPLATE = '<input type="{type}" name="{name}" [{attrs}?] [value="{value}?"]/>';
-
     /**
     * @var string The input type to use for the widget.
     */
     protected $input_type = null;
 
+    /**
+     * The constructor.
+     */
+    public function __construct(array $attrs = null)
+    {
+        $this->template = PHPFormConfig::getITemplate("INPUT");
+
+        parent::__construct($attrs);
+    }
 
     /**
      * Prepare context to be used on render method.

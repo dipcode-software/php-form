@@ -4,12 +4,22 @@
  */
 namespace PHPForm\Widgets;
 
+use PHPForm\PHPFormConfig;
+
 class Select extends ChoiceWidget
 {
-    const TEMPLATE = '<select name="{name}"[ {attrs}?]>{options}</select>';
-    const TEMPLATE_CHOICE = '<option value="{value}"[ {attrs}?]>{label}</option>';
-
     protected $option_inherits_attrs = false;
+
+    /**
+     * The constructor.
+     */
+    public function __construct(array $choices = array(), array $attrs = null)
+    {
+        $this->template = PHPFormConfig::getITemplate("SELECT");
+        $this->template_choice = PHPFormConfig::getITemplate("SELECT_ITEM");
+
+        parent::__construct($choices, $attrs);
+    }
 
     public function getContext(string $name, $value, array $attrs = null)
     {

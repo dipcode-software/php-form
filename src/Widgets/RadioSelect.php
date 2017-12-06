@@ -4,14 +4,25 @@
  */
 namespace PHPForm\Widgets;
 
-use PHPForm\Widgets\Input;
+use PHPForm\PHPFormConfig;
 
 class RadioSelect extends ChoiceWidget
 {
-    const TEMPLATE = '<div>{options}</div>';
-    const TEMPLATE_CHOICE = '<label for="{for}">' . Input::TEMPLATE . ' {label}</label>';
-
     protected $option_inherits_attrs = true;
     protected $selected_attribute = "checked";
     protected $input_type = "radio";
+
+    /**
+     * The constructor.
+     */
+    public function __construct(array $choices = array(), array $attrs = null)
+    {
+        $this->template = PHPFormConfig::getITemplate("RADIOSELECT");
+        $this->template_choice = sprintf(
+            PHPFormConfig::getITemplate("RADIOSELECT_ITEM"),
+            PHPFormConfig::getITemplate("INPUT")
+        );
+
+        parent::__construct($choices, $attrs);
+    }
 }

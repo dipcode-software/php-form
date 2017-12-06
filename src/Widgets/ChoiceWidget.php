@@ -10,8 +10,7 @@ use PHPForm\Utils\Attributes;
 
 abstract class ChoiceWidget extends Widget
 {
-    const TEMPLATE_CHOICE = "";
-
+    protected $template_choice = "";
     protected $allow_multiple_selected = false;
     protected $input_type = null;
     protected $option_inherits_attrs = true;
@@ -70,7 +69,7 @@ abstract class ChoiceWidget extends Widget
 
             $context = $this->getSubWidgetContext($name, $choice_value, $choice_label, $selected, $index, $attrs);
 
-            $subwidgets[] = Formatter::format(static::TEMPLATE_CHOICE, $context);
+            $subwidgets[] = Formatter::format($this->template_choice, $context);
 
             $index++;
         }

@@ -4,10 +4,10 @@
  */
 namespace PHPForm\Widgets;
 
+use PHPForm\PHPFormConfig;
+
 class Textarea extends Widget
 {
-    const TEMPLATE = '<textarea name="{name}" [{attrs}?]>[{value}?]</textarea>';
-
     /**
      * The constructor.
      */
@@ -18,6 +18,8 @@ class Textarea extends Widget
         if (!is_null($attrs)) {
             $extra_attrs = array_merge($extra_attrs, $attrs);
         }
+
+        $this->template = PHPFormConfig::getITemplate("TEXTAREA");
 
         parent::__construct($extra_attrs);
     }

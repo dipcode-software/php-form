@@ -11,7 +11,8 @@ use PHPForm\Utils\Attributes;
 abstract class Widget
 {
     const AUTO_ID_TEMPLATE = "id_{name}[_{index}?]";
-    const TEMPLATE = '';
+
+    protected $template = "";
 
     /**
     * @var array Attributes to be added to the widget.
@@ -42,7 +43,7 @@ abstract class Widget
     {
         $context = $this->getContext($name, $value, $attrs);
 
-        return Formatter::format(static::TEMPLATE, $context);
+        return Formatter::format($this->template, $context);
     }
 
     /**

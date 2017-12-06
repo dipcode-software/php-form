@@ -5,11 +5,10 @@ use ArrayObject;
 
 use Fleshgrinder\Core\Formatter;
 
+use PHPForm\PHPFormConfig;
+
 class ErrorList extends ArrayObject
 {
-    const LIST_TEMPLATE = '<ul class="errorlist">{items}</ul>';
-    const LIST_ITEM_TEMPLATE = '<li>{content}</li>';
-
     /**
      * Returns the error list rendered as HTML.
      *
@@ -32,11 +31,14 @@ class ErrorList extends ArrayObject
         }
 
         $items = [];
+        $list_item_template = PHPFormConfig::getITemplate("ERRORLIST_ITEM");
 
         foreach ($this as $error) {
-            $items[] = Formatter::format($this::LIST_ITEM_TEMPLATE, array("content" => $error));
+            $items[] = Formatter::format($list_item_template, array("content" => $error));
         }
 
-        return Formatter::format($this::LIST_TEMPLATE, array("items" => implode($items)));
+        $list_template = PHPFormConfig::getITemplate("ERRORLIST");
+
+        return Formatter::format($list_template, array("items" => implode($items)));
     }
 }
