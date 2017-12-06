@@ -3,6 +3,7 @@
 return array(
     "REQUIRED" => 'This field is required.',
     "INVALID_CHOICE" => 'Select a valid choice. "{choice}" is not one of the available choices.',
+    "INVALID_LIST" => 'Enter a list of values.',
     "INVALID_DATE" => 'Enter a valid date.',
     "INVALID_DATETIME" => 'Enter a valid date/time.',
     "INVALID_NUMBER" => 'Enter a whole number.',

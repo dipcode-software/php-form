@@ -168,6 +168,16 @@ abstract class Field
     }
 
     /**
+     * Check emptiness of $value
+     * @param  mixed   $value
+     * @return boolean
+     */
+    protected function isEmpty($value)
+    {
+        return empty($value);
+    }
+
+    /**
     * Tranforms $value into a native php object type.
     *
     * @param mixed $value Value to tranform.
@@ -188,7 +198,7 @@ abstract class Field
     */
     public function validate($value)
     {
-        if (empty($value) && $this->required) {
+        if ($this->isEmpty($value) && $this->required) {
             throw new ValidationError($this->error_messages['required'], 'required');
         }
     }
@@ -202,7 +212,7 @@ abstract class Field
     */
     public function runValidators($value)
     {
-        if (empty($value)) {
+        if ($this->isEmpty($value)) {
             return;
         }
 

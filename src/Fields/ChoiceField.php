@@ -30,7 +30,7 @@ class ChoiceField extends Field
         $this->widget->setChoices($choices);
     }
 
-    public function isEmpty($value)
+    protected function isEmpty($value)
     {
         return empty($value) && $value != "0";
     }
@@ -44,13 +44,24 @@ class ChoiceField extends Field
     {
         parent::validate($value);
 
-        if ($this->isEmpty($value) || !array_key_exists($value, $this->choices)) {
+        if ($this->isEmpty($value) || !$this->validValue($value)) {
             $error_message = PHPFormConfig::getIMessage("INVALID_CHOICE");
+
+            if (is_array($value)) {
+                $value_diff = array_diff($value, array_keys($this->choices));
+                $value = implode(', ', $value_diff);
+            }
+
             $message = Formatter::format($error_message, array(
-                'choice' => $value
+                'choice' => $value,
             ));
 
             throw new ValidationError($message, 'invalid');
         }
+    }
+
+    protected function validValue($value)
+    {
+        return array_key_exists($value, $this->choices);
     }
 }
