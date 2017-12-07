@@ -116,7 +116,7 @@ abstract class ChoiceWidget extends Widget
                 $values[] = parent::formatValue($v);
             }
         } else {
-            $values = [parent::formatValue($value)];
+            $values = !empty($value) ? [parent::formatValue($value)] : [];
         }
 
         return $values;
