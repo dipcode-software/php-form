@@ -44,7 +44,7 @@ class ChoiceField extends Field
     {
         parent::validate($value);
 
-        if ($this->isEmpty($value) || !$this->validValue($value)) {
+        if (!$this->validValue($value)) {
             $error_message = PHPFormConfig::getIMessage("INVALID_CHOICE");
 
             if (is_array($value)) {
