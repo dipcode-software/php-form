@@ -48,10 +48,17 @@ class FormTest extends TestCase
         $this->assertInstanceOf(BoundField::class, $form['email']);
     }
 
-    public function testErrors()
+    public function testGetErrors()
     {
         $form = new ExampleForm();
         $this->assertEmpty($form->errors);
+    }
+
+    public function testGetNotDefinedAttribute()
+    {
+        $form = new ExampleForm();
+
+        $this->assertNull($form->undefined);
     }
 
     public function testErrorsOfBoundedForm()
@@ -78,7 +85,7 @@ class FormTest extends TestCase
         $this->assertEquals(array("Error on title"), (array) $form->getFieldErrors("title"));
     }
 
-    public function testCleanWithTowAddError()
+    public function testCleanWithTwoAddError()
     {
         $form = new ExampleForm(["data" => array("title" => "Title2")]);
         $this->assertEquals(array("Error on title 1", "Error on title 2"), (array) $form->getFieldErrors("title"));
@@ -102,6 +109,38 @@ class FormTest extends TestCase
         $this->assertEquals(array("Error Processing Email"), (array) $form->getFieldErrors("email"));
     }
 
+    public function testGetCleanedData()
+    {
+        $form = new ExampleForm();
+        $this->assertEmpty($form->getCleanedData());
+    }
+
+    public function testGetCleanedField()
+    {
+        $form = new ExampleForm(["data" => array("title" => "title")]);
+        $form->isValid(); // force validation
+
+        $this->assertEquals("title", $form->getCleanedField("title"));
+        $this->assertEquals("", $form->getCleanedField("email"));
+        $this->assertNull($form->getCleanedField("unexistent"));
+    }
+
+    public function testGetNonFieldErrorsEmpty()
+    {
+        $form = new ExampleForm([]);
+        $result = $form->getNonFieldErrors();
+
+        $this->assertEquals(0, count($result));
+    }
+
+    public function testGetNonFieldErrors()
+    {
+        $form = new ExampleForm(["data" => array("email" => "test@unit.c")]);
+        $result = $form->getNonFieldErrors();
+
+        $this->assertEquals(1, count($result));
+    }
+
     public function testIsValidWithInvalidForm()
     {
         $form = new ExampleForm(["data" => array()]);
@@ -118,5 +157,38 @@ class FormTest extends TestCase
     {
         $form = new ExampleForm();
         $this->assertFalse($form->IsValid());
+    }
+
+    /**
+     * @expectedException UnexpectedValueException
+     * @expectedExceptionMessage Field 'unexistent' not found in PHPForm\Unit\Forms\ExampleForm.
+     * Choices are: title, description, email, disabled
+     */
+    public function testOffsetGetUnexistentField()
+    {
+        $form = new ExampleForm();
+        $form["unexistent"];
+    }
+
+    public function testOffsetExists()
+    {
+        $form = new ExampleForm();
+
+        $this->assertTrue(isset($form["disabled"]));
+        $this->assertFalse(isset($form["unexistent"]));
+    }
+
+    public function testOffsetUnset()
+    {
+        $form = new ExampleForm();
+        unset($form["disabled"]);
+
+        $this->assertFalse(isset($form["disabled"]));
+    }
+
+    public function testCount()
+    {
+        $form = new ExampleForm();
+        $this->assertEquals(4, count($form));
     }
 }

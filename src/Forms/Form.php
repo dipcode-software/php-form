@@ -130,8 +130,6 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
             return $this->form_errors;
         }
-
-        return parent::__get($name);
     }
 
     /**
