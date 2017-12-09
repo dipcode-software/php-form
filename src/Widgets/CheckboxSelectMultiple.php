@@ -4,8 +4,6 @@
  */
 namespace PHPForm\Widgets;
 
-use PHPForm\PHPFormConfig;
-
 class CheckboxSelectMultiple extends ChoiceWidget
 {
     const TEMPLATE = 'checkbox_select.html';

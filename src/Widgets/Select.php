@@ -4,8 +4,6 @@
  */
 namespace PHPForm\Widgets;
 
-use PHPForm\PHPFormConfig;
-
 class Select extends ChoiceWidget
 {
     const TEMPLATE = 'select.html';

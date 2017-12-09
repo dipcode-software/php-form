@@ -4,7 +4,6 @@
  */
 namespace PHPForm\Validators;
 
-use PHPForm\PHPFormConfig;
 use PHPForm\Validators\BaseValidator;
 
 class MinValueValidator extends BaseValidator
@@ -14,7 +13,7 @@ class MinValueValidator extends BaseValidator
     public function __construct(int $value, $message = null)
     {
         if (is_null($message)) {
-            $message = PHPFormConfig::getIMessage("INVALID_MIN_VALUE");
+            $message = msg("INVALID_MIN_VALUE");
         }
 
         parent::__construct($value, $message);

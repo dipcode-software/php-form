@@ -3,6 +3,7 @@ namespace PHPForm;
 
 use PHPForm\Renderers\TwigRenderer;
 use PHPForm\TemplatePacks\DefaultTemplatePack;
+use PHPForm\Messages;
 
 class Config extends Singleton
 {
@@ -17,6 +18,11 @@ class Config extends Singleton
     /**
      * @var string Renderer class used to render html content.
      */
+    protected $messages_class = Messages::class;
+
+    /**
+     * @var string Renderer class used to render html content.
+     */
     protected $renderer_class = TwigRenderer::class;
 
     /**
@@ -25,17 +31,33 @@ class Config extends Singleton
     private $renderer;
 
     /**
-     * Return renderer class instantiated
+     * Set template pack on top level.
      *
-     * @return PHPForm\Renderers\Renderer
+     * @param string Class name of TemplatePack.
      */
-    public function getRenderer()
+    public function setTemplatePack(string $template_pack)
     {
-        if (is_null($this->renderer)) {
-            $this->renderer = new $this->renderer_class($this->getTemplatesDirs());
-        }
+        $this->template_packs = array_unshift($this->template_packs, $template_pack);
+    }
 
-        return $this->renderer;
+    /**
+     * Set messages class.
+     *
+     * @param string Class name of Renderer.
+     */
+    public function setMessages(string $messages_class)
+    {
+        $this->messages_class = $messages_class;
+    }
+
+    /**
+     * Get messages class.
+     *
+     * @param Messages Messages class.
+     */
+    public function getMessages()
+    {
+        return $this->messages_class;
     }
 
     /**
@@ -49,13 +71,17 @@ class Config extends Singleton
     }
 
     /**
-     * Set template pack on top level.
+     * Return renderer class instantiated
      *
-     * @param string Class name of TemplatePack.
+     * @return PHPForm\Renderers\Renderer
      */
-    public function setTemplatePack(string $template_pack)
+    public function getRenderer()
     {
-        $this->template_packs = array_unshift($this->template_packs, $template_pack);
+        if (is_null($this->renderer)) {
+            $this->renderer = new $this->renderer_class($this->getTemplatesDirs());
+        }
+
+        return $this->renderer;
     }
 
     /**

@@ -4,8 +4,6 @@
  */
 namespace PHPForm\Validators;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Validators\Validator;
 use PHPForm\Exceptions\ValidationError;
 
@@ -26,7 +24,7 @@ abstract class BaseValidator extends Validator
         $cleaned = $this->cleanValue($value);
 
         if ($this->compare($cleaned, $this->value)) {
-            $message = Formatter::format($this->message, array(
+            $message = msg($this->message, array(
                 "limit" => $this->value,
                 "value" => $cleaned
             ));

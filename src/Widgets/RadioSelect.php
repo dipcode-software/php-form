@@ -4,8 +4,6 @@
  */
 namespace PHPForm\Widgets;
 
-use PHPForm\PHPFormConfig;
-
 class RadioSelect extends ChoiceWidget
 {
     const TEMPLATE = 'radio_select.html';

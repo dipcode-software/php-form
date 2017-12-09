@@ -5,7 +5,6 @@
 namespace PHPForm\Fields;
 
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\PHPFormConfig;
 use PHPForm\Widgets\SelectMultiple;
 
 class MultipleChoiceField extends ChoiceField
@@ -24,8 +23,7 @@ class MultipleChoiceField extends ChoiceField
         }
 
         if (!is_array($value)) {
-            $error_message = PHPFormConfig::getIMessage("INVALID_LIST");
-            throw new ValidationError($error_message, 'invalid_list');
+            throw new ValidationError(msg("INVALID_LIST"), 'invalid_list');
         }
 
         return array_map('strval', $value);

@@ -7,7 +7,6 @@ namespace PHPForm\Fields;
 use InvalidArgumentException;
 
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\PHPFormConfig;
 
 abstract class Field
 {
@@ -83,7 +82,7 @@ abstract class Field
             $args['error_messages'] : $this->error_messages;
 
         $default_error_messages = array(
-            'required' => PHPFormConfig::getIMessage("REQUIRED"),
+            'required' => msg("REQUIRED"),
         );
 
         $this->error_messages = array_merge($default_error_messages, $this->error_messages);
