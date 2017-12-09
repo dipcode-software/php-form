@@ -4,8 +4,6 @@
  */
 namespace PHPForm\Widgets;
 
-use PHPForm\Utils\Attributes;
-
 abstract class ChoiceWidget extends Widget
 {
     const TEMPLATE_CHOICE = '';

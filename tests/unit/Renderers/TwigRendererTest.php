@@ -10,13 +10,7 @@ class TwigRendererTest extends TestCase
 {
     public function setUp()
     {
-        $this->renderer = new TwigRenderer(__DIR__ . "/templates/pack1", __DIR__ . "/templates/pack2");
-    }
-
-    public function testGetTempate()
-    {
-        $result = $this->renderer->getTemplate("template.html");
-        $this->assertInstanceOf(Twig_TemplateWrapper::class, $result);
+        $this->renderer = new TwigRenderer([__DIR__ . "/templates/pack2", __DIR__ . "/templates/pack1"]);
     }
 
     public function testRender()
@@ -37,7 +31,7 @@ class TwigRendererTest extends TestCase
 
     public function testRenderWithOnlyFallbackDefined()
     {
-        $renderer = new TwigRenderer(__DIR__ . "/templates/pack1");
+        $renderer = new TwigRenderer([__DIR__ . "/templates/pack1"]);
 
         $result = $renderer->render("template.html", array("name" => "test"));
         $expected = "Pack1 template test";

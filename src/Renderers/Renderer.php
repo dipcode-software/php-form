@@ -6,7 +6,6 @@ namespace PHPForm\Renderers;
 
 interface Renderer
 {
-    public function __construct(string $fallback_templates_dir, string $templates_dir);
-    public function getTemplate(string $template_name);
+    public function __construct(array $templates_dirs);
     public function render(string $template_name, array $context);
 }
