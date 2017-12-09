@@ -15,8 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Added template pack `DefaultTemplatePack`. Defined as default template pack;
     - Added template pack `Bootstrap4TemplatePack` that integrates Bootstrap v4.0.0-beta.2.
  - `Config` singleton class allowing:
-    - Configure custom renderers;
-    - Configure custom template packs.
+    - Configure custom template packs;
+    - Configure custom messages;
+    - Configure custom renderers.
  - Added extra arg `label` to method `getContext` of `Widget` class.
 
 ### Changed
@@ -24,11 +25,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  - `BoundField` attribute `options` now return an array instead of formated string;
  - `Widgets`, `labelTag` and `ErrorList` now render through default renderer instead of formatter `fleshgrinder/format`;
  - `CheckboxSelectMultiple` and `RadioSelect` widget wrapped in an unordered list tag instead of previous `div`;
- - Method name `getSubWidgets` to `getOptions` in `Widgets` class and now returns an array instead of formated string.
+ - Method name `getSubWidgets` to `getOptions` in `Widgets` class and now returns an array instead of formated string;
+ - `messages.php` to class based definition.
 
 ### Removed:
  - `PHPFormConfig` class. Use new `Config` class instead to configure `PHPForm`;
- - `\Utils\Attributes` class. All static methods, except `flatattr` which is no longer used, where migrated to `helpers.php`;
+ - `Attribute` class. All static methods, except `flatattr` which is no longer used, where migrated to `helpers.php`;
  - Method `asUL` from `ErrorList` class.
 
 ## [1.0.1] - 2017-12-07
