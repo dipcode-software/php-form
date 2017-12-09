@@ -24,10 +24,13 @@
     "squizlabs/php_codesniffer": "*"
   },
   "autoload": {
+    "files": [
+      "src/helpers.php",
+      "config.php"
+    ],
     "psr-4": {
       "PHPForm\\" : "src/"
-    },
-    "files": ["config.php"]
+    }
   },
   "autoload-dev": {
     "psr-4": {

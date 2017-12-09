@@ -11,23 +11,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Added `TwigRenderer` that integrates `twig/twig`;
     - Added fallback template loading support.
  - Template packs to facilitate customization and extensibility of templates:
-    - Added template pack `default` and defined as fallback;
-    - Added template pack `bootstrap4` that integrates custom elements of Bootstrap v4.0.0-beta.2.
- - Added extra arg `label` on method `getContext` of `Widget` class;
- - Support to configure renderer and template pack through `Config` singleton class;
+    - Added abstract class `TemplatePack`;
+    - Added template pack `DefaultTemplatePack`. Defined as default template pack;
+    - Added template pack `Bootstrap4TemplatePack` that integrates Bootstrap v4.0.0-beta.2.
+ - `Config` singleton class allowing:
+    - Configure custom renderers;
+    - Configure custom template packs.
+ - Added extra arg `label` to method `getContext` of `Widget` class.
 
 ### Changed
- - Class name `PHPFormConfig` to `Config` and moved to `src/` directory;
  - `BoundField` attribute name `choices` changed to `options`;
  - `BoundField` attribute `options` now return an array instead of formated string;
  - `Widgets`, `labelTag` and `ErrorList` now render through default renderer instead of formatter `fleshgrinder/format`;
  - `CheckboxSelectMultiple` and `RadioSelect` widget wrapped in an unordered list tag instead of previous `div`;
- - Method name `getSubWidgets` to `getOptions` in `Widgets` class;
+ - Method name `getSubWidgets` to `getOptions` in `Widgets` class and now returns an array instead of formated string.
 
 ### Removed:
- - Method `asUL` from `ErrorList` class;
- - `config.php` and `templates.php` files;
- - Static method `flatatt` from `Attributes` class;
+ - `PHPFormConfig` class. Use new `Config` class instead to configure `PHPForm`;
+ - `\Utils\Attributes` class. All static methods, except `flatattr` which is no longer used, where migrated to `helpers.php`;
+ - Method `asUL` from `ErrorList` class.
 
 ## [1.0.1] - 2017-12-07
 ### Added
