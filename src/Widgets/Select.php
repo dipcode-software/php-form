@@ -13,9 +13,9 @@ class Select extends ChoiceWidget
 
     protected $option_inherits_attrs = false;
 
-    public function getContext(string $name, $value, array $attrs = null)
+    public function getContext(string $name, $value, string $label = null, array $attrs = null)
     {
-        $context = parent::getContext($name, $value, $attrs);
+        $context = parent::getContext($name, $value, $label, $attrs);
 
         if ($this->allow_multiple_selected) {
             $context["attrs"]["multiple"] = "multiple";

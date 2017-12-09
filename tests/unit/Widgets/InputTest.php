@@ -33,7 +33,7 @@ class InputTest extends TestCase
     public function testRenderWithExtraAttrs()
     {
         $stub = $this->getMockForAbstractClass(Input::class);
-        $result = $stub->render("name", "value", array("class" => "input"));
+        $result = $stub->render("name", "value", null, array("class" => "input"));
         $expected = '<input type="" id="id_name" name="name" value="value" class="input"/>';
         $this->assertXmlStringEqualsXmlString($result, $expected);
     }

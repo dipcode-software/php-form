@@ -4,8 +4,9 @@
 */
 namespace PHPForm\Renderers;
 
-abstract class Renderer
+interface Renderer
 {
-    abstract public function getTemplate($template_name);
-    abstract public function render($template_name, $context);
+    public function __construct(string $fallback_templates_dir, string $templates_dir);
+    public function getTemplate(string $template_name);
+    public function render(string $template_name, array $context);
 }

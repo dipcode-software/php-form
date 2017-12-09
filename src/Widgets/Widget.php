@@ -35,11 +35,11 @@ abstract class Widget
      *
      * @return string
      */
-    public function render(string $name, $value, array $attrs = null)
+    public function render(string $name, $value, string $label = null, array $attrs = null)
     {
         $renderer = Config::getInstance()->getRenderer();
 
-        $context = $this->getContext($name, $value, $attrs);
+        $context = $this->getContext($name, $value, $label, $attrs);
 
         return $renderer->render(static::TEMPLATE, $context);
     }
@@ -53,7 +53,7 @@ abstract class Widget
      *
      * @return array
      */
-    protected function getContext(string $name, $value, array $attrs = null)
+    protected function getContext(string $name, $value, string $label = null, array $attrs = null)
     {
         $value = $this->formatValue($value);
         $attrs = $this->buildAttrs($attrs);
@@ -63,9 +63,11 @@ abstract class Widget
         }
 
         return array(
+            "for" => $this->buildAutoId($name),
             "name" => $name,
             "attrs" => $attrs,
             "value" => $value,
+            "label" => $label,
         );
     }
 

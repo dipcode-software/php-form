@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.1.0] - XXXX-XX-XX
 ### Added
  - Renderers to facilitate integrations of template-engines:
-    - Added integration to `twig/twig` through `TwigRenderer` class renderer (defined as default);
+    - Added `Renderer` interface;
+    - Added `TwigRenderer` that integrates `twig/twig`;
+    - Added fallback template loading support.
  - Template packs to facilitate customization and extensibility of templates:
-    - Added template pack `default` and `bootstrap4`.
- - Support to configure default renderer and default template pack through `Config` singleton class;
+    - Added template pack `default` and defined as fallback;
+    - Added template pack `bootstrap4` that integrates custom elements of Bootstrap v4.0.0-beta.2.
+ - Added extra arg `label` on method `getContext` of `Widget` class;
+ - Support to configure renderer and template pack through `Config` singleton class;
 
 ### Changed
  - Class name `PHPFormConfig` to `Config` and moved to `src/` directory;

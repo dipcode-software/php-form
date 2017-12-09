@@ -73,9 +73,9 @@ abstract class ChoiceWidget extends Widget
      *
      * @return array
      */
-    protected function getContext(string $name, $value, array $attrs = null)
+    protected function getContext(string $name, $value, string $label = null, array $attrs = null)
     {
-        $context = parent::getContext($name, $value, $attrs);
+        $context = parent::getContext($name, $value, $label, $attrs);
 
         $context["name"] = $this->buildName($name);
         $context["options"] = $this->getOptions($name, $value, $attrs);

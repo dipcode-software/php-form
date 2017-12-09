@@ -77,7 +77,7 @@ class BoundField
 
         $attrs = $this->buildWidgetAttrs($attrs);
 
-        return $widget->render($this->html_name, $this->getValue(), $attrs);
+        return $widget->render($this->html_name, $this->getValue(), $this->label, $attrs);
     }
 
     public function labelTag($contents = null, array $attrs = array())

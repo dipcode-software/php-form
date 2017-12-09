@@ -6,24 +6,31 @@ namespace PHPForm\Renderers;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Twig_Loader_Chain;
 
-class TwigRenderer extends Renderer
+class TwigRenderer implements Renderer
 {
-    private $loader;
     private $twig;
 
-    public function __construct($templates_dir)
+    public function __construct(string $fallback_templates_dir, string $templates_dir = null)
     {
-        $this->loader = new Twig_Loader_Filesystem($templates_dir);
-        $this->twig = new Twig_Environment($this->loader);
+        $loaders = new Twig_Loader_Chain();
+
+        if (!is_null($templates_dir)) {
+            $loaders->addLoader(new Twig_Loader_Filesystem($templates_dir));
+        }
+
+        $loaders->addLoader(new Twig_Loader_Filesystem($fallback_templates_dir));
+
+        $this->twig = new Twig_Environment($loaders);
     }
 
-    public function getTemplate($template_name)
+    public function getTemplate(string $template_name)
     {
         return $this->twig->load($template_name);
     }
 
-    public function render($template_name, $context)
+    public function render(string $template_name, array $context)
     {
         $template = $this->getTemplate($template_name);
         return $template->render($context);

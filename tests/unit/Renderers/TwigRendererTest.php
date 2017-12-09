@@ -10,19 +10,38 @@ class TwigRendererTest extends TestCase
 {
     public function setUp()
     {
-        $this->renderer = new TwigRenderer(__DIR__ . "/templates");
+        $this->renderer = new TwigRenderer(__DIR__ . "/templates/pack1", __DIR__ . "/templates/pack2");
     }
 
     public function testGetTempate()
     {
-        $result = $this->renderer->getTemplate("dummy.html");
+        $result = $this->renderer->getTemplate("template.html");
         $this->assertInstanceOf(Twig_TemplateWrapper::class, $result);
     }
 
     public function testRender()
     {
-        $expected = "Dummy template test\n";
-        $result = $this->renderer->render("dummy.html", array("name" => "test"));
+        $result = $this->renderer->render("template.html", array("name" => "test"));
+        $expected = "Pack2 template test";
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testRenderFallback()
+    {
+        $result = $this->renderer->render("template2.html", array("name" => "test"));
+        $expected = "Pack1 template2 test";
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testRenderWithOnlyFallbackDefined()
+    {
+        $renderer = new TwigRenderer(__DIR__ . "/templates/pack1");
+
+        $result = $renderer->render("template.html", array("name" => "test"));
+        $expected = "Pack1 template test";
+
         $this->assertEquals($expected, $result);
     }
 }

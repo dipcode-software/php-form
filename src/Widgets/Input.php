@@ -18,9 +18,9 @@ abstract class Input extends Widget
      *
      * @return array
      */
-    public function getContext(string $name, $value, array $attrs = null)
+    public function getContext(string $name, $value, string $label = null, array $attrs = null)
     {
-        $context = parent::getContext($name, $value, $attrs);
+        $context = parent::getContext($name, $value, $label, $attrs);
 
         $context["type"] = static::INPUT_TYPE;
 
