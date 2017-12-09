@@ -60,8 +60,6 @@ class BoundField
             }
             return $options_cache;
         }
-
-        return null;
     }
 
     private function getOptions(array $attrs = array())

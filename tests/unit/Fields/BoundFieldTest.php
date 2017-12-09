@@ -56,14 +56,40 @@ class BoundFieldTest extends TestCase
     {
         $form = $this->getMockForAbstractClass(Form::class);
         $bound = new BoundField($form, $this->simple_field, "name");
+
         $this->assertInstanceOf(ErrorList::class, $bound->errors);
     }
 
-    public function testHasErrors()
+    public function testGetHasErrors()
     {
         $form = $this->getMockForAbstractClass(Form::class);
         $bound = new BoundField($form, $this->simple_field, "name");
+
         $this->assertFalse($bound->has_errors);
+    }
+
+    public function testGetIsRequired()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $bound = new BoundField($form, $this->simple_field, "name");
+
+        $this->assertFalse($bound->is_required);
+    }
+
+    public function testGetValue()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $bound = new BoundField($form, $this->simple_field, "name");
+
+        $this->assertNull($bound->value);
+    }
+
+    public function testGetNotDefinedAttribute()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $bound = new BoundField($form, $this->simple_field, "name");
+
+        $this->assertNull($bound->undefined);
     }
 
     public function testSimpleGet()
@@ -123,12 +149,26 @@ class BoundFieldTest extends TestCase
         $this->assertXmlStringEqualsXmlString($expected, (string) $bound);
     }
 
+    public function testToStringWithFieldRequired()
+    {
+        $form = $this->getMockForAbstractClass(Form::class);
+        $field = new CharField(['disabled' => true]);
+
+        $bound = new BoundField($form, $field, "name");
+
+        $expected = '<input type="text" id="id_name" name="name" disabled="disabled"/>';
+        $this->assertXmlStringEqualsXmlString($expected, (string) $bound);
+    }
+
     public function testLabelTag()
     {
         $field = new CharField(array("label" => "Label"));
         $bound = new BoundField($this->simple_form, $field, "name");
+
         $expected = '<label for="id_name">Label</label>';
+
         $this->assertXmlStringEqualsXmlString($bound->labelTag(), $expected);
+        $this->assertXmlStringEqualsXmlString($bound->label_tag, $expected);
     }
 
     public function testLabelTagWithPrefix()
