@@ -11,6 +11,12 @@ class ErrorListTest extends TestCase
     {
         $error = new ErrorList(array(1, 2, 3));
         $expected = '<ul class="errorlist"><li>1</li><li>2</li><li>3</li></ul>';
-        $this->assertEquals((string) $error, $expected);
+        $this->assertEquals($expected, (string) $error);
+    }
+
+    public function testToStringEmptyErrorList()
+    {
+        $error = new ErrorList();
+        $this->assertEquals('', (string) $error);
     }
 }

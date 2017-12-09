@@ -17,6 +17,7 @@ class ExampleForm extends Form
             "title" => new CharField(["required" => true]),
             "description" => new CharField(["widget" => Textarea::class, "max_length" => 10]),
             "email" => new EmailField(),
+            "disabled" => new CharField(["disabled" => true]),
         );
     }
 

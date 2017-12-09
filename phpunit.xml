@@ -7,7 +7,7 @@
          convertWarningsToExceptions="true"
          processIsolation="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="PHPForm Test Suite">
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
