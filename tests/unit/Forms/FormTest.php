@@ -2,7 +2,6 @@
 namespace PHPForm\Unit\Forms;
 
 use PHPUnit\Framework\TestCase;
-use Fleshgrinder\Core\Formatter;
 
 use PHPForm\Forms\Form;
 use PHPForm\Fields\BoundField;

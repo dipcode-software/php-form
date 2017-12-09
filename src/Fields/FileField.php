@@ -4,10 +4,7 @@
  */
 namespace PHPForm\Fields;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\PHPFormConfig;
 use PHPForm\Validators\FileTypeValidator;
 use PHPForm\Widgets\FileInput;
 
@@ -39,14 +36,11 @@ class FileField extends Field
         }
 
         if (0 == $value->size) {
-            $errormsg = PHPFormConfig::getIMessage("EMPTY_FILE");
-            throw new ValidationError($errormsg, 'empty_file');
+            throw new ValidationError(msg("EMPTY_FILE"), 'empty_file');
         }
 
         if (!is_null($this->max_size) && $value->size >= $this->max_size) {
-            $errormsg = PHPFormConfig::getIMessage("INVALID_FILE_MAX_SIZE");
-
-            $message = Formatter::format($errormsg, array(
+            $message = msg("INVALID_FILE_MAX_SIZE", array(
                 "limit" => $this->max_size,
                 "value" => $value->size
             ));
@@ -58,7 +52,7 @@ class FileField extends Field
     public function toNative($value)
     {
         if (!is_array($value)) {
-            throw new ValidationError(PHPFormConfig::getIMessage("INVALID_FILE"), 'invalid');
+            throw new ValidationError(msg("INVALID_FILE"), 'invalid');
         }
 
         return (object) $value;

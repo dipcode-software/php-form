@@ -4,10 +4,7 @@
  */
 namespace PHPForm\Validators;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\PHPFormConfig;
 use PHPForm\Validators\BaseValidator;
 
 class MaxLengthValidator extends BaseValidator
@@ -17,7 +14,7 @@ class MaxLengthValidator extends BaseValidator
     public function __construct(int $value, $message = null)
     {
         if (is_null($message)) {
-            $message = PHPFormConfig::getIMessage("INVALID_MAX_LENGTH");
+            $message = msg("INVALID_MAX_LENGTH");
         }
 
         parent::__construct($value, $message);

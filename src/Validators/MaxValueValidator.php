@@ -4,7 +4,6 @@
  */
 namespace PHPForm\Validators;
 
-use PHPForm\PHPFormConfig;
 use PHPForm\Validators\BaseValidator;
 
 class MaxValueValidator extends BaseValidator
@@ -14,7 +13,7 @@ class MaxValueValidator extends BaseValidator
     public function __construct(int $value, $message = null)
     {
         if (is_null($message)) {
-            $message = PHPFormConfig::getIMessage("INVALID_MAX_VALUE");
+            $message = msg("INVALID_MAX_VALUE");
         }
 
         parent::__construct($value, $message);

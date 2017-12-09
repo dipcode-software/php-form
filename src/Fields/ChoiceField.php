@@ -4,10 +4,7 @@
  */
 namespace PHPForm\Fields;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\PHPFormConfig;
 use PHPForm\Widgets\Select;
 
 class ChoiceField extends Field
@@ -45,14 +42,12 @@ class ChoiceField extends Field
         parent::validate($value);
 
         if (!$this->validValue($value)) {
-            $error_message = PHPFormConfig::getIMessage("INVALID_CHOICE");
-
             if (is_array($value)) {
                 $value_diff = array_diff($value, array_keys($this->choices));
                 $value = implode(', ', $value_diff);
             }
 
-            $message = Formatter::format($error_message, array(
+            $message = msg("INVALID_CHOICE", array(
                 'choice' => $value,
             ));
 

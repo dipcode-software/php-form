@@ -4,10 +4,7 @@
  */
 namespace PHPForm\Validators;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\PHPFormConfig;
 use PHPForm\Validators\Validator;
 
 class FileTypeValidator extends Validator
@@ -19,7 +16,7 @@ class FileTypeValidator extends Validator
         $this->valid_filetypes = $valid_filetypes;
 
         if (is_null($message)) {
-            $message = PHPFormConfig::getIMessage("INVALID_FILE_TYPE");
+            $message = msg("INVALID_FILE_TYPE");
         }
 
         parent::__construct($message);
@@ -28,7 +25,7 @@ class FileTypeValidator extends Validator
     public function __invoke($value)
     {
         if (!is_null($this->valid_filetypes) && !in_array($value->type, $this->valid_filetypes)) {
-            $message = Formatter::format($this->message, array(
+            $message = msg($this->message, array(
                 "valid_types" => implode(", ", $this->valid_filetypes),
                 "type" => $value->type
             ));
