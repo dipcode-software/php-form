@@ -26,20 +26,6 @@ class PHPFormConfigTest extends TestCase
         $this->assertNull($instance->getMessage("Inexistent"));
     }
 
-    public function testGetITemplate()
-    {
-        $this->assertEquals(PHPFormConfig::getITemplate("LABEL_REQUIRED"), '<span class="required">*</span>');
-        $this->assertNull(PHPFormConfig::getITemplate("Inexistent"));
-    }
-
-    public function testGetTemplate()
-    {
-        $instance = PHPFormConfig::getInstance();
-
-        $this->assertEquals($instance->getTemplate("LABEL_REQUIRED"), '<span class="required">*</span>');
-        $this->assertNull($instance->getTemplate("Inexistent"));
-    }
-
     public function testSetIMessages()
     {
         PHPFormConfig::setIMessages(array(
@@ -63,30 +49,5 @@ class PHPFormConfigTest extends TestCase
         $this->assertEquals("This field is required.", $instance->getMessage("REQUIRED"));
         $this->assertEquals("Invalid 2", $instance->getMessage("Invalid 2"));
         $this->assertEquals("Invalid 3", $instance->getMessage("Invalid 3"));
-    }
-
-    public function testSetITemplates()
-    {
-        PHPFormConfig::setITemplates(array(
-            "Invalid 2" => "Invalid 2",
-            "Invalid 3" => "Invalid 3",
-        ));
-
-        $this->assertEquals('<span class="required">*</span>', PHPFormConfig::getITemplate("LABEL_REQUIRED"));
-        $this->assertEquals("Invalid 2", PHPFormConfig::getITemplate("Invalid 2"));
-        $this->assertEquals("Invalid 3", PHPFormConfig::getITemplate("Invalid 3"));
-    }
-
-    public function testSetTemplates()
-    {
-        $instance = PHPFormConfig::getInstance();
-        $instance->setTemplates(array(
-            "Invalid 2" => "Invalid 2",
-            "Invalid 3" => "Invalid 3",
-        ));
-
-        $this->assertEquals('<span class="required">*</span>', $instance->getTemplate("LABEL_REQUIRED"));
-        $this->assertEquals("Invalid 2", $instance->getTemplate("Invalid 2"));
-        $this->assertEquals("Invalid 3", $instance->getTemplate("Invalid 3"));
     }
 }

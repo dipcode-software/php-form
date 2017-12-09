@@ -15,14 +15,14 @@ class CheckboxSelectMultipleTest extends TestCase
     public function testRender()
     {
         $expected =
-            '<div>' .
-                '<label for="id_name_1">' .
+            '<ul id="id_name">' .
+                '<li><label for="id_name_1">' .
                     '<input id="id_name_1" name="name[]" type="checkbox" value="option1"/> option1' .
-                '</label>' .
-                '<label for="id_name_2">' .
+                '</label></li>' .
+                '<li><label for="id_name_2">' .
                     '<input id="id_name_2" name="name[]" type="checkbox" value="option2"/> option2'.
-                '</label>' .
-            '</div>';
+                '</label></li>' .
+            '</ul>';
 
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", null));
     }
@@ -30,14 +30,14 @@ class CheckboxSelectMultipleTest extends TestCase
     public function testRenderChecked()
     {
         $expected =
-            '<div>' .
-                '<label for="id_name_1">' .
+            '<ul id="id_name">' .
+                '<li><label for="id_name_1">' .
                     '<input id="id_name_1" name="name[]" type="checkbox" checked="checked" value="option1"/> option1' .
-                '</label>' .
-                '<label for="id_name_2">' .
+                '</label></li>' .
+                '<li><label for="id_name_2">' .
                     '<input id="id_name_2" name="name[]" type="checkbox" value="option2"/> option2'.
-                '</label>' .
-            '</div>';
+                '</label></li>' .
+            '</ul>';
 
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", "option1"));
     }
@@ -52,20 +52,20 @@ class CheckboxSelectMultipleTest extends TestCase
         ]);
 
         $expected =
-            '<div>' .
-                '<label for="id_name_1">' .
+            '<ul id="id_name">' .
+                '<li><label for="id_name_1">' .
                     '<input id="id_name_1" name="name[]" type="checkbox" value="option1"/> option1' .
-                '</label>' .
-                '<label for="id_name_2">' .
+                '</label></li>' .
+                '<li><label for="id_name_2">' .
                     '<input id="id_name_2" name="name[]" type="checkbox" checked="checked" value="option2"/> option2'.
-                '</label>' .
-                '<label for="id_name_3">' .
+                '</label></li>' .
+                '<li><label for="id_name_3">' .
                     '<input id="id_name_3" name="name[]" type="checkbox" checked="checked" value="option3"/> option3'.
-                '</label>' .
-                '<label for="id_name_4">' .
+                '</label></li>' .
+                '<li><label for="id_name_4">' .
                     '<input id="id_name_4" name="name[]" type="checkbox" value="option4"/> option4'.
-                '</label>' .
-            '</div>';
+                '</label></li>' .
+            '</ul>';
 
         $this->assertXmlStringEqualsXmlString($expected, $widget->render("name", ["option2", "option3"]));
     }

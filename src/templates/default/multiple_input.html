@@ -1,0 +1,5 @@
+<ul id="{{attrs.id}}">
+    {% for option in options %}
+        <li>{% include option.template with option only %}</li>
+    {% endfor %}
+</ul>

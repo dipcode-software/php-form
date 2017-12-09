@@ -1,17 +1,16 @@
 <?php
 namespace PHPForm\Fields;
 
-use Fleshgrinder\Core\Formatter;
-
-use PHPForm\PHPFormConfig;
-use PHPForm\Utils\Attributes;
+use PHPForm\Config;
 
 class BoundField
 {
+    const TEMPLATE_LABEL = "label.html";
+
     private $form;
     private $field;
     private $name;
-    private $subwidgets_cache;
+    private $options_cache;
 
     public $html_name;
     public $help_text;
@@ -55,22 +54,21 @@ class BoundField
             return $this->getValue();
         }
 
-        if ($name == 'choices') {
-            if (!isset($subwidgets_cache)) {
-                $subwidgets_cache = $this->getSubWidgets();
+        if ($name == 'options') {
+            if (!isset($options_cache)) {
+                $options_cache = $this->getOptions();
             }
-            return $subwidgets_cache;
+            return $options_cache;
         }
 
-        return parent::__get($name);
+        return null;
     }
 
-    private function getSubWidgets(array $attrs = array())
+    private function getOptions(array $attrs = array())
     {
-        $widget = $this->field->getWidget();
         $attrs = $this->buildWidgetAttrs($attrs);
 
-        return $widget->getSubWidgets($this->html_name, $this->getValue(), $attrs);
+        return $this->field->getWidget()->getOptions($this->html_name, $this->getValue(), $attrs);
     }
 
     protected function asWidget($widget = null, array $attrs = array())
@@ -82,7 +80,7 @@ class BoundField
         return $widget->render($this->html_name, $this->getValue(), $attrs);
     }
 
-    public function labelTag($contents = null, array $attrs = null)
+    public function labelTag($contents = null, array $attrs = array())
     {
         $contents = is_null($contents) ? $this->label : $contents;
 
@@ -90,20 +88,15 @@ class BoundField
             return "";
         }
 
-        if (!is_null($attrs)) {
-            $attrs = Attributes::flatatt($attrs);
-        }
-
         $widget = $this->field->getWidget();
 
-        $label_tpl = PHPFormConfig::getITemplate("LABEL");
-        $label_required_tpl = PHPFormConfig::getITemplate("LABEL_REQUIRED");
+        $renderer = Config::getInstance()->getRenderer();
 
-        return Formatter::format($label_tpl, array(
+        return $renderer->render(self::TEMPLATE_LABEL, array(
             "for" => $widget->buildAutoId($this->html_name),
             "attrs" => $attrs,
             "contents" => $contents,
-            "required" => $this->field->isRequired() ? $label_required_tpl : null
+            "required" => $this->field->isRequired()
         ));
     }
 

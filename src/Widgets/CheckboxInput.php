@@ -6,7 +6,8 @@ namespace PHPForm\Widgets;
 
 class CheckboxInput extends Input
 {
-    protected $input_type = 'checkbox';
+    const TEMPLATE = 'checkbox.html';
+    const INPUT_TYPE = 'checkbox';
 
     public function getContext(string $name, $value, array $attrs = null)
     {

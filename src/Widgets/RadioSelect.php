@@ -8,21 +8,10 @@ use PHPForm\PHPFormConfig;
 
 class RadioSelect extends ChoiceWidget
 {
+    const TEMPLATE = 'radio_select.html';
+    const TEMPLATE_CHOICE = 'radio_select_option.html';
+    const INPUT_TYPE = 'radio';
+
     protected $option_inherits_attrs = true;
-    protected $selected_attribute = "checked";
-    protected $input_type = "radio";
-
-    /**
-     * The constructor.
-     */
-    public function __construct(array $choices = array(), array $attrs = null)
-    {
-        $this->template = PHPFormConfig::getITemplate("RADIOSELECT");
-        $this->template_choice = sprintf(
-            PHPFormConfig::getITemplate("RADIOSELECT_ITEM"),
-            PHPFormConfig::getITemplate("INPUT")
-        );
-
-        parent::__construct($choices, $attrs);
-    }
+    protected $selected_attribute = 'checked';
 }

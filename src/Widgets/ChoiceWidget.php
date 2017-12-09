@@ -4,17 +4,35 @@
  */
 namespace PHPForm\Widgets;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Utils\Attributes;
 
 abstract class ChoiceWidget extends Widget
 {
-    protected $template_choice = "";
+    const TEMPLATE_CHOICE = '';
+    const INPUT_TYPE = null;
+
+    /**
+     * Allow multiple choices being selected.
+     * @var boolean
+     */
     protected $allow_multiple_selected = false;
-    protected $input_type = null;
+
+    /**
+     * Option inherit the attrs of mains widget.
+     * @var boolean
+     */
     protected $option_inherits_attrs = true;
+
+    /**
+     * Attr name when option is selected.
+     * @var string
+     */
     protected $selected_attribute = "selected";
+
+    /**
+     * Valid choices for this widget.
+     * @var array
+     */
     protected $choices;
 
     /**
@@ -27,31 +45,54 @@ abstract class ChoiceWidget extends Widget
         $this->setChoices($choices);
     }
 
+    /**
+     * @param array $choices Choices to be setted.
+     */
     public function setChoices(array $choices)
     {
         $this->choices = $choices;
     }
 
-    public function buildName($name)
+    /**
+     * If allow multiple selected, add [] to the end of name.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function buildName(string $name)
     {
-        if ($this->allow_multiple_selected && substr($name, -2, 2) !== "[]") {
-            $name = $name . "[]";
-        }
-
-        return $name;
+        return $this->allow_multiple_selected ? $name . "[]" : $name;
     }
 
-    public function getContext(string $name, $value, array $attrs = null)
+    /**
+     * Prepare context to be used on render method.
+     *
+     * @param string $name  Field name.
+     * @param mixed  $value Field value.
+     * @param array  $attrs Extra widget attributes.
+     *
+     * @return array
+     */
+    protected function getContext(string $name, $value, array $attrs = null)
     {
         $context = parent::getContext($name, $value, $attrs);
 
         $context["name"] = $this->buildName($name);
-        $context["options"] = implode($this->getSubWidgets($name, $value, $attrs));
+        $context["options"] = $this->getOptions($name, $value, $attrs);
 
         return $context;
     }
 
-    public function getSubWidgets(string $name, $value, array $attrs = null)
+    /**
+     * Prepare options.
+     *
+     * @param string $name  Choice name.
+     * @param mixed  $value Choice value.
+     * @param array  $attrs Extra choice attributes.
+     *
+     * @return array
+     */
+    public function getOptions(string $name, $value, array $attrs = null)
     {
         $value = $this->formatValue($value);
         $subwidgets = array();
@@ -63,21 +104,33 @@ abstract class ChoiceWidget extends Widget
             $selected = false;
 
             if (!$has_selected || $this->allow_multiple_selected) {
-                $selected = in_array($choice_value, $value);
-                $has_selected = $selected;
+                $has_selected = $selected = in_array($choice_value, $value);
             }
 
-            $context = $this->getSubWidgetContext($name, $choice_value, $choice_label, $selected, $index, $attrs);
-
-            $subwidgets[] = Formatter::format($this->template_choice, $context);
-
-            $index++;
+            $subwidgets[] = $this->buildOption(
+                $name,
+                $choice_value,
+                $choice_label,
+                $selected,
+                $index++,
+                $attrs
+            );
         }
 
         return $subwidgets;
     }
 
-    public function getSubWidgetContext(
+    /**
+     * @param  string     $name
+     * @param  mixed      $value
+     * @param  string     $label
+     * @param  bool       $is_selected
+     * @param  int        $index
+     * @param  array|null $attrs
+     *
+     * @return array
+     */
+    protected function buildOption(
         string $name,
         $value,
         string $label,
@@ -99,14 +152,22 @@ abstract class ChoiceWidget extends Widget
 
         return array(
             "for" => $this->buildAutoId($name, $index),
-            "type" => $this->input_type,
-            "name" => htmlentities($this->buildName($name)),
-            "value" => htmlentities($value),
-            "label" => htmlentities($label),
-            "attrs" => Attributes::flatatt($attrs),
+            "type" => static::INPUT_TYPE,
+            "name" => $this->buildName($name),
+            "value" => $value,
+            "label" => $label,
+            "attrs" => $attrs,
+            "template" => static::TEMPLATE_CHOICE,
         );
     }
 
+    /**
+     * Format value to be rendered in html.
+     *
+     * @param mixed $value Value to be formated.
+     *
+     * @return array
+     */
     protected function formatValue($value)
     {
         if (is_array($value)) {

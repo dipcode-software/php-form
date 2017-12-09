@@ -4,8 +4,6 @@
  */
 namespace PHPForm\Fields;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\PHPFormConfig;
 use PHPForm\Widgets\SelectMultiple;

@@ -16,7 +16,7 @@ use PHPForm\Utils\Attributes;
 
 abstract class Form implements ArrayAccess, Iterator, Countable
 {
-    const PREFIX_TEMPLATE = '{prefix}-{field_name}';
+    const PREFIX_FORMAT = '%s-%s';
     const NON_FIELD_ERRORS = '__all__';
 
     /**
@@ -145,10 +145,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     public function addPrefix(string $field_name)
     {
         if (!is_null($this->prefix)) {
-            return Formatter::format(self::PREFIX_TEMPLATE, array(
-                "prefix" => $this->prefix,
-                "field_name" => $field_name
-            ));
+            return sprintf(static::PREFIX_FORMAT, $this->prefix, $field_name);
         }
 
         return $field_name;

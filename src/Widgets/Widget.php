@@ -4,15 +4,11 @@
  */
 namespace PHPForm\Widgets;
 
-use Fleshgrinder\Core\Formatter;
-
-use PHPForm\Utils\Attributes;
+use PHPForm\Config;
 
 abstract class Widget
 {
-    const AUTO_ID_TEMPLATE = "id_{name}[_{index}?]";
-
-    protected $template = "";
+    const TEMPLATE = "";
 
     /**
     * @var array Attributes to be added to the widget.
@@ -41,9 +37,11 @@ abstract class Widget
      */
     public function render(string $name, $value, array $attrs = null)
     {
+        $renderer = Config::getInstance()->getRenderer();
+
         $context = $this->getContext($name, $value, $attrs);
 
-        return Formatter::format($this->template, $context);
+        return $renderer->render(static::TEMPLATE, $context);
     }
 
     /**
@@ -65,9 +63,9 @@ abstract class Widget
         }
 
         return array(
-            "name" => htmlentities($name),
-            "attrs" => Attributes::flatatt($attrs),
-            "value" => is_string($value) ? htmlspecialchars($value) : $value,
+            "name" => $name,
+            "attrs" => $attrs,
+            "value" => $value,
         );
     }
 
@@ -98,13 +96,13 @@ abstract class Widget
     }
 
     /**
-    * Return defined subwidget.
+    * Return defined options.
     *
     * @return array
     */
-    public function getSubWidgets(string $name, $value, array $attrs = null)
+    public function getOptions(string $name, $value, array $attrs = null)
     {
-        return $this->widget;
+        return array();
     }
 
     /**
@@ -144,9 +142,7 @@ abstract class Widget
      */
     public function buildAutoId(string $name, int $index = null)
     {
-        return Formatter::format(self::AUTO_ID_TEMPLATE, array(
-            "name" => $name,
-            "index" => $index
-        ));
+        $auto_id = is_null($index) ? "id_%s" : "id_%s_%s";
+        return sprintf($auto_id, $name, $index);
     }
 }

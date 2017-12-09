@@ -6,5 +6,6 @@ namespace PHPForm\Widgets;
 
 class TextInput extends Input
 {
-    protected $input_type = 'text';
+    const TEMPLATE = 'text.html';
+    const INPUT_TYPE = 'text';
 }

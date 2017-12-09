@@ -16,3 +16,6 @@ trim_trailing_whitespace = true
 [*.json]
 indent_size = 2
 insert_final_newline = ignore
+
+[*.html]
+insert_final_newline = ignore
