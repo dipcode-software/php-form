@@ -4,14 +4,12 @@
 
   <!-- Scan these files -->
   <file>src</file>
+  <file>tests</file>
 
   <!-- Show colors in console -->
   <arg value="-colors"/>
-
   <!-- Show sniff codes in all reports -->
   <arg value="s"/>
-
   <!-- Use PSR-2 as a base -->
   <rule ref="PSR2"/>
-
 </ruleset>
