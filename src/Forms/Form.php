@@ -7,8 +7,6 @@ use InvalidArgumentException;
 use Iterator;
 use UnexpectedValueException;
 
-use Fleshgrinder\Core\Formatter;
-
 use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;

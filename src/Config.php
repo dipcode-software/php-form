@@ -2,26 +2,20 @@
 namespace PHPForm;
 
 use PHPForm\Renderers\TwigRenderer;
+use PHPForm\TemplatePacks\DefaultTemplatePack;
 
 class Config extends Singleton
 {
     /**
-     * @var string Directory with templates
+     * @var array Template packs to be used. The templates will be loaded
+     *            accordingly to the order defined.
      */
-    protected $templates_dir = __DIR__ . '/templates/';
+    protected $template_packs = array(
+        DefaultTemplatePack::class,
+    );
 
     /**
-     * @var string Default fallback template pack
-     */
-    protected $fallback_template_pack = "default";
-
-    /**
-     * @var string Default template pack defined. If null, fallback is used.
-     */
-    protected $template_pack = null;
-
-    /**
-     * @var string Renderer class used to render html content
+     * @var string Renderer class used to render html content.
      */
     protected $renderer_class = TwigRenderer::class;
 
@@ -31,22 +25,6 @@ class Config extends Singleton
     private $renderer;
 
     /**
-     * Templates path accordingly with defined template pack.
-     *
-     * @return string
-     */
-    private function buildPath($template_pack)
-    {
-        $path = $this->templates_dir . $template_pack . "/";
-
-        if (!file_exists($path)) {
-            trigger_error("Template pack dir '$path' don't exists.", E_USER_ERROR);
-        }
-
-        return $path;
-    }
-
-    /**
      * Return renderer class instantiated
      *
      * @return PHPForm\Renderers\Renderer
@@ -54,22 +32,45 @@ class Config extends Singleton
     public function getRenderer()
     {
         if (is_null($this->renderer)) {
-            $fallback_pack_dir = $this->buildPath($this->fallback_template_pack);
-            $pack_dir = !is_null($this->template_pack) ? $this->buildPath($this->template_pack) : null;
-
-            $this->renderer = new $this->renderer_class($fallback_pack_dir, $pack_dir);
+            $this->renderer = new $this->renderer_class($this->getTemplatesDirs());
         }
 
         return $this->renderer;
     }
 
     /**
-     * Define template pack
+     * Set renderer class.
      *
-     * @param string
+     * @param string Class name of Renderer.
      */
-    public function setTemplatePack($template_pack)
+    public function setRenderer(string $renderer_class)
     {
-        $this->template_pack = $template_pack;
+        $this->renderer_class = $renderer_class;
+    }
+
+    /**
+     * Set template pack on top level.
+     *
+     * @param string Class name of TemplatePack.
+     */
+    public function setTemplatePack(string $template_pack)
+    {
+        $this->template_packs = array_unshift($this->template_packs, $template_pack);
+    }
+
+    /**
+     * Traverse all packs to extract template dir path.
+     *
+     * @return array
+     */
+    private function getTemplatesDirs()
+    {
+        $dirs = array();
+
+        foreach ($this->template_packs as $template_pack) {
+            $dirs[] = $template_pack::TEMPLATES_DIR;
+        }
+
+        return $dirs;
     }
 }
