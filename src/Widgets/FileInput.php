@@ -6,7 +6,8 @@ namespace PHPForm\Widgets;
 
 class FileInput extends Input
 {
-    protected $input_type = 'file';
+    const TEMPLATE = 'file.html';
+    const INPUT_TYPE = 'file';
 
     /**
      * FileInput don't render the value.

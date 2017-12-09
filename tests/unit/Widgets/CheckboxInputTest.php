@@ -15,13 +15,13 @@ class CheckboxInputTest extends TestCase
     public function testGetContext()
     {
         $context = $this->widget->getContext("name", 10);
-        $this->assertEquals('checked="checked" id="id_name"', $context['attrs']);
+        $this->assertArraySubset(array("checked" => "checked"), $context['attrs']);
     }
 
     public function testGetContextWithFalseValue()
     {
         $context = $this->widget->getContext("name", false);
-        $this->assertEquals('id="id_name"', $context['attrs']);
+        $this->assertArrayNotHasKey("checked", $context['attrs']);
     }
 
     public function testRender()

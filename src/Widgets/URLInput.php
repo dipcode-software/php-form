@@ -6,5 +6,6 @@ namespace PHPForm\Widgets;
 
 class URLInput extends Input
 {
-    protected $input_type = 'url';
+    const TEMPLATE = 'url.html';
+    const INPUT_TYPE = 'url';
 }

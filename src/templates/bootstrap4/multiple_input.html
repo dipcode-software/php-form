@@ -1,0 +1,5 @@
+<div id="{{attrs.id}}" class="custom-controls-stacked">
+    {% for option in options %}
+        {% include option.template with option only %}
+    {% endfor %}
+</div>

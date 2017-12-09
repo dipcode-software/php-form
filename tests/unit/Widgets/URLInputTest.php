@@ -7,17 +7,20 @@ use PHPForm\Widgets\URLInput;
 
 class URLInputTest extends TestCase
 {
+    public function setUp()
+    {
+        $this->widget = new URLInput();
+    }
+
     public function testGetContext()
     {
-        $widget = new URLInput();
-        $context = $widget->getContext("name", "url");
+        $context = $this->widget->getContext("name", "url");
         $this->assertEquals($context["type"], "url");
     }
 
     public function testRender()
     {
-        $widget = new URLInput();
-        $render = $widget->render("name", "url");
-        $this->assertXmlStringEqualsXmlString($render, '<input type="url" id="id_name" name="name" value="url"/>');
+        $expected = $this->widget->render("name", "url");
+        $this->assertXmlStringEqualsXmlString($expected, '<input type="url" id="id_name" name="name" value="url"/>');
     }
 }

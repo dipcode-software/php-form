@@ -3,12 +3,12 @@ namespace PHPForm\Errors;
 
 use ArrayObject;
 
-use Fleshgrinder\Core\Formatter;
-
-use PHPForm\PHPFormConfig;
+use PHPForm\Config;
 
 class ErrorList extends ArrayObject
 {
+    const TEMPLATE = "error_list.html";
+
     /**
      * Returns the error list rendered as HTML.
      *
@@ -16,29 +16,14 @@ class ErrorList extends ArrayObject
      */
     public function __toString()
     {
-        return $this->asUL();
-    }
-
-    /**
-     * Returns an error dictionary as an unordered list in HTML.
-     *
-     * @return string
-     */
-    public function asUL()
-    {
         if (!count($this)) {
             return '';
         }
 
-        $items = [];
-        $list_item_template = PHPFormConfig::getITemplate("ERRORLIST_ITEM");
+        $renderer = Config::getInstance()->getRenderer();
 
-        foreach ($this as $error) {
-            $items[] = Formatter::format($list_item_template, array("content" => $error));
-        }
-
-        $list_template = PHPFormConfig::getITemplate("ERRORLIST");
-
-        return Formatter::format($list_template, array("items" => implode($items)));
+        return $renderer->render(self::TEMPLATE, array(
+            "errors" => $this,
+        ));
     }
 }

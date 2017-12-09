@@ -6,7 +6,8 @@ namespace PHPForm\Widgets;
 
 class PasswordInput extends Input
 {
-    protected $input_type = 'password';
+    const TEMPLATE = 'password.html';
+    const INPUT_TYPE = 'password';
 
     /**
      * PasswordInput don't render the value.

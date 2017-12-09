@@ -19,12 +19,15 @@ class ChoiceWidgetTest extends TestCase
         $this->widget = $this->getMockForAbstractClass(ChoiceWidget::class, array($attrs));
     }
 
-    public function testFormatValue()
+    public function testSetChoices()
     {
-        // $this->assertEquals([], $this->widget->formatValue(""));
-        // $this->assertEquals([], $this->widget->formatValue(null));
-        // $this->assertEquals([], $this->widget->formatValue([]));
-        // $this->assertEquals(["1", "2"], $this->widget->formatValue([1, 2]));
-        $this->assertEquals(1, 1);
+        $choices = array(
+            "option1" => "Option 1",
+            "option2" => "Option 2",
+        );
+
+        $this->widget->setChoices($choices);
+
+        $this->assertAttributeEquals($choices, "choices", $this->widget);
     }
 }

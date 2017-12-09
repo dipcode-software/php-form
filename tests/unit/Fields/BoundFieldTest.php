@@ -169,16 +169,21 @@ class BoundFieldTest extends TestCase
     }
 
 
-    public function testChoices()
+    public function testOptions()
     {
-        $field = new ChoiceField(["choices" => array("option1" => "Option1", "option2" => "Option2")]);
+        $field = new ChoiceField(["choices" => array("option1" => "Option1")]);
         $bound = new BoundField($this->simple_form, $field, "name");
 
-        $expected = array(
-            '<option value="option1">Option1</option>',
-            '<option value="option2">Option2</option>'
-        );
+        $expected = array(array(
+            "for" => "id_name_1",
+            "type" => null,
+            "name" => "name",
+            "value" => "option1",
+            "label" => "Option1",
+            "attrs" => array(),
+            "template" => "select_option.html"
+        ));
 
-        $this->assertEquals($expected, $bound->choices);
+        $this->assertEquals($expected, $bound->options);
     }
 }

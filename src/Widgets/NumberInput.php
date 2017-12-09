@@ -6,5 +6,6 @@ namespace PHPForm\Widgets;
 
 class NumberInput extends Input
 {
-    protected $input_type = 'number';
+    const TEMPLATE = 'number.html';
+    const INPUT_TYPE = 'number';
 }

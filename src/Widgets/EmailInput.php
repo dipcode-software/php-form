@@ -6,5 +6,6 @@ namespace PHPForm\Widgets;
 
 class EmailInput extends Input
 {
-    protected $input_type = 'email';
+    const TEMPLATE = 'email.html';
+    const INPUT_TYPE = 'email';
 }

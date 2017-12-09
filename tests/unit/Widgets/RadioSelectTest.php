@@ -15,14 +15,14 @@ class RadioSelectTest extends TestCase
     public function testRender()
     {
         $expected =
-            '<div>' .
-                '<label for="id_name_1">' .
+            '<ul id="id_name">' .
+                '<li><label for="id_name_1">' .
                     '<input id="id_name_1" name="name" type="radio" value="option1"/> option1' .
-                '</label>' .
-                '<label for="id_name_2">' .
+                '</label></li>' .
+                '<li><label for="id_name_2">' .
                     '<input id="id_name_2" name="name" type="radio" value="option2"/> option2'.
-                '</label>' .
-            '</div>';
+                '</label></li>' .
+            '</ul>';
 
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", null));
     }
@@ -30,14 +30,14 @@ class RadioSelectTest extends TestCase
     public function testRenderChecked()
     {
         $expected =
-            '<div>' .
-                '<label for="id_name_1">' .
+            '<ul id="id_name">' .
+                '<li><label for="id_name_1">' .
                     '<input id="id_name_1" name="name" type="radio" checked="checked" value="option1"/> option1' .
-                '</label>' .
-                '<label for="id_name_2">' .
+                '</label></li>' .
+                '<li><label for="id_name_2">' .
                     '<input id="id_name_2" name="name" type="radio" value="option2"/> option2'.
-                '</label>' .
-            '</div>';
+                '</label></li>' .
+            '</ul>';
 
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", "option1"));
         $this->assertXmlStringEqualsXmlString($expected, $this->widget->render("name", ["option1", "option2"]));

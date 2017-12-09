@@ -6,5 +6,6 @@ namespace PHPForm\Widgets;
 
 class HiddenInput extends Input
 {
-    protected $input_type = 'hidden';
+    const TEMPLATE = 'hidden.html';
+    const INPUT_TYPE = 'hidden';
 }

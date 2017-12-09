@@ -4,7 +4,6 @@ namespace PHPForm;
 class PHPFormConfig
 {
     const MESSAGES_FILE_PATH = 'src/messages.php';
-    const TEMPLATES_FILE_PATH = 'src/templates.php';
 
     private static $config = null;
 
@@ -14,7 +13,6 @@ class PHPFormConfig
     private function __construct()
     {
         $this->messages = include static::MESSAGES_FILE_PATH;
-        $this->templates = include static::TEMPLATES_FILE_PATH;
     }
 
     public static function getInstance()

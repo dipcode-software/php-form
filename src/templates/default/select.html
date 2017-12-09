@@ -1,0 +1,5 @@
+<select name="{{name|e}}"{% include 'attrs.html' with attrs %}>
+    {% for option in options %}
+        {% include option.template with option only %}
+    {% endfor %}
+</select>
