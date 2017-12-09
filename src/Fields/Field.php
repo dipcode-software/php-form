@@ -8,7 +8,6 @@ use InvalidArgumentException;
 
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\PHPFormConfig;
-use PHPForm\Utils\Attributes;
 
 abstract class Field
 {
@@ -151,7 +150,7 @@ abstract class Field
         $label = $this->label;
 
         if (is_null($this->label) && !is_null($name)) {
-            $label = Attributes::prettyName($name);
+            $label = prettyName($name);
         }
 
         return $label;

@@ -10,7 +10,6 @@ use UnexpectedValueException;
 use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\BoundField;
-use PHPForm\Utils\Attributes;
 
 abstract class Form implements ArrayAccess, Iterator, Countable
 {
@@ -200,7 +199,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
             try {
                 $this->cleaned_data[$field_name] = $field->clean($value);
 
-                $method = 'clean' . Attributes::snakeToCamel($field_name);
+                $method = 'clean' . snakeToCamel($field_name);
 
                 if (method_exists($this, $method)) {
                     $this->cleaned_data[$field_name] = call_user_func(array($this, $method));
