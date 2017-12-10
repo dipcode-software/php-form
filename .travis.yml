@@ -10,10 +10,10 @@ matrix:
     - php: nightly
 
 before_script:
-  - composer self-update
+  - travis_retry composer self-update
 
 install:
-  - composer install --no-interaction
+  - travis_retry composer install --no-interaction
 
 script:
   - mkdir -p build/logs
@@ -21,4 +21,3 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls
-  - sh docs/deploy.sh
