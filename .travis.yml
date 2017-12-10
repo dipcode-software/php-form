@@ -26,5 +26,5 @@ deploy:
   provider: script
   script: docs/deploy.sh
   on:
-    branch: feat\docs
+    branch: feat/docs
     php: '7.1'
