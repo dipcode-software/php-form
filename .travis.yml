@@ -25,3 +25,6 @@ after_success:
 deploy:
   provider: script
   script: docs/deploy.sh
+  on:
+    all_branches: true
+    php: '7.1'
