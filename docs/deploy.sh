@@ -1,5 +1,4 @@
 #!/bin/sh
-
 sudo pip install -r docs/requirements.txt
 cd docs/php-form
 mkdocs build

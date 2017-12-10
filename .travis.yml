@@ -21,11 +21,4 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls
-
-deploy:
-  provider: script
-  script: ./docs/deploy.sh
-  skip_cleanup: true
-  on:
-    branch: feat/docs
-    php: '7.1'
+  - sh docs/deploy.sh
