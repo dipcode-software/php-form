@@ -15,9 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Added template pack `DefaultTemplatePack`. Defined as default template pack;
     - Added template pack `Bootstrap4TemplatePack` that integrates Bootstrap v4.0.0-beta.2.
  - `Config` singleton class allowing:
-    - Configure custom template packs;
-    - Configure custom messages;
-    - Configure custom renderers.
+    - Configure custom template packs class;
+    - Configure custom messages class;
+    - Configure custom renderers class.
  - Added extra arg `label` to method `getContext` of `Widget` class.
 
 ### Changed

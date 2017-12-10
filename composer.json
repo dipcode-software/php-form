@@ -11,7 +11,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/dipcode-software/php-form/issues"
+    "issues": "https://github.com/dipcode-software/php-form/issues",
+    "docs": "https://alexandriadocs.io/docs/php-form/index.html"
   },
   "require": {
     "php": ">=7.0.0",

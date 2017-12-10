@@ -51,8 +51,8 @@ class FieldTest extends TestCase
     public function testRunValidatorsWithEmptyValue()
     {
         $stub = $this->getMockForAbstractClass(Field::class);
-        $this->assertNull($stub->RunValidators(""));
-        $this->assertNull($stub->RunValidators(null));
-        $this->assertNull($stub->RunValidators([]));
+        $this->assertNull($stub->runValidators(""));
+        $this->assertNull($stub->runValidators(null));
+        $this->assertNull($stub->runValidators([]));
     }
 }

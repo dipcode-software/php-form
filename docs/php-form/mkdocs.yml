@@ -1,0 +1,54 @@
+# Project information
+site_name: PHPForm
+site_description: "PHP class for form handling abstraction."
+site_author: "Dipcode"
+
+# Configuration
+theme:
+  name: material
+  palette:
+    primary: "blue"
+    accent: "blue"
+  logo:
+    icon: "assignment"
+  feature:
+    tabs: true
+
+# Repository
+repo_name: "dipcode-software/php-form"
+repo_url: "https://github.com/dipcode-software/php-form"
+
+# Copyright
+copyright: "PHPForm is licensed under the <a href='https://github.com/dipcode-software/php-form/blob/master/LICENSE'>MIT license</a>"
+
+# Page tree
+pages:
+  - Home: index.md
+  - Forms:
+    - Home: forms.md
+    - Fields: fields.md
+    - Widgets: widgets.md
+  - Integrations:
+    - Wordpress: wordpress.md
+  - Getting started: getting-started.md
+  - Renderers: renderers.md
+  - Template Packs: template-packs.md
+
+# Customization
+extra:
+  social:
+    - type: "github"
+      link: "https://github.com/dipcode-software"
+    - type: "linkedin"
+      link: "https://www.linkedin.com/company/18328412/"
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite:
+      linenums: true
+  - toc:
+      permalink: true
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist:
+      custom_checkbox: true
