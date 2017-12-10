@@ -24,7 +24,7 @@ after_success:
 
 deploy:
   provider: script
-  script: docs/deploy.sh
+  script: ./docs/deploy.sh $ALEXANDRIA_APIKEY
   skip_cleanup: true
   on:
     branch: feat/docs
