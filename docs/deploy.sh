@@ -1,5 +1,5 @@
 #!/bin/bash
-pip install -r docs/requirements.txt && \
+sudo pip install -r docs/requirements.txt && \
     cd docs/php-form && \
     mkdocs build && \
     tar -zcvf phpform.tar.gz -C site . && \
