@@ -1,11 +1,12 @@
 <?php
-namespace PHPForm\Unit\Fields;
+namespace PHPForm\Unit\Bounds;
 
 use PHPUnit\Framework\TestCase;
 
+use PHPForm\Bounds\BoundField;
+use PHPForm\Bounds\BoundWidget;
 use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\Fields\BoundField;
 use PHPForm\Fields\CharField;
 use PHPForm\Fields\ChoiceField;
 use PHPForm\Widgets\RadioSelect;
@@ -214,16 +215,6 @@ class BoundFieldTest extends TestCase
         $field = new ChoiceField(["choices" => array("option1" => "Option1")]);
         $bound = new BoundField($this->simple_form, $field, "name");
 
-        $expected = array(array(
-            "for" => "id_name_1",
-            "type" => null,
-            "name" => "name",
-            "value" => "option1",
-            "label" => "Option1",
-            "attrs" => array(),
-            "template" => "select_option.html"
-        ));
-
-        $this->assertEquals($expected, $bound->options);
+        $this->assertInstanceOf(BoundWidget::class, $bound->options[0]);
     }
 }

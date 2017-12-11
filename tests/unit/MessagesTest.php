@@ -7,6 +7,13 @@ use PHPForm\Messages;
 
 class MessagesTest extends TestCase
 {
+    public function testSetMessages()
+    {
+        Messages::setMessages(["REQUIRED2" => "Required"]);
+
+        $this->assertEquals("Required", Messages::format("REQUIRED2"));
+    }
+
     public function testFormat()
     {
         $this->assertEquals("String", Messages::format("String"));

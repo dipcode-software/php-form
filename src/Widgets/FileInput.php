@@ -32,10 +32,6 @@ class FileInput extends Input
      */
     public function valueFromData($data, $files, string $name)
     {
-        if (array_key_exists($name, $files)) {
-            return $files[$name];
-        }
-
-        return null;
+        return !is_null($files) && array_key_exists($name, $files) ? $files[$name] : null;
     }
 }
