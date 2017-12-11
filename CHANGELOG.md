@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.1.0] - XXXX-XX-XX
+## [2.0.0] - 2017-12-11
 ### Added
  - Renderers to facilitate integrations of template-engines:
     - Added `Renderer` interface;
@@ -18,9 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Configure custom template packs;
     - Configure custom messages;
     - Configure custom renderers.
- - Added extra arg `label` to method `getContext` of `Widget` class.
+ - Added extra arg `label` to method `getContext` of `Widget` class;
+ - `BoundWidget` class to represent the choices of a `ChoiceWidget` in `BoundField`, allowing individual render or data access to each option.
 
 ### Changed
+ - `BoundField` moved from `Fields` to new namespace `Bounds`;
  - `BoundField` attribute name `choices` changed to `options`;
  - `BoundField` attribute `options` now return an array instead of formated string;
  - `Widgets`, `labelTag` and `ErrorList` now render through default renderer instead of formatter `fleshgrinder/format`;
