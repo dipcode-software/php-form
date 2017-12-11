@@ -7,6 +7,8 @@ use PHPForm\Messages;
 
 class Config extends Singleton
 {
+    const VERSION = "v2.0.0";
+
     /**
      * @var array Template packs to be used. The templates will be loaded
      *            accordingly to the order defined.

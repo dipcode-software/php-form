@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0] - 2017-12-11
 ### Added
+ - Documentation of package;
  - Renderers to facilitate integrations of template-engines:
     - Added `Renderer` interface;
     - Added `TwigRenderer` that integrates `twig/twig`;
