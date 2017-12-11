@@ -4,7 +4,7 @@ namespace PHPForm\Unit\Forms;
 use PHPUnit\Framework\TestCase;
 
 use PHPForm\Forms\Form;
-use PHPForm\Fields\BoundField;
+use PHPForm\Bounds\BoundField;
 
 class FormTest extends TestCase
 {

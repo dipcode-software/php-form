@@ -39,4 +39,10 @@ class FileInputTest extends TestCase
         $value = $widget->valueFromData(array(), array("name" => "file"), "name");
         $this->assertEquals($value, "file");
     }
+
+    public function testValueFromDataWithNullData()
+    {
+        $widget = new FileInput();
+        $this->assertNull($widget->valueFromData(null, null, "name"));
+    }
 }

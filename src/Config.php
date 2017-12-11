@@ -37,7 +37,7 @@ class Config extends Singleton
      */
     public function setTemplatePack(string $template_pack)
     {
-        $this->template_packs = array_unshift($this->template_packs, $template_pack);
+        array_unshift($this->template_packs, $template_pack);
     }
 
     /**
