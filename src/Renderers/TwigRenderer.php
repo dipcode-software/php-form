@@ -4,9 +4,9 @@
 */
 namespace PHPForm\Renderers;
 
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Twig_Loader_Chain;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
+use Twig\Loader\ChainLoader;
 
 class TwigRenderer implements Renderer
 {
@@ -24,13 +24,13 @@ class TwigRenderer implements Renderer
      */
     public function __construct(array $templates_dirs)
     {
-        $loaders = new Twig_Loader_Chain();
+        $loaders = new ChainLoader();
 
         foreach ($templates_dirs as $template_dir) {
-            $loaders->addLoader(new Twig_Loader_Filesystem($template_dir));
+            $loaders->addLoader(new FilesystemLoader($template_dir));
         }
 
-        $this->twig = new Twig_Environment($loaders);
+        $this->twig = new Environment($loaders);
     }
 
     /**
