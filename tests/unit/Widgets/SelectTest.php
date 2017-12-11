@@ -51,4 +51,21 @@ class SelectTest extends TestCase
 
         $this->assertXmlStringEqualsXmlString($expected, $widget->render("name", "option3"));
     }
+
+    public function testRenderOptionWithouValue()
+    {
+        $widget = new Select([
+            "" => "",
+            "option2" => "option2",
+            "option3" => "option3",
+        ]);
+
+        $expected = '<select id="id_name" name="name">' .
+                        '<option></option>' .
+                        '<option value="option2">option2</option>' .
+                        '<option value="option3" selected="selected">option3</option>' .
+                    '</select>';
+
+        $this->assertXmlStringEqualsXmlString($expected, $widget->render("name", "option3"));
+    }
 }
