@@ -7,9 +7,9 @@ use InvalidArgumentException;
 use Iterator;
 use UnexpectedValueException;
 
+use PHPForm\Bounds\BoundField;
 use PHPForm\Errors\ErrorList;
 use PHPForm\Exceptions\ValidationError;
-use PHPForm\Fields\BoundField;
 
 abstract class Form implements ArrayAccess, Iterator, Countable
 {

@@ -1,5 +1,5 @@
 <?php
-namespace PHPForm\Fields;
+namespace PHPForm\Bounds;
 
 use PHPForm\Config;
 
@@ -10,7 +10,7 @@ class BoundField
     private $form;
     private $field;
     private $name;
-    private $options_cache;
+    private $bound_widgets_cache;
 
     public $html_name;
     public $help_text;
@@ -55,18 +55,25 @@ class BoundField
         }
 
         if ($name == 'options') {
-            if (!isset($options_cache)) {
-                $options_cache = $this->getOptions();
+            if (!isset($bound_widgets_cache)) {
+                $bound_widgets_cache = $this->getSubWidgets();
             }
-            return $options_cache;
+            return $bound_widgets_cache;
         }
     }
 
-    private function getOptions(array $attrs = array())
+    private function getSubWidgets(array $attrs = array())
     {
-        $attrs = $this->buildWidgetAttrs($attrs);
+        $bounds = [];
 
-        return $this->field->getWidget()->getOptions($this->html_name, $this->getValue(), $attrs);
+        $attrs = $this->buildWidgetAttrs($attrs);
+        $options = $this->field->getWidget()->getOptions($this->html_name, $this->getValue(), $attrs);
+
+        foreach ($options as $option) {
+            $bounds[] = new BoundWidget($option);
+        }
+
+        return $bounds;
     }
 
     protected function asWidget($widget = null, array $attrs = array())
