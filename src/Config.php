@@ -41,13 +41,13 @@ class Config extends Singleton
     }
 
     /**
-     * Set messages class.
+     * Redefine default messages.
      *
-     * @param string Class name of Renderer.
+     * @param array Messages array.
      */
-    public function setMessages(string $messages_class)
+    public function setMessages(array $messages)
     {
-        $this->messages_class = $messages_class;
+        $this->messages_class::setMessages($messages);
     }
 
     /**
