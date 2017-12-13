@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.3] - 2017-12-13
+### Added
+ - `setRequired` to `Field` class;
+ - Twig Filter `merge_str` to merge value into as array value through implode.
+
+### Fixed
+ - Form field error class being ignored in `Bootstrap4TemplatePack`.
+
 ## [2.0.2] - 2017-12-12
 ### Changed
  - `Twig` minimal version supported setted to `>=1.35`.

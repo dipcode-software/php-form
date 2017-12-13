@@ -38,4 +38,24 @@ class TwigRendererTest extends TestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    public function testFilterRenderStr()
+    {
+        $renderer = new TwigRenderer([__DIR__ . "/templates/pack1"]);
+
+        $result = $renderer->render("merge_str_filter.html", array("attrs" => ["class" => "existent"]));
+        $expected = "class merged existent";
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testFilterRenderStrWithoutArg()
+    {
+        $renderer = new TwigRenderer([__DIR__ . "/templates/pack1"]);
+
+        $result = $renderer->render("merge_str_filter.html", array("attrs" => []));
+        $expected = "class merged";
+
+        $this->assertEquals($expected, $result);
+    }
 }
