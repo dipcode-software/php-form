@@ -4,9 +4,10 @@
 */
 namespace PHPForm\Renderers;
 
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
 use Twig\Loader\ChainLoader;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
 
 class TwigRenderer implements Renderer
 {
@@ -22,7 +23,7 @@ class TwigRenderer implements Renderer
      *
      * @param array $template_dirs
      */
-    public function __construct(array $templates_dirs)
+    public function __construct(array $templates_dirs, array $options = array())
     {
         $loaders = new ChainLoader();
 
@@ -30,7 +31,26 @@ class TwigRenderer implements Renderer
             $loaders->addLoader(new FilesystemLoader($template_dir));
         }
 
-        $this->twig = new Environment($loaders);
+        $this->twig = new Environment($loaders, $options);
+        $this->setFilters();
+    }
+
+    public function setFilters()
+    {
+        $filter_merge_str = new TwigFilter('merge_str', function ($attrs, array $options = array()) {
+            $key = $options[0];
+            $value = $options[1];
+
+            if (array_key_exists($key, $attrs)) {
+                $attrs[$key] = implode(' ', [$value, $attrs[$key]]);
+            } else {
+                $attrs[$key] = $value;
+            }
+
+            return $attrs;
+        }, array('is_variadic' => true));
+
+        $this->twig->addFilter($filter_merge_str);
     }
 
     /**
