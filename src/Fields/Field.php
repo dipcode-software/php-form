@@ -138,6 +138,16 @@ abstract class Field
     }
 
     /**
+    * Set disabled value.
+    *
+    * @param bool
+    */
+    public function setDisabled(bool $value)
+    {
+        $this->disabled = $value;
+    }
+
+    /**
     * Return defined label or construct one based on the field name.
     *
     * @param  string $name Name to be prettified, if no label defined.
