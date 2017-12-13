@@ -17,6 +17,13 @@ class FieldTest extends TestCase
         $this->assertAttributeEquals("label", "label", $stub);
     }
 
+    public function testSetDisabled()
+    {
+        $stub = $this->getMockForAbstractClass(Field::class);
+        $stub->setDisabled(true);
+        $this->assertAttributeEquals(true, 'disabled', $stub);
+    }
+
     public function testToNative()
     {
         $stub = $this->getMockForAbstractClass(Field::class);
