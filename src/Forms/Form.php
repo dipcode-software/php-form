@@ -17,6 +17,24 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     const NON_FIELD_ERRORS = '__all__';
 
     /**
+     * Array with form data.
+     * @var array
+     */
+    private $data = null;
+
+    /**
+     * Array with form data files.
+     * @var array
+     */
+    private $files = null;
+
+    /**
+     * Array with initial data.
+     * @var array
+     */
+    private $initial = array();
+
+    /**
      * List of form errors.
      * @var array
      */
@@ -66,14 +84,15 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Constructor method
+     *
      * @param array $args Arguments
      */
     public function __construct(array $args = array())
     {
-        $this->data = array_key_exists('data', $args) ? $args['data'] : null;
-        $this->files = array_key_exists('files', $args) ? $args['files'] : null;
+        $this->data = array_key_exists('data', $args) ? $args['data'] : $this->data;
+        $this->files = array_key_exists('files', $args) ? $args['files'] : $this->files;
         $this->prefix = array_key_exists('prefix', $args) ? $args['prefix'] : $this->prefix;
-        $this->initial = array_key_exists('initial', $args) ? $args['initial'] : array();
+        $this->initial = array_key_exists('initial', $args) ? $args['initial'] : $this->initial;
         $this->css_classes = array_key_exists('css_classes', $args) ? $args['css_classes'] : $this->css_classes;
 
         $this->is_bound = !is_null($this->data) or !is_null($this->files);
@@ -82,6 +101,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Method to be redefined with form fields
+     *
      * @return array Desired fields for this form.
      */
     protected static function setFields()
@@ -91,6 +111,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return if form is bounded or not.
+     *
      * @return boolean
      */
     public function isBound()
@@ -99,7 +120,28 @@ abstract class Form implements ArrayAccess, Iterator, Countable
     }
 
     /**
+     * Return form data array.
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Return form files data array.
+     *
+     * @return array
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
      * Return css classes to be added to each widget.
+     *
      * @return array
      */
     public function getCssClasses()
@@ -109,6 +151,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return error css class to be added on case of field error.
+     *
      * @return array
      */
     public function getErrorCssClass()
@@ -118,7 +161,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Special method to make errors accessible as a attribute.
+     *
      * @param  string $name Attribute name.
+     *
      * @return mixed
      */
     public function __get(string $name)
@@ -134,7 +179,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Add a prefix to a name.
+     *
      * @param  string $field_name Field name.
+     *
      * @return string
      */
     public function addPrefix(string $field_name)
@@ -148,6 +195,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Add error to specific $field_name, if null, define to NON_FIELD_ERRORS.
+     *
      * @param mixed  $error
      * @param string $field_name
      */
@@ -222,6 +270,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Redefine if need to validate crossfields.
+     *
      * @return array Cleaned data
      */
     protected function clean()
@@ -231,6 +280,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return cleaned data values.
+     *
      * @return array Cleaned data
      */
     public function getCleanedData()
@@ -240,7 +290,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return cleaned field value.
+     *
      * @param  string $field_name Name of field.
+     *
      * @return string             Cleaned field value.
      */
     public function getCleanedField(string $field_name)
@@ -250,7 +302,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Check if field has error on it.
+     *
      * @param  string   $field_name Name of field to check
+     *
      * @return boolean
      */
     public function hasErrors($field_name)
@@ -260,7 +314,9 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return all errors associated to $field_name.
+     *
      * @param  string    $field_name Field name
+     *
      * @return ErrorList
      */
     public function getFieldErrors(string $field_name)
@@ -274,6 +330,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Return errors not associated with any field.
+     *
      * @return ErrorList
      */
     public function getNonFieldErrors()
@@ -287,6 +344,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Check if form is valid.
+     *
      * @return bool
      */
     public function isValid()
@@ -296,6 +354,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * Check if form is valid.
+     *
      * @return bool
      */
     public function getInitialForField($field, $field_name)
@@ -327,6 +386,7 @@ abstract class Form implements ArrayAccess, Iterator, Countable
 
     /**
      * @throws UnexpectedValueException
+     *
      * @return BoundField
      */
     public function offsetGet($offset)

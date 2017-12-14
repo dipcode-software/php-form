@@ -109,7 +109,7 @@ class BoundField
     {
         if ($this->form->isBound() && !$this->field->isDisabled()) {
             $widget = $this->field->getWidget();
-            $value = $widget->valueFromData($this->form->data, $this->form->files, $this->html_name);
+            $value = $widget->valueFromData($this->form->getData(), $this->form->getFiles(), $this->html_name);
         } else {
             $value = $this->form->getInitialForField($this->field, $this->name);
         }
