@@ -4,8 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.1.0] - XXXX-XX-XX
+## [2.0.3] - 2017-12-13
 ### Added
+ - `setRequired` to `Field` class;
+ - Twig Filter `merge_str` to merge value into as array value through implode.
+
+### Fixed
+ - Form field error class being ignored in `Bootstrap4TemplatePack`.
+
+## [2.0.2] - 2017-12-12
+### Changed
+ - `Twig` minimal version supported setted to `>=1.35`.
+
+## [2.0.1] - 2017-12-11
+### Changed
+ - Loading `Twig` classes with psr-4 mode;
+ - Select `option` tag don't render `value` if it is empty.
+
+## [2.0.0] - 2017-12-11
+### Added
+ - Documentation of package;
  - Renderers to facilitate integrations of template-engines:
     - Added `Renderer` interface;
     - Added `TwigRenderer` that integrates `twig/twig`;
@@ -15,12 +33,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Added template pack `DefaultTemplatePack`. Defined as default template pack;
     - Added template pack `Bootstrap4TemplatePack` that integrates Bootstrap v4.0.0-beta.2.
  - `Config` singleton class allowing:
-    - Configure custom template packs class;
-    - Configure custom messages class;
-    - Configure custom renderers class.
- - Added extra arg `label` to method `getContext` of `Widget` class.
+    - Configure custom template packs;
+    - Configure custom messages;
+    - Configure custom renderers.
+ - Added extra arg `label` to method `getContext` of `Widget` class;
+ - `BoundWidget` class to represent the choices of a `ChoiceWidget` in `BoundField`, allowing individual render or data access to each option.
 
 ### Changed
+ - `BoundField` moved from `Fields` to new namespace `Bounds`;
  - `BoundField` attribute name `choices` changed to `options`;
  - `BoundField` attribute `options` now return an array instead of formated string;
  - `Widgets`, `labelTag` and `ErrorList` now render through default renderer instead of formatter `fleshgrinder/format`;

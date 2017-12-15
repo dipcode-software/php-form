@@ -1,5 +1,5 @@
 <label for="{{for|e}}" class="custom-control custom-{{ type|e }}">
-    {% set attrs = attrs|merge({'class': 'custom-control-input'}) %}
+    {% set attrs = attrs|merge_str("class", "custom-control-input") %}
     {% include 'input.html' %}
     <span class="custom-control-indicator"></span>
     <span class="custom-control-description">{{ label|e }}</span>

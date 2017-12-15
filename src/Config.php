@@ -7,7 +7,7 @@ use PHPForm\Messages;
 
 class Config extends Singleton
 {
-    const VERSION = "v1.1.0";
+    const VERSION = "v2.0.3";
 
     /**
      * @var array Template packs to be used. The templates will be loaded
@@ -39,17 +39,17 @@ class Config extends Singleton
      */
     public function setTemplatePack(string $template_pack)
     {
-        $this->template_packs = array_unshift($this->template_packs, $template_pack);
+        array_unshift($this->template_packs, $template_pack);
     }
 
     /**
-     * Set messages class.
+     * Redefine default messages.
      *
-     * @param string Class name of Renderer.
+     * @param array Messages array.
      */
-    public function setMessages(string $messages_class)
+    public function setMessages(array $messages)
     {
-        $this->messages_class = $messages_class;
+        $this->messages_class::setMessages($messages);
     }
 
     /**
