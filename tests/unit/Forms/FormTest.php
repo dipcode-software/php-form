@@ -26,6 +26,22 @@ class FormTest extends TestCase
         $this->assertAttributeEquals($data, "data", $form);
     }
 
+    public function testGetData()
+    {
+        $data = array("data" => "data");
+        $form = new ExampleForm(["data" => $data]);
+
+        $this->assertEquals($form->getData(), $data);
+    }
+
+    public function testGetFiles()
+    {
+        $files = array("files" => "files");
+        $form = new ExampleForm(["files" => $files]);
+
+        $this->assertEquals($form->getFiles(), $files);
+    }
+
     public function testAddPrefix()
     {
         $form = new ExampleForm(["prefix" => "prefix"]);
