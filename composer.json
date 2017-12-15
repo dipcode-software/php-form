@@ -1,8 +1,11 @@
 {
   "name": "dipcode/php-form",
-  "description": "PHP class for form handling abstraction.",
+  "description": "Full featured form engine library.",
   "license": "MIT",
   "homepage": "https://github.com/dipcode-software/php-form",
+  "keywords": [
+    "forms"
+  ],
   "authors": [
     {
       "name": "Dipcode",
