@@ -1,6 +1,6 @@
 # Project information
 site_name: PHPForm
-site_description: "PHP class for form handling abstraction."
+site_description: "Full featured php form engine library."
 site_author: "Dipcode"
 
 # Configuration
@@ -17,6 +17,7 @@ theme:
 # Repository
 repo_name: "dipcode-software/php-form"
 repo_url: "https://github.com/dipcode-software/php-form"
+edit_uri: "blob/master/docs/"
 
 # Copyright
 copyright: "PHPForm is licensed under the <a href='https://github.com/dipcode-software/php-form/blob/master/LICENSE'>MIT license</a>"
