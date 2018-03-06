@@ -31,7 +31,10 @@ class FileField extends Field
 
     public function validate($value)
     {
-        if (0 == $value->size && $this->required) {
+        if (is_null($value) && !$this->required) {
+            return;
+        }
+        if (is_null($value) && $this->required || 0 == $value->size && $this->required) {
             throw new ValidationError($this->error_messages['required'], 'required');
         }
 
@@ -51,6 +54,9 @@ class FileField extends Field
 
     public function toNative($value)
     {
+        if (is_null($value)) {
+            return null;
+        }
         if (!is_array($value)) {
             throw new ValidationError(msg("INVALID_FILE"), 'invalid');
         }
