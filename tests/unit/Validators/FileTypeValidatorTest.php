@@ -11,7 +11,7 @@ class FileTypeValidatorTest extends TestCase
 
     public function setUp()
     {
-        $this->data = (object) array('type' => 'image/png');
+        $this->data = (object) array('size' => 10, 'type' => 'image/png');
     }
 
     public function testValidType()
