@@ -22,12 +22,13 @@ class FileFieldTest extends TestCase
 
     /**
      * @expectedException PHPForm\Exceptions\ValidationError
-     * @expectedExceptionMessage The submitted file is empty.
+     * @expectedExceptionMessage This field is required.
      */
     public function testValidateEmpty()
     {
         $data = array('size' => 0);
-        $this->field->validate((object) $data);
+        $field = new FileField(["max_size" => 20, "required" => true]);
+        $field->validate((object) $data);
     }
 
     /**
