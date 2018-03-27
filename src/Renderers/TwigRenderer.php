@@ -27,17 +27,31 @@ class TwigRenderer implements Renderer
     {
         $loaders = new ChainLoader();
 
-        foreach ($templates_dirs as $template_dir) {
-            $loaders->addLoader(new FilesystemLoader($template_dir));
+        if (class_exists('Twig_Loader_Filesystem')) {
+            $class = 'Twig_Loader_Filesystem';
+            $envClass = 'Twig_Environment';
+        } else {
+            $class = 'FilesystemLoader';
+            $envClass = 'Environment';
         }
 
-        $this->twig = new Environment($loaders, $options);
+        foreach ($templates_dirs as $template_dir) {
+            $loaders->addLoader(new $class($template_dir));
+        }
+
+        $this->twig = new $envClass($loaders, $options);
         $this->setFilters();
     }
 
     public function setFilters()
     {
-        $filter_merge_str = new TwigFilter('merge_str', function ($attrs, array $options = array()) {
+        if (class_exists('Twig_SimpleFilter')) {
+            $class = 'Twig_SimpleFilter';
+        } else {
+            $class = 'TwigFilter';
+        }
+
+        $filter_merge_str = new $class('merge_str', function ($attrs, array $options = array()) {
             $key = $options[0];
             $value = $options[1];
 
