@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
  - `data` and `files` were wrongly exposed on `Form` class. Changed visibility to private and added `getData` and `getFiles` methods.
  - Allow non-required file fields
+ - Fixed choice field values check
 
 ## [2.0.3] - 2017-12-13
 ### Added
