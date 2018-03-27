@@ -27,6 +27,7 @@ class TwigRenderer implements Renderer
     {
         $loaders = new ChainLoader();
 
+        /* To maintain compatibility with non-PSR4 versions of Twig */
         if (class_exists('Twig_Loader_Filesystem')) {
             $class = 'Twig_Loader_Filesystem';
             $envClass = 'Twig_Environment';
@@ -45,6 +46,7 @@ class TwigRenderer implements Renderer
 
     public function setFilters()
     {
+        /* To maintain compatibility with non-PSR4 versions of Twig */
         if (class_exists('Twig_SimpleFilter')) {
             $class = 'Twig_SimpleFilter';
         } else {
