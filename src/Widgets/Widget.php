@@ -80,7 +80,7 @@ abstract class Widget
      */
     protected function formatValue($value)
     {
-        return !empty($value) ? (string) $value : null;
+        return $value !== false ? (string) $value : null;
     }
 
     /**
