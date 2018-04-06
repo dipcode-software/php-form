@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  - Allow non-required file fields
  - Fixed choice field values check
  - Added retrocompability between Twig v1 and v2
+ - Fixed Widget format value
 
 ## [2.0.3] - 2017-12-13
 ### Added
