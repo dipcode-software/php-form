@@ -41,7 +41,7 @@ class ChoiceField extends Field
     {
         parent::validate($value);
 
-        if (!$this->validValue($value)) {
+        if (!$this->isEmpty($value) && !$this->validValue($value)) {
             if (is_array($value)) {
                 $value_diff = array_diff($value, array_keys($this->choices));
                 $value = implode(', ', $value_diff);

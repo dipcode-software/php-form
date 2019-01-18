@@ -61,16 +61,6 @@ class ChoiceFieldTest extends TestCase
         $this->field->validate("option2");
     }
 
-    /**
-     * @expectedException PHPForm\Exceptions\ValidationError
-     * @expectedExceptionMessage Select a valid choice. "empty string" is not one of the available choices.
-     */
-    public function testValidateChoiceEmpty()
-    {
-        $field = new ChoiceField(["choices" => array("option1" => "Option1")]);
-        $field->validate("");
-    }
-
     public function testValidateValidValue()
     {
         $this->assertNull($this->field->validate("option1"));
