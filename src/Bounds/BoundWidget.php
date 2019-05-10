@@ -13,6 +13,7 @@ class BoundWidget
     public $name;
     public $value;
     public $label;
+    public $attrs;
 
     public function __construct(array $data)
     {
@@ -21,6 +22,7 @@ class BoundWidget
         $this->name = $data["name"];
         $this->value = $data["value"];
         $this->label = $data["label"];
+        $this->attrs = $data["attrs"];
         $this->template = $data["template"];
 
         unset($data["template"]);
