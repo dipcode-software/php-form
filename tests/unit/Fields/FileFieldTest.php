@@ -55,6 +55,22 @@ class FileFieldTest extends TestCase
         $this->field->validate((object) $data);
     }
 
+    public function testValidateNull()
+    {
+        $result = $this->field->validate(null);
+        $this->assertNull($result);
+    }
+
+    /**
+     * @expectedException PHPForm\Exceptions\ValidationError
+     * @expectedExceptionMessage Invalid file submitted.
+     */
+    public function testValidateInvalid()
+    {
+        $field = new FileField(["max_size" => 20, 'required' => true]);
+        $field->validate(null);
+    }
+
     public function testToNative()
     {
         $data = array(

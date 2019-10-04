@@ -31,9 +31,9 @@ class FileField extends Field
 
     public function validate($value)
     {
-        if ((!isset($value->size) && $this->isDisabled()) || 0 == $value->size && !$this->required) {
+        if ((!isset($value->size) || 0 == $value->size) && !$this->required) {
             return;
-        } elseif (!isset($value->size) && !$this->isDisabled()) {
+        } elseif (!isset($value->size) && $this->required) {
             throw new ValidationError(msg("INVALID_FILE"), 'invalid');
         }
 
