@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\FileField;
 use PHPForm\Widgets\FileInput;
+use stdClass;
 
 class FileFieldTest extends TestCase
 {
@@ -72,13 +73,10 @@ class FileFieldTest extends TestCase
         $this->assertEquals($data['size'], $result->size);
     }
 
-    /**
-     * @expectedException PHPForm\Exceptions\ValidationError
-     * @expectedExceptionMessage Invalid file submitted.
-     */
     public function testToNativeInvalidValue()
     {
-        $this->field->toNative("string");
+        $result = $this->field->toNative(null);
+        $this->assertNull($result);
     }
 
     /**

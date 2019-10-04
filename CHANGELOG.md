@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.5] - 2019-10-04
+### Fixed
+ - Moved validation of invalid file to validate function to avoid wrong behavior.
+
 ## [2.1.4] - 2019-05-10
 ### Added
  - Added missing varible (attributes) to `BoundWidget` class
