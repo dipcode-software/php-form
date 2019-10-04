@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.6] - 2019-10-04
+### Fixed
+ - Changed validation to check if empty instead of null.
+
 ## [2.1.5] - 2019-10-04
 ### Fixed
  - Moved validation of invalid file to validate function to avoid wrong behavior.
