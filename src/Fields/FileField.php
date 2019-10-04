@@ -57,7 +57,7 @@ class FileField extends Field
 
     public function toNative($value)
     {
-        if (is_null($value)) {
+        if ($this->isEmpty($value)) {
             return $value;
         }
         return (object) $value;

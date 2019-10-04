@@ -94,6 +94,12 @@ class FileFieldTest extends TestCase
         $this->assertNull($result);
     }
 
+    public function testToNativeEmptyString()
+    {
+        $result = $this->field->toNative('');
+        $this->assertEquals('', $result);
+    }
+
     /**
      * @expectedException PHPForm\Exceptions\ValidationError
      */
