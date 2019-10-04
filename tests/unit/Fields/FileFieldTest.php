@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use PHPForm\Exceptions\ValidationError;
 use PHPForm\Fields\FileField;
 use PHPForm\Widgets\FileInput;
-use stdClass;
 
 class FileFieldTest extends TestCase
 {
