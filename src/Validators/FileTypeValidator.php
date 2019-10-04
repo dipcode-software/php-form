@@ -24,8 +24,7 @@ class FileTypeValidator extends Validator
 
     public function __invoke($value)
     {
-        if (isset($value->size) &&
-            $value->size > 0 && !is_null($this->valid_filetypes) && !in_array($value->type, $this->valid_filetypes)) {
+        if ($value->size > 0 && !is_null($this->valid_filetypes) && !in_array($value->type, $this->valid_filetypes)) {
             $message = msg($this->message, array(
                 "valid_types" => implode(", ", $this->valid_filetypes),
                 "type" => $value->type
