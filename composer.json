@@ -19,7 +19,6 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "fleshgrinder/format": "^1.1",
     "twig/twig": ">=1.35"
   },
   "require-dev": {
