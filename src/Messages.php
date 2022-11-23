@@ -4,8 +4,6 @@
 */
 namespace PHPForm;
 
-use Fleshgrinder\Core\Formatter;
-
 class Messages
 {
     /**
@@ -48,7 +46,9 @@ class Messages
         $message = array_key_exists($id, self::$messages) ? self::$messages[$id] : $id;
 
         if (!is_null($context)) {
-            $message = Formatter::format($message, $context);
+            foreach ($context as $key => $value) {
+                $message = str_replace("{{$key}}", $value, $message);
+            }
         }
 
         return $message;

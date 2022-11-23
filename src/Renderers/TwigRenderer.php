@@ -5,9 +5,6 @@
 namespace PHPForm\Renderers;
 
 use Twig\Loader\ChainLoader;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-use Twig\TwigFilter;
 
 class TwigRenderer implements Renderer
 {
@@ -32,8 +29,8 @@ class TwigRenderer implements Renderer
             $class = 'Twig_Loader_Filesystem';
             $envClass = 'Twig_Environment';
         } else {
-            $class = 'FilesystemLoader';
-            $envClass = 'Environment';
+            $class = 'Twig\Loader\FilesystemLoader';
+            $envClass = 'Twig\Environment';
         }
 
         foreach ($templates_dirs as $template_dir) {
@@ -50,7 +47,7 @@ class TwigRenderer implements Renderer
         if (class_exists('Twig_SimpleFilter')) {
             $class = 'Twig_SimpleFilter';
         } else {
-            $class = 'TwigFilter';
+            $class = 'Twig\TwigFilter';
         }
 
         $filter_merge_str = new $class('merge_str', function ($attrs, array $options = array()) {

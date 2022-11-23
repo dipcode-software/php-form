@@ -24,6 +24,10 @@ class MessagesTest extends TestCase
     {
         $this->assertEquals("String unit", Messages::format("String {name}", ["name" => "unit"]));
         $this->assertEquals(
+            "String unit test",
+            Messages::format("String {name} {test}", ["name" => "unit", "test" => "test"])
+        );
+        $this->assertEquals(
             "Ensure this value is greater than or equal to 10.",
             Messages::format("INVALID_MIN_VALUE", ["limit" => 10])
         );
