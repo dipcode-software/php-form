@@ -29,10 +29,9 @@ abstract class Singleton
     {
     }
     /**
-     * Unserialize method of the private type to prevent the deserialization of
-     * the instance
+     * Unserialize method
      */
-    private function __wakeup()
+    public function __wakeup()
     {
     }
 }
