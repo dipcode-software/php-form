@@ -1,1 +1,1 @@
-<option {% if value is not empty %}value="{{value|e}}"{% endif %}{% include 'attrs.html' with attrs %}>{{label|e}}</option>
+<option value="{% if value is not empty %}{{value|e}}{% endif %}"{% include 'attrs.html' with attrs %}>{{label|e}}</option>

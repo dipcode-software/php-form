@@ -61,7 +61,7 @@ class SelectTest extends TestCase
         ]);
 
         $expected = '<select id="id_name" name="name">' .
-                        '<option></option>' .
+                        '<option value=""></option>' .
                         '<option value="option2">option2</option>' .
                         '<option value="option3" selected="selected">option3</option>' .
                     '</select>';
