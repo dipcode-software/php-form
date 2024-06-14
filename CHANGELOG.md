@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.2] - 2024-06-14
+### Added
+ - `Twig` minimal version supported setted to `>=1.44.7`.
+ - Fixed select_option.html. Always ensure that the value is included in the option tag.
+
 ## [3.0.0] - 2022-11-23
 ### Added
  - Added support for php8 removing package `fleshgrinder/format` from project. This package is no longer needed, its functionality has been replaced by native php code.

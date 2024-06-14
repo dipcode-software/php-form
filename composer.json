@@ -19,7 +19,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "twig/twig": ">=1.35"
+    "twig/twig": ">=1.44.7"
   },
   "require-dev": {
     "php-coveralls/php-coveralls": "^1.0",
