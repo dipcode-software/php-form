@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
  - `Twig` minimal version supported setted to `>=1.44.7`.
  - Fixed select_option.html. Always ensure that the value is included in the option tag.
+
+## [3.0.1] - 2024-03-28
+### Added
  - Changed `__wake()` method visibility to public. PHP8 compatibility.
 
 ## [3.0.0] - 2022-11-23
