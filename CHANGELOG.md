@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.3] - 2024-07-03
+### Fixed
+ - Fixed the Twig version. Reverted to the previous Twig version. The latest 1.x version has some issues.
+
 ## [3.0.2] - 2024-06-14
 ### Added
  - `Twig` minimal version supported setted to `>=1.44.7`.
